@@ -1,13 +1,13 @@
-# Snakemake workflow: `<name>`
+# Snakemake workflow: GeneProgramsProfiler
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥8.0.0-brightgreen.svg)](https://snakemake.github.io)
 [![GitHub actions status](https://github.com/<owner>/<repo>/workflows/Tests/badge.svg?branch=main)](https://github.com/<owner>/<repo>/actions?query=branch%3Amain+workflow%3ATests)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/<owner>/<repo>)
 
-A Snakemake workflow for `<description>`
+A Snakemake workflow for characterizing cell type specific gene program deregulations from scRNAseq datasets.
 
-- [Snakemake workflow: `<name>`](#snakemake-workflow-name)
+- [Snakemake workflow: GeneProgramsProfiler](#snakemake-workflow-name)
   - [Usage](#usage)
   - [Deployment options](#deployment-options)
   - [Workflow profiles](#workflow-profiles)
@@ -29,7 +29,7 @@ If you use this workflow in a paper, don't forget to give credits to the authors
 To run the workflow from command line, change the working directory.
 
 ```bash
-cd path/to/snakemake-workflow-name
+cd path/to/GeneProgramProfiler
 ```
 
 Adjust options in the default config file `config/config.yaml`.
@@ -59,10 +59,9 @@ The [profiles `README.md`](profiles/README.md) provides more details.
 
 ## Authors
 
-- Firstname Lastname
-  - Affiliation
-  - ORCID profile
-  - home page
+- Filippo Gastaldello
+  - Department of Cellular, Computational and Integrative Biology (CIBIO), University of Trento, Trento 38123, Italy, Fondazione The Microsoft Research—University of Trento Centre for Computational and Systems Biology (COSBI), Rovereto 38068, Italy
+  - [ORCID profile](https://orcid.org/0009-0004-1676-8898)
 
 ## References
 
@@ -70,9 +69,7 @@ The [profiles `README.md`](profiles/README.md) provides more details.
 
 ## TODO
 
-- Replace `<owner>` and `<repo>` everywhere in the template with the correct user name/organization, and the repository name. The workflow will be automatically added to the [snakemake workflow catalog](https://snakemake.github.io/snakemake-workflow-catalog/index.html) once it is publicly available on Github.
-- Replace `<name>` with the workflow name (can be the same as `<repo>`).
-- Replace `<description>` with a description of what the workflow does.
+- The workflow will be automatically added to the [snakemake workflow catalog](https://snakemake.github.io/snakemake-workflow-catalog/index.html) once it is publicly available on Github.
 - Update the [deployment](#deployment-options), [authors](#authors) and [references](#references) sections.
 - Update the `README.md` badges. Add or remove badges for `conda`/`singularity`/`apptainer` usage depending on the workflow's [deployment](#deployment-options) options.
 - Do not forget to also adjust the configuration-specific `config/README.md` file.
