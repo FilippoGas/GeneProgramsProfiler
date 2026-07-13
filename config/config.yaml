@@ -1,0 +1,11 @@
+# Global settings
+scRNAseq: "test/data/Natri_et_al_test_data.rds"
+analysis_name: "Natri_et_al"
+
+# Module 1: preprocess.smk
+preprocess:
+  # Rule 1: annotate_and_save
+  annotate_and_save:
+    celltype_conversion_dictionary: "test/data/Natri_et_al_cytopus_dict.json"
+    rstudio_memory: 400
+    time: "00:15:00"
