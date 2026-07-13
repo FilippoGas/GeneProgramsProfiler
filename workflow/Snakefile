@@ -1,12 +1,13 @@
-# load configuration
+from snakemake.utils import validate
+
+# load and validate configuration
 # -----------------------------------------------------
 configfile: "config/config.yaml"
-
+validate(config, schema="schemas/config.schema.yaml")
 
 # load rules
 # -----------------------------------------------------
-include: "rules/common.smk"
-include: "rules/process_reads.smk"
+include: "rules/spectra_preprocess.smk"
 
 
 # optional messages, log and error handling
@@ -28,4 +29,8 @@ onerror:
 rule all:
     default_target: True
     input:
-        "results/multiqc/multiqc_report.html",
+        "results/preprocess/AnnData/"+config["analysis_name"]+".h5ad",
+        "results/preprocess/rds/"+config["analysis_name"]+".rds",
+        "results/preprocess/mtx/"+config["analysis_name"]+"_matrix.mtx",
+        "results/preprocess/mtx/"+config["analysis_name"]+"_barcodes.tsv",
+        "results/preprocess/mtx/"+config["analysis_name"]+"_genes.tsv"
