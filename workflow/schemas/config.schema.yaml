@@ -1,0 +1,35 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+description: "Configuration schema for GeneProgramsProfiler"
+
+# Global settings
+type: object
+properties:
+  scRNAseq: 
+    type: string
+  analysis_name:
+    type: string
+
+  # Module 1: preprocess.smk
+  preprocess:
+    type: object
+    properties:
+      # Rule 1: annotate_and_save
+      annotate_and_save:
+        type: object
+        properties:
+          celltype_conversion_dictionary:
+            type: string
+          rstudio_memory:
+            type: integer
+            description: "Memory occupied by loading the scRNAseq dataset on R"
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+        required:
+          - celltype_conversion_dictionary
+          - rstudio_memory
+
+required:
+  - scRNAseq
+  - analysis_name
