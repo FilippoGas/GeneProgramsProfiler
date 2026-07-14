@@ -7,7 +7,7 @@ validate(config, schema="schemas/config.schema.yaml")
 
 # load rules
 # -----------------------------------------------------
-include: "rules/spectra_preprocess.smk"
+include: "rules/preprocess.smk"
 
 
 # optional messages, log and error handling
