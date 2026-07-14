@@ -27,7 +27,6 @@ onerror:
 # target rules
 # -----------------------------------------------------
 rule all:
-    default_target: True
     input:
         "results/preprocess/AnnData/"+config["analysis_name"]+".h5ad",
         "results/preprocess/rds/"+config["analysis_name"]+".rds",
