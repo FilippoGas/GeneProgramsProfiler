@@ -5,10 +5,11 @@ rule annotate_and_save:
     """
     Modify the metadata layer of the scRNAseq dataset to include the cell type annotation
     from cytopus, as specified on the user-provided cell type conversion dictionary.
+    Save the dataset in h5ad, 10XGenomics mtx format and rds.
     """
     input:
-        config["scRNAseq"],
-        config["preprocess"]["annotate_and_save"]
+        sc_dataset = config["scRNAseq"],
+        dictionary = config["preprocess"]["annotate_and_save"]["celltype_conversion_dictionary"]
     output:
         anndata  = "results/preprocess/AnnData/"+config["analysis_name"]+".h5ad",
         rds      = "results/preprocess/rds/"+config["analysis_name"]+".rds",
@@ -21,7 +22,7 @@ rule annotate_and_save:
         "Annotating Seurat object's metadata with cytopus cell types and saving as .rds, 10x-Genomics-formatted mtx and h5ad ..."
     threads: 1
     resources: 
-        mem_mb = config["preprocess"]["annotate_and_save"]["rstudio_memory"]+500
+        mem_mb = config["preprocess"]["annotate_and_save"]["rstudio_memory"]+500,
         time   = config["preprocess"]["annotate_and_save"]["time"]
     script:
         "scripts/preprocess/annotate_and_save.R"
