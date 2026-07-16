@@ -27,4 +27,4 @@ rule annotate_and_save:
     conda:
         "envs/preprocess.yaml"
     script:
-        "scripts/preprocess/annotate_and_save.R"
+        "../scripts/preprocess/annotate_and_save.R"
