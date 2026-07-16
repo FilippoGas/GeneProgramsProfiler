@@ -1,5 +1,5 @@
 # Global settings
-scRNAseq: "data/Natri_et_al_test_data.rds"
+scRNAseq: ".test/data/Natri_et_al_test_data.rds"
 analysis_name: "Natri_et_al"
 queues:
   cpu: "cibioCPUQ"
@@ -7,6 +7,6 @@ queues:
 preprocess:
   # Rule 1: annotate_and_save
   annotate_and_save:
-    celltype_conversion_dictionary: "data/Natri_et_al_cytopus_dict.json"
+    celltype_conversion_dictionary: ".test/data/Natri_et_al_cytopus_dict.json"
     rstudio_memory: 400
     time: "00:15:00"
