@@ -46,8 +46,7 @@ message("Starting R script \"annotate_and_save.R\"...")
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
 message("Loading Seurat object: ", snakemake@input[["sc_dataset"]])
-data <- read_rds(snakemake@input[["sc_dataset"]], 
-                 show_col_types = FALSE)
+data <- read_rds(snakemake@input[["sc_dataset"]])
 message("Done")
 message("Loading cell type conversion dictionary: ",
         snakemake@input[["dictionary"]])
