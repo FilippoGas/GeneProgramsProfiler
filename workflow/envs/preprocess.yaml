@@ -4,6 +4,6 @@ channels:
   - bioconda
 dependencies:
   - r-base=4.4.3
-  - r-matrix=1.7-2
+  - r-jsonlite=2.0.0
   - r-seurat=5.5.0
   - r-tidyverse=2.0.0
