@@ -1,9 +1,13 @@
 from snakemake.utils import validate
 
+
 # load and validate configuration
 # -----------------------------------------------------
 configfile: "config/config.yaml"
+
+
 validate(config, schema="schemas/config.schema.yaml")
+
 
 # load rules
 # -----------------------------------------------------
@@ -28,8 +32,8 @@ onerror:
 # -----------------------------------------------------
 rule all:
     input:
-        "results/preprocess/AnnData/"+config["analysis_name"]+".h5ad",
-        "results/preprocess/rds/"+config["analysis_name"]+".rds",
-        "results/preprocess/mtx/"+config["analysis_name"]+"_matrix.mtx",
-        "results/preprocess/mtx/"+config["analysis_name"]+"_barcodes.tsv",
-        "results/preprocess/mtx/"+config["analysis_name"]+"_genes.tsv"
+        f"results/preprocess/AnnData/{config["analysis_name"]}.h5ad",
+        f"results/preprocess/rds/{config["analysis_name"]}.rds",
+        f"results/preprocess/mtx/{config["analysis_name"]}_matrix.mtx",
+        f"results/preprocess/mtx/{config["analysis_name"]}_barcodes.tsv",
+        f"results/preprocess/mtx/{config["analysis_name"]}_genes.tsv",
