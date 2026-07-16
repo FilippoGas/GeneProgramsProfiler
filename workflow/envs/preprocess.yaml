@@ -1,0 +1,9 @@
+name: preprocess
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4.3
+  - r-matrix=1.7-2
+  - r-seurat=5.5.0
+  - r-tidyverse=2.0.0

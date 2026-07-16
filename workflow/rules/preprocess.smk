@@ -24,5 +24,7 @@ rule annotate_and_save:
     resources: 
         mem_mb = config["preprocess"]["annotate_and_save"]["rstudio_memory"]+500,
         time   = config["preprocess"]["annotate_and_save"]["time"]
+    conda:
+        "envs/preprocess.yaml"
     script:
         "scripts/preprocess/annotate_and_save.R"
