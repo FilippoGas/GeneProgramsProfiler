@@ -8,3 +8,5 @@ dependencies:
   - r-matrix=1.7-2
   - r-seurat=5.5.0
   - r-tidyverse=2.0.0
+  - bioconductor-zellkonverter=1.16.0
+  - bioconductor-singlecellexperiment=1.28.0
