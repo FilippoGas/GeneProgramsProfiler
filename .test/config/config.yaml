@@ -1,7 +1,8 @@
 # Global settings
 scRNAseq: "data/Natri_et_al_test_data.rds"
 analysis_name: "Natri_et_al"
-
+queues:
+  cpu: "cibioCPUQ"
 # Module 1: preprocess.smk
 preprocess:
   # Rule 1: annotate_and_save

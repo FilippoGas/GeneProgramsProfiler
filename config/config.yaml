@@ -1,7 +1,8 @@
 # Global settings
 scRNAseq: "path/to/scRNAseq"
 analysis_name: "..."
-
+queues:
+  cpu: "queue_name"
 # Module 1: preprocess.smk
 preprocess:
   # Rule 1: annotate_and_save
