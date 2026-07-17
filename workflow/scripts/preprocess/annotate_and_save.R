@@ -72,7 +72,11 @@ message("Adding cell type annotations from Cytopus... ")
 DefaultAssay(data) <- "RNA"
 # Rename original celltype annotation column to "celltype"
 data@meta.data <- data@meta.data %>%
-                        dplyr::rename("celltype" = all_of(celltype_annotation_colname))
+                        dplyr::rename(
+                                "celltype" = all_of(
+                                        celltype_annotation_colname
+                                        )
+                                )
 # Add annotations to metadata in all datasets
 data@meta.data <- data@meta.data %>% 
         rownames_to_column("barcode") %>%
