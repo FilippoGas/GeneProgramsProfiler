@@ -8,5 +8,6 @@ preprocess:
   # Rule 1: annotate_and_save
   annotate_and_save:
     celltype_conversion_dictionary: "path/to/conversion/dictionary"
+    celltype_annotation_colname: "column name"
     rstudio_memory: 100
     time: "00:15:00"

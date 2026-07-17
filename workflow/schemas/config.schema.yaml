@@ -4,7 +4,7 @@ description: "Configuration schema for GeneProgramsProfiler"
 # Global settings
 type: object
 properties:
-  scRNAseq: 
+  scRNAseq:
     type: string
   analysis_name:
     type: string
@@ -26,6 +26,10 @@ properties:
         properties:
           celltype_conversion_dictionary:
             type: string
+            description: "Path to json dictionary to match celltype in the dataset to celltypes in cytopus"
+          celltype_annotation_colname:
+            type: string
+            description: "Name of celltype annotation column in the seurat object's metadata"
           rstudio_memory:
             type: integer
             description: "Memory occupied by loading the scRNAseq dataset on R"

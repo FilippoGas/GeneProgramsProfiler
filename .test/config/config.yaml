@@ -8,5 +8,6 @@ preprocess:
   # Rule 1: annotate_and_save
   annotate_and_save:
     celltype_conversion_dictionary: ".test/data/Natri_et_al_cytopus_dict.json"
+    celltype_annotation_colname: "manual_annotation_1"
     rstudio_memory: 400
     time: "00:15:00"
