@@ -3,10 +3,10 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - r-base=4.4.3
+  - r-base=4.5.1
   - r-jsonlite=2.0.0
-  - r-matrix=1.7-2
+  - r-matrix=1.7_5
   - r-seurat=5.5.0
   - r-tidyverse=2.0.0
-  - bioconductor-zellkonverter=1.16.0
-  - bioconductor-singlecellexperiment=1.28.0
+  - bioconductor-anndatar=1.0.2
+  - bioconductor-rhdf5=2.54.1
