@@ -37,8 +37,7 @@ suppressPackageStartupMessages({
         library(jsonlite)
         library(Matrix)
         library(Seurat)
-        library(SingleCellExperiment)
-        library(zellkonverter)
+        library(anndataR)
 })
 
 message("Starting R script \"annotate_and_save.R\"...")
@@ -87,9 +86,9 @@ message("Done")
 # 4. Save Outputs ####
 # ------------------------------------------------------------------------------
 message("Saving dataset as h5ad to: ", snakemake@output[["anndata"]])
-writeH5AD(
-        as.SingleCellExperiment(data),
-        file = snakemake@output[["anndata"]]
+write_h5ad(
+        data,
+        path = snakemake@output[["anndata"]]
 )
 message("Done")
 message("Saving dataset as rds to ", snakemake@output[["rds"]])
@@ -113,8 +112,8 @@ write.table(
 message("Done")
 message("Saving gene names as .mtx to: ", snakemake@output[["genes"]])
 features <- data.frame(
-                "gene_id"    = rownames(count),
-                "gene_names" = rownames(count),
+                "gene_id"    = rownames(counts),
+                "gene_names" = rownames(counts),
                 type = "Gene Expression"
 )
 write.table(
