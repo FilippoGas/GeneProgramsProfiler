@@ -12,7 +12,7 @@ validate(config, schema="schemas/config.schema.yaml")
 # load rules
 # -----------------------------------------------------
 include: "rules/preprocess.smk"
-
+include: "rules/spectra.smk"
 
 # optional messages, log and error handling
 # -----------------------------------------------------
@@ -32,8 +32,11 @@ onerror:
 # -----------------------------------------------------
 rule all:
     input:
+        # preprocess.smk
         f"results/preprocess/AnnData/{config["analysis_name"]}.h5ad",
         f"results/preprocess/rds/{config["analysis_name"]}.rds",
         f"results/preprocess/mtx/{config["analysis_name"]}_matrix.mtx",
         f"results/preprocess/mtx/{config["analysis_name"]}_barcodes.tsv",
         f"results/preprocess/mtx/{config["analysis_name"]}_genes.tsv",
+        # spectra.smk
+        f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json"
