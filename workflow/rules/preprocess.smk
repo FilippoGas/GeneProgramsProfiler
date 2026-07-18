@@ -20,7 +20,8 @@ rule annotate_and_save:
         "logs/preprocess/annotate_and_save.log",
     conda:
         "../envs/preprocess.yaml"
-    threads: config["preprocess"]["annotate_and_save"]["cores"]
+    threads: 
+        config["preprocess"]["annotate_and_save"]["cores"]
     resources:
         mem_mb=config["preprocess"]["annotate_and_save"]["rstudio_memory"] + 500,
         time=config["preprocess"]["annotate_and_save"]["time"],
