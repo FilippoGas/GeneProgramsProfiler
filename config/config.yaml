@@ -11,10 +11,17 @@ preprocess:
     celltype_annotation_colname: "column name"
     cores: 1
     rstudio_memory: 100
-    time: "00:15:00"
+    time: "hh:mm:ss"
 # Module 2: spectra.smk
 spectra:
   prepare_cytopus_list:
     mem_mb: 500
     cores: 1
     global_celltype: "celltype"
+    time: "hh:mm:ss"
+  # Rule 2: run_spectra
+  run_spectra:
+    lambda: 0.1
+    cores: 1
+    mem_mb: 5000
+    time: "hh:mm:ss"

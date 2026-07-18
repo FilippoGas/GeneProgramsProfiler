@@ -59,9 +59,34 @@ properties:
           global_celltype:
             type: string
             description: "cell type to use as global celltype in the cytopus list. For more details visit https://github.com/wallet-maker/cytopus"
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
         required:
           - mem_mb
           - cores
+      # Rule 2: run_spectra
+      run_spectra:
+        type: object
+        properties:
+          lambda:
+            type: number
+            max: 0.5
+            min: 0.0001
+            description: weighs relative contribution of cytopus list and expression loss functions. For more details visit https://github.com/dpeerlab/spectra
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+        required:
+          - lambda
+          - cores
+          - mem_mb
 
 required:
   - scRNAseq
