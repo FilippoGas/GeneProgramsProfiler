@@ -9,9 +9,7 @@ rule annotate_and_save:
     """
     input:
         sc_dataset=config["scRNAseq"],
-        dictionary=config["preprocess"]["annotate_and_save"][
-            "celltype_conversion_dictionary"
-        ],
+        dictionary=config["celltype_conversion_dictionary"],
     output:
         anndata=f"results/preprocess/AnnData/{config["analysis_name"]}.h5ad",
         rds=f"results/preprocess/rds/{config["analysis_name"]}.rds",
@@ -22,7 +20,7 @@ rule annotate_and_save:
         "logs/preprocess/annotate_and_save.log",
     conda:
         "../envs/preprocess.yaml"
-    threads: 1
+    threads: config["preprocess"]["annotate_and_save"]["cores"]
     resources:
         mem_mb=config["preprocess"]["annotate_and_save"]["rstudio_memory"] + 500,
         time=config["preprocess"]["annotate_and_save"]["time"],
@@ -32,6 +30,6 @@ rule annotate_and_save:
             "celltype_annotation_colname"
         ],
     message:
-        "Annotating Seurat object's metadata with cytopus cell types and saving as .rds, 10x-Genomics-formatted mtx and h5ad ..."
+        "Annotate Seurat object's metadata with cytopus cell types and save as .rds, 10x-Genomics-formatted mtx and h5ad."
     script:
         "../scripts/preprocess/annotate_and_save.R"
