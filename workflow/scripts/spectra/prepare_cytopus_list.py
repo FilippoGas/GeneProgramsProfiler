@@ -37,19 +37,19 @@ G = cp.KnowledgeBase()
 print("Done")
 
 # Extract cell types of interest from conversion dictionary
-print("Extracting cell types of interest from conversion dictionary")
+print("Extracting cell types of interest from conversion dictionary ...")
 celltypes_of_interest = list(dict.fromkeys(conversion_dict.values()))
 global_celltype = list(snakemake.params.global_celltype)
 print("Done")
 
 # Get spectra dictionary
-print("Get spectra dictionary")
+print("Getting spectra dictionary ...")
 G.get_celltype_processes(celltypes_of_interest, global_celltypes=global_celltype)
 processes_dict = G.celltype_process_dict
 print("Done")
 
 # Replace process_dict keys with the matching celltype in the dataframe
-print("Convert cytopus celltype using celltype conversion dictionary")
+print("Converting cytopus celltype using celltype conversion dictionary ...")
 spectra_dict = {}
 for key, value in conversion_dict.items():
     spectra_dict[key] = processes_dict[value]

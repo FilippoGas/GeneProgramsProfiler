@@ -9,30 +9,47 @@ rule prepare_cytopus_list:
     input:
         config["celltype_conversion_dictionary"],
     output:
-        f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json"
+        f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json",
     log:
         "logs/spectra/prepare_cytopus_list.log",
     conda:
         "../envs/spectra.yaml"
-    threads: 
-        config["spectra"]["prepare_cytopus_list"]["cores"]
+    threads: config["spectra"]["prepare_cytopus_list"]["cores"]
     resources:
         mem_mb=config["spectra"]["prepare_cytopus_list"]["mem_mb"],
         time=config["spectra"]["prepare_cytopus_list"]["time"],
-        queue=config["queues"]["cpu"]
+        queue=config["queues"]["cpu"],
     params:
-        global_celltype=config["spectra"]["prepare_cytopus_list"]["global_celltype"]
+        global_celltype=config["spectra"]["prepare_cytopus_list"]["global_celltype"],
     message:
         "Retrieve cytopus gene sets for the cell types in the dataset."
     script:
         "../scripts/spectra/prepare_cytopus_list.py"
+
 
 rule run_spectra:
     """
     Run spectra to quantify gene programs activation in the scRNAseq dataset
     """
     input:
+        sc_dataset=f"results/preprocess/AnnData/{config["analysis_name"]}.h5ad",
+        cytopus_list=f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json",
     output:
+        gene_scores=f"results/spectra/spectra_output/{config["analysis_name"]}_gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        cell_scores=f"results/spectra/spectra_output/{config["analysis_name"]}_cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        factor_markers=f"results/spectra/spectra_output/{config["analysis_name"]}_factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
     log:
+        "logs/spectra/run_spectra.log",
     conda:
-    threads
+        "../envs/spectra.yaml"
+    threads: config["spectra"]["run_spectra"]["cores"]
+    resources:
+        mem_mb=config["spectra"]["run_spectra"]["mem_mb"],
+        time=config["spectra"]["run_spectra"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        lam=config["spectra"]["run_spectra"]["lambda"],
+    message:
+        "Run spectra to identify activated gene programs in the single cell RNA seq dataset."
+    script:
+        "../scripts/spectra/run_spectra.py"

@@ -39,4 +39,6 @@ rule all:
         f"results/preprocess/mtx/{config["analysis_name"]}_barcodes.tsv",
         f"results/preprocess/mtx/{config["analysis_name"]}_genes.tsv",
         # spectra.smk
-        f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json"
+        f"results/spectra/spectra_output/{config["analysis_name"]}_gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        f"results/spectra/spectra_output/{config["analysis_name"]}_cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        f"results/spectra/spectra_output/{config["analysis_name"]}_factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv"
