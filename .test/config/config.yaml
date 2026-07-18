@@ -1,5 +1,6 @@
 # Global settings
 scRNAseq: ".test/data/Natri_et_al_test_data.rds"
+celltype_conversion_dictionary: ".test/data/Natri_et_al_cytopus_dict.json"
 analysis_name: "Natri_et_al"
 queues:
   cpu: "cibioCPUQ"
@@ -7,7 +8,14 @@ queues:
 preprocess:
   # Rule 1: annotate_and_save
   annotate_and_save:
-    celltype_conversion_dictionary: ".test/data/Natri_et_al_cytopus_dict.json"
     celltype_annotation_colname: "manual_annotation_1"
+    cores: 1
     rstudio_memory: 400
     time: "00:15:00"
+# Module 2: spectra.smk
+spectra:
+  prepare_cytopus_list:
+    mem_mb: 500
+    cores: 1
+    global_celltype: "all-cells"
+    time: "00:05:00"

@@ -6,6 +6,9 @@ type: object
 properties:
   scRNAseq:
     type: string
+  celltype_conversion_dictionary:
+    type: string
+    description: "Path to json dictionary to match celltype in the dataset to celltypes in cytopus"
   analysis_name:
     type: string
   queues:
@@ -24,12 +27,11 @@ properties:
       annotate_and_save:
         type: object
         properties:
-          celltype_conversion_dictionary:
-            type: string
-            description: "Path to json dictionary to match celltype in the dataset to celltypes in cytopus"
           celltype_annotation_colname:
             type: string
             description: "Name of celltype annotation column in the seurat object's metadata"
+          cores:
+            types: integer
           rstudio_memory:
             type: integer
             description: "Memory occupied by loading the scRNAseq dataset on R"
@@ -38,10 +40,30 @@ properties:
             description: "Job walltime, if required by computing infrastructure."
             pattern: "^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
         required:
-          - celltype_conversion_dictionary
+          - cores
           - celltype_annotation_colname
           - rstudio_memory
+  # Module 2: spectra.smk
+  spectra:
+    type: object
+    properties:
+      # Rule 1: prepare_cytopus_list
+      prepare_cytopus_list:
+        type: object
+        properties:
+          mem_mb:
+            type: integer
+            description: "Memory required to donwload and save the required cytopus gene sets"
+          cores:
+            type: integer
+          global_celltype:
+            type: string
+            description: "cell type to use as global celltype in the cytopus list. For more details visit https://github.com/wallet-maker/cytopus"
+        required:
+          - mem_mb
+          - cores
 
 required:
   - scRNAseq
+  - celltype_conversion_dictionary
   - analysis_name

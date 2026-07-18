@@ -1,5 +1,6 @@
 # Global settings
 scRNAseq: "path/to/scRNAseq"
+celltype_conversion_dictionary: "path/to/conversion/dictionary"
 analysis_name: "..."
 queues:
   cpu: "queue_name"
@@ -7,7 +8,13 @@ queues:
 preprocess:
   # Rule 1: annotate_and_save
   annotate_and_save:
-    celltype_conversion_dictionary: "path/to/conversion/dictionary"
     celltype_annotation_colname: "column name"
+    cores: 1
     rstudio_memory: 100
     time: "00:15:00"
+# Module 2: spectra.smk
+spectra:
+  prepare_cytopus_list:
+    mem_mb: 500
+    cores: 1
+    global_celltype: "celltype"
