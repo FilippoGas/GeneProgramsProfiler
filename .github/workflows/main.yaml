@@ -39,17 +39,17 @@ jobs:
       - Linting
       - Formatting
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
         with:
-          root-reserve-mb: 3072
-          swap-size-mb: 1024
-          remove-dotnet: "true"
-          remove-android: "true"
-          remove-haskell: "true"
-          remove-codeql: "true"
-          remove-docker-images: "true"
-
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+          
       - uses: actions/checkout@v4
 
       - name: Test workflow
