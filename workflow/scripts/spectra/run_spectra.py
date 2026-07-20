@@ -27,13 +27,25 @@ import pandas as pd
 import Spectra as spc
 
 # 3. Load dataset and cytopus list -------------------------------------------------------------------------------
-# Laod h5ad of scRNAseq dataset
+# Load h5ad of scRNAseq dataset
 print("Loading h5ad dataset ...")
 adata = sc.read_h5ad(snakemake.input.sc_dataset)
+
+# RECOVERY CHECK: If adata.X was stripped, restore it from raw or layers
+if adata.X is None:
+    print("adata.X is missing. Attempting to recover...")
+    if adata.raw is not None and adata.raw.X is not None:
+        adata.X = adata.raw.X.copy()
+    elif "counts" in adata.layers:  # Change "counts" if you used a different layer name
+        adata.X = adata.layers["counts"].copy()
+    else:
+        raise ValueError("Fatal: adata.X is empty and no backup was found in .raw or .layers!")
+
 # Check if matrix is sparse, if so, convert to dense array
 if sp.issparse(adata.X):
-    adata.X=adata.X.toarray()
+    adata.X = adata.X.toarray()
 print("Done")
+
 # Load cytopus list
 print("Loading cytopus list ...")
 with open(snakemake.input.cytopus_list, 'r') as f:
