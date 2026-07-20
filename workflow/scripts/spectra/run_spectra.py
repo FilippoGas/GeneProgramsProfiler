@@ -21,10 +21,9 @@ sys.stderr = sys.stdout = open(snakemake.log[0], 'w')
 
 # 2. Import libraries --------------------------------------------------------------------------------------------
 import json
-import scanpy as cp
 import scipy.sparse as sp
+import scanpy as sc
 import pandas as pd
-import h5py
 import Spectra as spc
 
 # 3. Load dataset and cytopus list -------------------------------------------------------------------------------
