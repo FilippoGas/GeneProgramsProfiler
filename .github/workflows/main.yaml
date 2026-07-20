@@ -10,16 +10,16 @@ jobs:
   Formatting:
     runs-on: ubuntu-latest
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
         with:
-          tool-cache: true
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
@@ -56,7 +56,7 @@ jobs:
         with:
           directory: .
           snakefile: workflow/Snakefile
-          args: "--sdm conda --show-failed-logs --cores 2 --latency-wait 120 --conda-cleanup-pkgs cache --all-temp"
+          args: "--sdm mamba --show-failed-logs --cores 2 --latency-wait 120 --conda-cleanup-pkgs cache --all-temp"
 
       - name: Test report
         uses: snakemake/snakemake-github-action@v2
