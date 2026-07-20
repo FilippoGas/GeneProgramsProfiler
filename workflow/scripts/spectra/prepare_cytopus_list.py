@@ -39,7 +39,8 @@ print("Done")
 # Extract cell types of interest from conversion dictionary
 print("Extracting cell types of interest from conversion dictionary ...")
 celltypes_of_interest = list(dict.fromkeys(conversion_dict.values()))
-global_celltype = list(snakemake.params.global_celltype)
+global_celltype = []
+global_celltype.append(snakemake.params.global_celltype)
 print("Done")
 
 # Get spectra dictionary
