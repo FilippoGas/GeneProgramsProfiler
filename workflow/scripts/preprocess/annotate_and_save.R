@@ -123,11 +123,11 @@ message("Done")
 
 # 3. Modify the object strictly for the h5ad converter
 message("Preparing matrix for h5ad export...")
-log_norm_matrix <- GetAssayData(data, assay = "RNA", slot = "data")
+log_norm_matrix <- GetAssayData(data, assay = "RNA", layer = "data")
 data <- SetAssayData(
                 data,
                 assay = "RNA",
-                slot = "counts",
+                layer = "counts",
                 new.data = log_norm_matrix)
 
 message("Saving log-normalized dataset as h5ad to: ",
