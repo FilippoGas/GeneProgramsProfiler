@@ -11,4 +11,5 @@ snakemake \
     --jobs 50 \
     --keep-going \
     --use-conda \
+    --rerun-incomplete \
     --latency-wait 120
