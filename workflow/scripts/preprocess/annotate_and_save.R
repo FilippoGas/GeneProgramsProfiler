@@ -85,40 +85,56 @@ message("Done")
 
 # 4. Save Outputs ####
 # ------------------------------------------------------------------------------
-message("Saving dataset as h5ad to: ", snakemake@output[["anndata"]])
-write_h5ad(
-        data,
-        path = snakemake@output[["anndata"]]
-)
-message("Done")
+# 1. Save RDS 
 message("Saving dataset as rds to ", snakemake@output[["rds"]])
 saveRDS(data, snakemake@output[["rds"]])
 message("Done")
-message("Saving count matrix as .mtx to: ", snakemake@output[["matrix"]])
-counts <- data@assays$RNA$counts
+
+# 2. Save MTX and features using the original raw counts
+message("Saving raw count matrix as .mtx to: ", snakemake@output[["matrix"]])
+raw_counts <- data@assays$RNA$counts
 writeMM(
-        counts,
+        raw_counts,
         snakemake@output[["matrix"]]
 )
 message("Done")
+
 message("Saving cell barcodes as .mtx to: ", snakemake@output[["barcodes"]])
 write.table(
-        as.data.frame(colnames(counts)),
+        as.data.frame(colnames(raw_counts)),
         snakemake@output[["barcodes"]],
         col.names = FALSE,
         row.names = FALSE,
         sep = "\t"
 )
 message("Done")
+
 message("Saving gene names as .mtx to: ", snakemake@output[["genes"]])
 features <- data.frame(
-                "gene_id"    = rownames(counts),
-                "gene_names" = rownames(counts),
-                type = "Gene Expression"
+        "gene_id"    = rownames(raw_counts),
+        "gene_names" = rownames(raw_counts),
+        "type"       = "Gene Expression"
 )
 write.table(
         as.data.frame(features),
         snakemake@output[["genes"]]
+)
+message("Done")
+
+# 3. Modify the object strictly for the h5ad converter
+message("Preparing matrix for h5ad export...")
+log_norm_matrix <- GetAssayData(data, assay = "RNA", slot = "data")
+data <- SetAssayData(
+                data,
+                assay = "RNA",
+                slot = "counts",
+                new.data = log_norm_matrix)
+
+message("Saving log-normalized dataset as h5ad to: ",
+        snakemake@output[["anndata"]])
+write_h5ad(
+        data,
+        path = snakemake@output[["anndata"]]
 )
 message("Done")
 # Close Logging ----------------------------------------------------------------
