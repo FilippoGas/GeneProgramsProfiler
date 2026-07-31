@@ -3,7 +3,6 @@ dependencies:
   - python=3.12.12
   - pip=25.3
   - pip:
-    - --no-cache-dir
     - "git+https://github.com/wallet-maker/cytopus.git@v2.0"
     - matplotlib==3.10.7
     - setuptools==80.9.0

@@ -54,6 +54,8 @@ jobs:
 
       - name: Test workflow
         uses: snakemake/snakemake-github-action@v2
+        env:
+          PIP_NO_CACHE_DIR: 1
         with:
           directory: .
           snakefile: workflow/Snakefile
