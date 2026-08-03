@@ -11,8 +11,9 @@ validate(config, schema="schemas/config.schema.yaml")
 
 # load rules
 # -----------------------------------------------------
-include: "rules/preprocess.smk"
 include: "rules/spectra.smk"
+include: "rules/preprocess.smk"
+include: "rules/DE_analysis.smk"
 
 
 # optional messages, log and error handling
@@ -34,8 +35,6 @@ onerror:
 rule all:
     input:
         # preprocess.smk
-        f"results/preprocess/AnnData/{config["analysis_name"]}.h5ad",
-        f"results/preprocess/rds/{config["analysis_name"]}.rds",
         f"results/preprocess/mtx/{config["analysis_name"]}_matrix.mtx",
         f"results/preprocess/mtx/{config["analysis_name"]}_barcodes.tsv",
         f"results/preprocess/mtx/{config["analysis_name"]}_genes.tsv",
@@ -43,3 +42,7 @@ rule all:
         f"results/spectra/spectra_output/{config["analysis_name"]}_gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         f"results/spectra/spectra_output/{config["analysis_name"]}_cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         f"results/spectra/spectra_output/{config["analysis_name"]}_factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        # DE_analysis.smk
+        f"results/DE_analysis/DEGs_sc.csv",
+        f"results/DE_analysis/DEGs_pb",
+        f"results/DE_analysis/DEGs_both.csv"
