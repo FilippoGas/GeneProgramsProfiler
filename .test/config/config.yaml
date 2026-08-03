@@ -2,6 +2,8 @@
 scRNAseq: ".test/data/Natri_et_al_test_data.rds"
 celltype_conversion_dictionary: ".test/data/Natri_et_al_cytopus_dict.json"
 analysis_name: "Natri_et_al"
+case_condition: "IPF"
+control_condition: "Control"
 queues:
   cpu: "cibioCPUQ"
 # Module 1: preprocess.smk
@@ -25,4 +27,15 @@ spectra:
     lambda: 0.1
     cores: 16
     mem_mb: 153600
-    time: "100:00:00"
+    time: ""
+# Module 3: DE_analysis
+DE_analysis:
+  # Rule 1: run_DE_analysis
+  run_DE_analysis:
+    cores: 4
+    mem_mb: 12000
+    time: "00:20:00"
+    logFC: 1.5
+    FDR: 0.05
+    sample_column: "Sample_Name"
+    condition_column: "Diagnosis"
