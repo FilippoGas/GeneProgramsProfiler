@@ -1,6 +1,3 @@
-configfile: ".test/config/config.yaml"
-
-
 rule prepare_cytopus_list:
     """
     Download genesets from cytopus for the cell types present in the scRNAseq dataset.
