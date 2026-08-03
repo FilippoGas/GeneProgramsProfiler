@@ -1,0 +1,9 @@
+name: DE_analysis
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4.3
+  - r-tidyverse=2.0.0
+  - r-seurat=5.5.0
+  - r-presto=1.0.0
