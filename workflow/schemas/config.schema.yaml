@@ -18,7 +18,10 @@ properties:
         type: string
       gpu:
         type: string
-
+  case_condition:
+    type: string
+  control_condition:
+    type: string
   # Module 1: preprocess.smk
   preprocess:
     type: object
@@ -31,7 +34,7 @@ properties:
             type: string
             description: "Name of celltype annotation column in the seurat object's metadata"
           cores:
-            types: integer
+            type: integer
           rstudio_memory:
             type: integer
             description: "Memory occupied by loading the scRNAseq dataset on R"
@@ -62,7 +65,7 @@ properties:
           time:
             type: string
             description: "Job walltime, if required by computing infrastructure."
-            pattern: "^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
         required:
           - mem_mb
           - cores
@@ -72,8 +75,8 @@ properties:
         properties:
           lambda:
             type: number
-            max: 0.5
-            min: 0.0001
+            maximum: 0.5
+            minimum: 0.0001
             description: weighs relative contribution of cytopus list and expression loss functions. For more details visit https://github.com/dpeerlab/spectra
           cores:
             type: integer
@@ -82,13 +85,49 @@ properties:
           time:
             type: string
             description: "Job walltime, if required by computing infrastructure."
-            pattern: "^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
         required:
           - lambda
           - cores
           - mem_mb
-
+  # Module 3: DE_analysis.smk
+  DE_analysis:
+    type: object
+    properties:
+      # Rule 1: run_DE_analysis
+      run_DE_analysis:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          logFC:
+            type: number
+            description: "log(Fold Change) threshold to consider a gene to be differentially expressed"
+          FDR:
+            type: number
+            description: "False Discovery Rate threshold to consider a gene to be differentially expressed"
+          sample_column:
+            type: string
+            description: "Column of sample name in the Seurat metadata"
+          condition_column:
+            type: string
+            description: "Column of condition name in the Seurat metadata"
+      required: 
+        - cores
+        - mem_mb
+        - logFC
+        - FDR
+        - sample_column
+        - condition_column
 required:
   - scRNAseq
   - celltype_conversion_dictionary
   - analysis_name
+  - case_condition
+  - control_condition
