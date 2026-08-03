@@ -21,7 +21,7 @@ rule run_DE_analysis:
         queue=config["queues"]["cpu"],
     params:
         logFC_thresh=config["DE_analysis"]["run_DE_analysis"]["logFC"],
-        FDR_thres=config["DE_analysis"]["run_DE_analysis"]["FDR"],
+        FDR_thresh=config["DE_analysis"]["run_DE_analysis"]["FDR"],
         control=config["control_condition"],
         case=config["case_condition"],
         sample_col=config["DE_analysis"]["run_DE_analysis"]["sample_column"],
