@@ -1,5 +1,5 @@
 # Create logdir for PBS inside the repo's results directory
-PBS_LOGDIR="path/for/PBS/logs"
+PBS_LOGDIR="logs/PBS/"
 if [ ! -e $PBS_LOGDIR ]; then
     mkdir -p $PBS_LOGDIR
 fi
