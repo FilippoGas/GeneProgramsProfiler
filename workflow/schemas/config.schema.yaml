@@ -118,7 +118,7 @@ properties:
           condition_column:
             type: string
             description: "Column of condition name in the Seurat metadata"
-      required: 
+      required:
         - cores
         - mem_mb
         - logFC

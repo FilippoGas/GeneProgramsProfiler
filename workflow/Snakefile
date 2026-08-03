@@ -45,4 +45,4 @@ rule all:
         # DE_analysis.smk
         f"results/DE_analysis/DEGs_sc.csv",
         f"results/DE_analysis/DEGs_pb",
-        f"results/DE_analysis/DEGs_both.csv"
+        f"results/DE_analysis/DEGs_both.csv",
