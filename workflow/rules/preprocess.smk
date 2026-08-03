@@ -1,6 +1,3 @@
-configfile: ".test/config/config.yaml"
-
-
 rule annotate_and_save:
     """
     Modify the metadata layer of the scRNAseq dataset to include the cell type annotation
