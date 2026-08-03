@@ -7,3 +7,4 @@ dependencies:
   - r-tidyverse=2.0.0
   - r-seurat=5.5.0
   - r-presto=1.0.0
+  - bioconductor-deseq2=1.46.0
