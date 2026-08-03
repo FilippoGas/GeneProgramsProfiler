@@ -57,7 +57,7 @@ print("Fitting Spectra ...")
 trained_model = spc.est_spectra(adata=adata,
                                 gene_set_dictionary=cytopus_list,
                                 L=None,
-                                use_highly_variable=False,
+                                use_highly_variable=True,
                                 cell_type_key="celltype",
                                 use_weights=True,
                                 lam=snakemake.params.lam,
