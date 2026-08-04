@@ -15,10 +15,10 @@
 # Snakemake Expected Outputs:
 #   - snakemake@output[["overlap]] : Out path for single cell/pseudobulk 
 #                                    overlap plot 
-#   - snakemake@output[["FDR_correlation.pdf"]] : Out path for correlation
+#   - snakemake@output[["FDR_correlation"]] : Out path for correlation
 #                                                 between FDR in single cell vs
 #                                                 pseudo bulk
-#   - snakemake@output[["log2FC_correlation.pdf"]] : Out path for correlation
+#   - snakemake@output[["log2FC_correlation"]] : Out path for correlation
 #                                                    between log2FC in single
 #                                                    cell vs pseudo bulk
 # ==============================================================================
@@ -99,7 +99,7 @@ plot_list <- lapply(unique(c(DEGs_sc$celltype, DEGs_pb$celltype)),
                         title = cell_type
                         ) +
                 theme_minimal()
-        p <- wrap_plots(c(p1, p2)) + plot_annotation(title = cell_type)
+        p <- wrap_plots(p1, p2) + plot_annotation(title = cell_type)
 })
 
 combined_plot <- wrap_plots(plot_list) + 
@@ -137,7 +137,7 @@ p1 <- DEGs_both %>%
                         color="red",
                         fill="#69b3a2",
                         se=TRUE,
-                        size = 0.25
+                        linewidth = 0.25
                         ) +
                 labs(
                         title = "Significant in at least one of the two
@@ -162,7 +162,7 @@ p2 <- DEGs_both %>%
                         color="red",
                         fill="#69b3a2",
                         se=TRUE,
-                        size = 0.25
+                        linewidth = 0.25
                         ) +
                 labs(
                         title = "Significant in both analyses"
@@ -174,7 +174,7 @@ p <- wrap_plots(p1, p2) +
                          FDRs of differential analysis",
                 subtitle = "(Removed genes where single cell FDR was zero)")
 ggsave(p,
-       filename = snakemake@output[["FDR_correlation.pdf"]],
+       filename = snakemake@output[["FDR_correlation"]],
        device = "pdf",
        width = 10,
        height = 5,
@@ -200,7 +200,7 @@ p1 <- DEGs_both %>%
                         color="red",
                         fill="#69b3a2",
                         se=TRUE,
-                        size = 0.25
+                        linewidth = 0.25
                         ) +
                 labs(
                         title = "Significant in at least one of the two 
@@ -223,7 +223,7 @@ p2 <- DEGs_both %>%
                         color="red",
                         fill="#69b3a2",
                         se=TRUE,
-                        size = 0.25
+                        linewidth = 0.25
                         ) +
                 labs(
                         title = "Significant in both analyses"
@@ -235,7 +235,7 @@ p <- wrap_plots(p1, p2) +
                          Log2FC of differential analysis"
                 )
 ggsave(p,
-       filename = snakemake@output[["log2FC_correlation.pdf"]],
+       filename = snakemake@output[["log2FC_correlation"]],
        device = "pdf",
        width = 10,
        height = 5,
