@@ -36,13 +36,13 @@ onerror:
 rule all:
     input:
         # preprocess.smk
-        f"results/{config["analysis_name"]}/preprocess/mtx/{config["analysis_name"]}_matrix.mtx",
-        f"results/{config["analysis_name"]}/preprocess/mtx/{config["analysis_name"]}_barcodes.tsv",
-        f"results/{config["analysis_name"]}/preprocess/mtx/{config["analysis_name"]}_genes.tsv",
+        f"results/{config["analysis_name"]}/preprocess/mtx/matrix.mtx",
+        f"results/{config["analysis_name"]}/preprocess/mtx/barcodes.tsv",
+        f"results/{config["analysis_name"]}/preprocess/mtx/genes.tsv",
         # spectra.smk
-        f"results/{config["analysis_name"]}/spectra/spectra_output/{config["analysis_name"]}_gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
-        f"results/{config["analysis_name"]}/spectra/spectra_output/{config["analysis_name"]}_cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
-        f"results/{config["analysis_name"]}/spectra/spectra_output/{config["analysis_name"]}_factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        f"results/{config["analysis_name"]}/spectra/spectra_output/gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        f"results/{config["analysis_name"]}/spectra/spectra_output/factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         # DE_analysis.smk
         f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
         f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",

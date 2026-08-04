@@ -5,7 +5,7 @@ rule run_DE_analysis:
     (sc and pseudobulk) and one for genes that are deregulated according to both.
     """
     input:
-        sc_dataset=f"results/{config["analysis_name"]}/preprocess/rds/{config["analysis_name"]}.rds",
+        sc_dataset=f"results/{config["analysis_name"]}/preprocess/rds/seurat.rds",
     output:
         DEGs_sc=f"results/{config["analysis_name"]}/DE_analysis/DEGs_sc.csv",
         DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",

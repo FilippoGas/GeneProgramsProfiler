@@ -9,7 +9,7 @@ rule run_gsea:
     """
     input:
         DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
-        cytopus=f"results/{config["analysis_name"]}/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json",
+        cytopus=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
     output:
         f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
     log:

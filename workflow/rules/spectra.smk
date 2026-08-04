@@ -29,7 +29,7 @@ rule run_spectra:
     Run spectra to quantify gene programs activation in the scRNAseq dataset
     """
     input:
-        sc_dataset=f"results/{config["analysis_name"]}/preprocess/AnnData/{config["analysis_name"]}.h5ad",
+        sc_dataset=f"results/{config["analysis_name"]}/preprocess/AnnData/adata.h5ad",
         cytopus_list=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
     output:
         gene_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
