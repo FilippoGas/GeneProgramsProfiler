@@ -51,3 +51,4 @@ functional_enrichment:
     cores: 1
     mem_mb: 2500
     time: "00:15:00"
+    padj_thresh: 0.05
