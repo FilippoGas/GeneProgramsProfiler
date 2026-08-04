@@ -31,7 +31,7 @@ rule run_DE_analysis:
     script:
         "../scripts/DE_analysis/run_DE_analysis.R"
 
-
+#TODO improve plots quality
 rule DEA_plots:
     """
     Plot some summaries from the DE analysis
