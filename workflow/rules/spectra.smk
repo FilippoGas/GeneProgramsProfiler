@@ -6,7 +6,7 @@ rule prepare_cytopus_list:
     input:
         config["celltype_conversion_dictionary"],
     output:
-        f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json", #TODO move analysis name after results/ and do the same for all rules. so results will contain all differen analysis
+        f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",  #TODO move analysis name after results/ and do the same for all rules. so results will contain all differen analysis
     log:
         f"logs/{config["analysis_name"]}/spectra/prepare_cytopus_list.log",
     conda:
