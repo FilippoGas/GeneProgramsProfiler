@@ -49,3 +49,4 @@ rule all:
         f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
         # functional_enrichment.smk
         f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
+        f"results/{config["analysis_name"]}/functional_enrichment/run_ora/.done.txt",
