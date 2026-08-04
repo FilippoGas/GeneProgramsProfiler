@@ -93,7 +93,7 @@ plot_list <- lapply(unique(c(DEGs_sc$celltype, DEGs_pb$celltype)),
                         color="red",
                         fill="#69b3a2",
                         se=TRUE,
-                        size = 0.25
+                        linewidth = 0.25
                         ) +
                 labs(
                         title = cell_type
