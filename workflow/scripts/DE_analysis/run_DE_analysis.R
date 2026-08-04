@@ -180,7 +180,9 @@ message("Done")
 message("Saving merged DEGs to ", snakemake@output[["DEGs_both"]], " ...")
 write_csv(DEGs_both, file = snakemake@output[["DEGs_both"]])
 message("Done")
-
+message("Saving gene list to ", snakemake@output[["gene_list"]])
+write(rownames(data@assays$RNA@data), snakemake@output[["gene_list"]])
+message("Done")
 # Close Logging ----------------------------------------------------------------
 sink(type="message")
 sink()
