@@ -43,3 +43,10 @@ DE_analysis:
     cores: 1
     mem_mb: 2500
     time: "00:05:00"
+# Module 4: functional_enrichment.smk
+functional_enrichment:
+  # Rule 1: run_gsea
+  run_gsea:
+    cores: 1
+    mem_mb: 2500
+    time: "00:15:00"

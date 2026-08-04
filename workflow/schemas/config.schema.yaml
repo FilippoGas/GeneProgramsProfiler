@@ -140,6 +140,25 @@ properties:
         required:
           - cores
           - mem_mb
+  # Module 4: functional_enrichment.smk
+  functional_enrichment:
+    type: object
+    properties:
+      # Rule 1: run_gsea
+      run_gsea:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+        required:
+          - cores
+          - mem_mb
 required:
   - scRNAseq
   - celltype_conversion_dictionary
