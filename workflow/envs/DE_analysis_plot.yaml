@@ -1,0 +1,9 @@
+name: DE_analysis
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.3.3
+  - r-tidyverse=2.0.0
+  - r-eulerr=7.0.1
+  - r-ggplotify=0.1.3
