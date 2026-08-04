@@ -14,6 +14,7 @@ validate(config, schema="schemas/config.schema.yaml")
 include: "rules/spectra.smk"
 include: "rules/preprocess.smk"
 include: "rules/DE_analysis.smk"
+include: "rules/functional_enrichment.smk"
 
 
 # optional messages, log and error handling
