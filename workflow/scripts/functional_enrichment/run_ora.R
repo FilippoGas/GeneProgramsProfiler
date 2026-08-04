@@ -40,6 +40,8 @@ suppressPackageStartupMessages({
         library(AnnotationDbi)
         library(org.Hs.eg.db)
 })
+# Prevent R from generating the default Rplots.pdf file
+pdf(NULL)
 
 message("Starting R script \"run_ora.R\"...")
 

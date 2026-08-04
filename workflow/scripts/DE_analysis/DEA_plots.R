@@ -38,6 +38,8 @@ suppressPackageStartupMessages({
         library(ggrastr)
         library(patchwork)
 })
+# Prevent R from generating the default Rplots.pdf file
+pdf(NULL)
 
 message("Starting R script \"DEA_plots.R\"...")
 

@@ -37,6 +37,8 @@ suppressPackageStartupMessages({
         library(jsonlite)
         library(fgsea)
 })
+# Prevent R from generating the default Rplots.pdf file
+pdf(NULL)
 
 message("Starting R script \"run_gsea.R\"...")
 
