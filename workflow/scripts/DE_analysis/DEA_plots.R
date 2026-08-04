@@ -35,6 +35,8 @@ suppressPackageStartupMessages({
         library(ggplot2)
         library(eulerr)
         library(ggplotify)
+        library(ggrastr)
+        library(patchwork)
 })
 
 message("Starting R script \"DEA_plots.R\"...")
