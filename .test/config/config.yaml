@@ -52,3 +52,9 @@ functional_enrichment:
     mem_mb: 2500
     time: "00:15:00"
     padj_thresh: 0.05
+  # Rule 2: run_ora
+  run_ora:
+    cores: 1
+    mem_mb: 2500
+    time: "00:15:00"
+    padj_thresh: 0.05
