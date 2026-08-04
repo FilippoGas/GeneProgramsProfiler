@@ -114,7 +114,7 @@ for (cell_type in unique(DEGs_both$celltype)) {
                 top_pathways  <- unique(c(top_up, top_down))
                 
                 if (!is_empty(top_pathways)) {
-                        p <- as.ggplot(plotGseaTable(gene_sets[[gene_set]][top_pathways],
+                        p <- as.ggplot(plotGseaTable(cytopus_list[top_pathways],
                                                      rank, 
                                                      fgsea_results,
                                                      gseaParam = 0.5)) +
@@ -122,12 +122,10 @@ for (cell_type in unique(DEGs_both$celltype)) {
                                                     cfg$title_desc,
                                                     " for ",
                                                     cell_type,
-                                                    " cells using ",
-                                                    gene_set,
-                                                    " gene set."))
+                                                    " cells using cytopus gene set."))
                         
                         # Define output directory and filename prefix
-                        out_dir     <- paste0(out_dir, cfg$out_folder, "/", gene_set, "/")
+                        out_dir     <- paste0(out_dir, cfg$out_folder, "/")
                         file_prefix <- paste0(out_dir, gsub("/", "_", cell_type))
                         
                         ggsave(p, filename = paste0(file_prefix, ".pdf"), device = "pdf", width = 12, height = 8, create.dir = TRUE)
@@ -144,7 +142,7 @@ for (cell_type in unique(DEGs_both$celltype)) {
                                 scale_color_gradient(low = "red", high = "blue", name = "p.adjust", guide = guide_colorbar(reverse = TRUE)) +
                                 scale_size_continuous(range = c(3, 8), name = "Set Size") +
                                 theme_minimal() +
-                                labs(title = paste0("GSEA of DEGs according to ", cfg$title_desc, "\nfor ", cell_type, " cells using ", gene_set, " gene set."),
+                                labs(title = paste0("GSEA of DEGs according to ", cfg$title_desc, "\nfor ", cell_type, " cells using cytopus gene set."),
                                      x = "Normalized Enrichment Score (NES)",
                                      y = NULL) +
                                 theme(axis.text.y = element_text(size = 10))
