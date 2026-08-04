@@ -5,13 +5,13 @@ rule run_DE_analysis:
     (sc and pseudobulk) and one for genes that are deregulated according to both.
     """
     input:
-        sc_dataset=f"results/preprocess/rds/{config["analysis_name"]}.rds",
+        sc_dataset=f"results/{config["analysis_name"]}/preprocess/rds/{config["analysis_name"]}.rds",
     output:
-        DEGs_sc=f"results/DE_analysis/DEGs_sc.csv",
-        DEGs_pb=f"results/DE_analysis/DEGs_pb.csv",
-        DEGs_both=f"results/DE_analysis/DEGs_both.csv",
+        DEGs_sc=f"results/{config["analysis_name"]}/DE_analysis/DEGs_sc.csv",
+        DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",
+        DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
     log:
-        "logs/DE_analysis/run_DE_analysis.log",
+        f"logs/{config["analysis_name"]}/DE_analysis/run_DE_analysis.log",
     conda:
         "../envs/DE_analysis.yaml"
     threads: config["DE_analysis"]["run_DE_analysis"]["cores"]
@@ -38,15 +38,15 @@ rule DEA_plots:
     Plot some summaries from the DE analysis
     """
     input:
-        DEGs_sc=f"results/DE_analysis/DEGs_sc.csv",
-        DEGs_pb=f"results/DE_analysis/DEGs_pb.csv",
-        DEGs_both=f"results/DE_analysis/DEGs_both.csv",
+        DEGs_sc=f"results/{config["analysis_name"]}/DE_analysis/DEGs_sc.csv",
+        DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",
+        DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
     output:
-        overlap=f"results/DE_analysis/plots/sc_pb_overlap.pdf",
-        FDR_correlation=f"results/DE_analysis/plots/FDR_correlation.pdf",
-        log2FC_correlation=f"results/DE_analysis/plots/log2FC_correlation.pdf",
+        overlap=f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
+        FDR_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",
+        log2FC_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
     log:
-        "logs/DE_analysis/DEA_plots.log",
+        f"logs/{config["analysis_name"]}/DE_analysis/DEA_plots.log",
     conda:
         "../envs/DE_analysis_plot.yaml"
     threads: config["DE_analysis"]["DEA_plots"]["cores"]

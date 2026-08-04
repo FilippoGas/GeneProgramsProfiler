@@ -6,9 +6,9 @@ rule prepare_cytopus_list:
     input:
         config["celltype_conversion_dictionary"],
     output:
-        f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json",
+        f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json", #TODO move analysis name after results/ and do the same for all rules. so results will contain all differen analysis
     log:
-        "logs/spectra/prepare_cytopus_list.log",
+        f"logs/{config["analysis_name"]}/spectra/prepare_cytopus_list.log",
     conda:
         "../envs/spectra.yaml"
     threads: config["spectra"]["prepare_cytopus_list"]["cores"]
@@ -29,14 +29,14 @@ rule run_spectra:
     Run spectra to quantify gene programs activation in the scRNAseq dataset
     """
     input:
-        sc_dataset=f"results/preprocess/AnnData/{config["analysis_name"]}.h5ad",
-        cytopus_list=f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json",
+        sc_dataset=f"results/{config["analysis_name"]}/preprocess/AnnData/{config["analysis_name"]}.h5ad",
+        cytopus_list=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
     output:
-        gene_scores=f"results/spectra/spectra_output/{config["analysis_name"]}_gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
-        cell_scores=f"results/spectra/spectra_output/{config["analysis_name"]}_cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
-        factor_markers=f"results/spectra/spectra_output/{config["analysis_name"]}_factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        gene_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        factor_markers=f"results/{config["analysis_name"]}/spectra/spectra_output/factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
     log:
-        "logs/spectra/run_spectra.log",
+        f"logs/{config["analysis_name"]}/spectra/run_spectra.log",
     conda:
         "../envs/spectra.yaml"
     threads: config["spectra"]["run_spectra"]["cores"]

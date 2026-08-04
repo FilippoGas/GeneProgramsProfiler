@@ -8,12 +8,12 @@ rule run_gsea:
     the rule has finished.
     """
     input:
-        DEGs_both=f"results/DE_analysis/DEGs_both.csv",
-        cytopus=f"results/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json",
+        DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
+        cytopus=f"results/{config["analysis_name"]}/spectra/{config["analysis_name"]}_cytopus_Gene_sets.json",
     output:
-        "results/functional_enrichment/run_gsea/.done.txt",
+        f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
     log:
-        "logs/functional_enrichment/run_gsea.log",
+        f"logs/{config["analysis_name"]}/functional_enrichment/run_gsea.log",
     conda:
         "../envs/functional_enrichment.yaml"
     threads: config["functional_enrichment"]["run_gsea"]["cores"]

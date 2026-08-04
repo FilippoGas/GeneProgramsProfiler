@@ -8,13 +8,13 @@ rule annotate_and_save:
         sc_dataset=config["scRNAseq"],
         dictionary=config["celltype_conversion_dictionary"],
     output:
-        anndata=f"results/preprocess/AnnData/{config["analysis_name"]}.h5ad",
-        rds=f"results/preprocess/rds/{config["analysis_name"]}.rds",
-        matrix=f"results/preprocess/mtx/{config["analysis_name"]}_matrix.mtx",
-        barcodes=f"results/preprocess/mtx/{config["analysis_name"]}_barcodes.tsv",
-        genes=f"results/preprocess/mtx/{config["analysis_name"]}_genes.tsv",
+        anndata=f"results/{config["analysis_name"]}/preprocess/AnnData/{config["analysis_name"]}.h5ad",
+        rds=f"results/{config["analysis_name"]}/preprocess/rds/{config["analysis_name"]}.rds",
+        matrix=f"results/{config["analysis_name"]}/preprocess/mtx/{config["analysis_name"]}_matrix.mtx",
+        barcodes=f"results/{config["analysis_name"]}/preprocess/mtx/{config["analysis_name"]}_barcodes.tsv",
+        genes=f"results/{config["analysis_name"]}/preprocess/mtx/{config["analysis_name"]}_genes.tsv",
     log:
-        "logs/preprocess/annotate_and_save.log",
+        f"logs/{config["analysis_name"]}/preprocess/annotate_and_save.log",
     conda:
         "../envs/preprocess.yaml"
     threads: config["preprocess"]["annotate_and_save"]["cores"]
