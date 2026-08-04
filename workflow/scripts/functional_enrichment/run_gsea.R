@@ -34,8 +34,6 @@ suppressPackageStartupMessages({
         library(tidyverse)
         library(ggplot2)
         library(ggplotify)
-        library(patchwork)
-        library(msigdbr)
         library(jsonlite)
         library(fgsea)
 })
