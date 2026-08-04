@@ -49,8 +49,19 @@ jobs:
           large-packages: true
           docker-images: true
           swap-storage: true
-
       - uses: actions/checkout@v4
+
+      - name: Cache slow pipeline step
+        id: cache-slow-step
+        uses: actions/cache@v4
+        with:
+          path: results/spectra/
+          key: ${{ runner.os }}-slow-step-${{ hashFiles('workflow/rules/spectra.smk', 'workflow/scripts/spectra/run_spectra.py') }}
+
+      - name: Update timestamps to prevent Snakemake rerun
+        if: steps.cache-slow-step.outputs.cache-hit == 'true'
+        run: |
+          find results/spectra/ -type f -exec touch {} +
 
       - name: Test workflow
         uses: snakemake/snakemake-github-action@v2
