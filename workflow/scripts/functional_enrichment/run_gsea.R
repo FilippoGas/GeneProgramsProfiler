@@ -69,7 +69,7 @@ message("Done")
 # ------------------------------------------------------------------------------
 message("Running GSEA ...")
 # Read output path
-out_dir <- str_split_i(snakemake@output[[1]], ".done", 1)
+base_out_dir <- str_split_i(snakemake@output[[1]], ".done", 1)
 # Define configurations for each analysis
 analysis_configs <- list(
         sc = list(
@@ -125,7 +125,7 @@ for (cell_type in unique(DEGs_both$celltype)) {
                                                     " cells using cytopus gene set."))
                         
                         # Define output directory and filename prefix
-                        out_dir     <- paste0(out_dir, cfg$out_folder, "/")
+                        out_dir     <- paste0(base_out_dir, cfg$out_folder, "/")
                         file_prefix <- paste0(out_dir, gsub("/", "_", cell_type))
                         
                         ggsave(p, filename = paste0(file_prefix, ".pdf"), device = "pdf", width = 12, height = 8, create.dir = TRUE)
