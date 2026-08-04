@@ -10,6 +10,7 @@ rule run_DE_analysis:
         DEGs_sc=f"results/{config["analysis_name"]}/DE_analysis/DEGs_sc.csv",
         DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",
         DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
+        gene_list=f"results/{config["analysis_name"]}/DE_analysis/gene_list.txt"
     log:
         f"logs/{config["analysis_name"]}/DE_analysis/run_DE_analysis.log",
     conda:
