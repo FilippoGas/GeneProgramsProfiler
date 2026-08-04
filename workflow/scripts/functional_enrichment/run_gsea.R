@@ -52,7 +52,7 @@ cytopus <- read_json(snakemake@input[["cytopus"]])
 message("Done")
 message("Loading padj threshold: ",
         snakemake@params[["padj_thresh"]])
-padj_thresh <- snakemake@params[["padj_thresh"]])
+padj_thresh <- snakemake@params[["padj_thresh"]]
 message("Done")
 
 # 2. Prepare cytopus gene sets for enrichment with fgsea ####
