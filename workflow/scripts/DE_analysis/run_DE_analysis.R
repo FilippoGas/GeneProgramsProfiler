@@ -34,7 +34,7 @@ suppressPackageStartupMessages({
         library(parallel)
 })
 
-message("Starting R script \"annotate_and_save.R\"...")
+message("Starting R script \"run_DE_analysis.R\"...")
 
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
