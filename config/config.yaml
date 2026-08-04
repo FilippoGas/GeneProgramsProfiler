@@ -38,3 +38,8 @@ DE_analysis:
     FDR: 0.05
     sample_column: "Sample_Name"
     condition_column: "Diagnosis"
+  # Rule 2: DEA_plots
+  DEA_plots:
+    cores: 1
+    mem_mb: 2500
+    time: "00:05:00"
