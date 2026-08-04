@@ -43,6 +43,6 @@ rule all:
         f"results/spectra/spectra_output/{config["analysis_name"]}_cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         f"results/spectra/spectra_output/{config["analysis_name"]}_factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         # DE_analysis.smk
-        f"results/DE_analysis/DEGs_sc.csv",
-        f"results/DE_analysis/DEGs_pb.csv",
-        f"results/DE_analysis/DEGs_both.csv",
+        f"results/DE_analysis/plots/sc_pb_overlap.pdf",
+        f"results/DE_analysis/plots/FDR_correlation.pdf",
+        f"results/DE_analysis/plots/log2FC_correlation.pdf",
