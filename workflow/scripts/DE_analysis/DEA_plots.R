@@ -76,7 +76,7 @@ plot_list <- lapply(unique(c(DEGs_sc$celltype, DEGs_pb$celltype)),
                              alpha = 0.5)
                         )
         # Combine with correlation of FC in sc vs pb
-        p2 <- total_DEGs %>%
+        p2 <- DEGs_both %>%
                 dplyr::filter(both_sig,
                               celltype == cell_type) %>% 
                 dplyr::select(avg_log2FC_sc,
@@ -119,7 +119,7 @@ message("Done")
 # ------------------------------------------------------------------------------
 message("Plotting correlation between FDR in single cell and pseudo bulk")
 # Significant in one of the 2
-p1 <- total_DEGs %>%
+p1 <- DEGs_both %>%
         dplyr::filter(is_sig_sc | is_sig_pb) %>% 
         dplyr::select(FDR_sc, FDR_pb) %>%
         drop_na() %>%
@@ -144,7 +144,7 @@ p1 <- total_DEGs %>%
                 theme_minimal()
 
 # Significant in both
-p2 <- total_DEGs %>%
+p2 <- DEGs_both %>%
         dplyr::filter(both_sig) %>% 
         dplyr::select(FDR_sc, FDR_pb) %>%
         drop_na() %>%
@@ -183,7 +183,7 @@ message("Done")
 # ------------------------------------------------------------------------------
 message("Plotting correlation between log2FC in single cell and pseudo bulk")
 # Significant in one of the 2
-p1 <- total_DEGs %>%
+p1 <- DEGs_both %>%
         dplyr::filter(is_sig_sc | is_sig_pb) %>% 
         dplyr::select(avg_log2FC_sc, avg_log2FC_pb) %>%
         drop_na() %>% 
@@ -206,7 +206,7 @@ p1 <- total_DEGs %>%
                         ) +
                 theme_minimal()
 # Significant in both
-p2 <- total_DEGs %>%
+p2 <- DEGs_both %>%
         dplyr::filter(both_sig) %>% 
         dplyr::select(avg_log2FC_sc, avg_log2FC_pb) %>%
         drop_na() %>%
