@@ -47,3 +47,5 @@ rule all:
         f"results/DE_analysis/plots/sc_pb_overlap.pdf",
         f"results/DE_analysis/plots/FDR_correlation.pdf",
         f"results/DE_analysis/plots/log2FC_correlation.pdf",
+        # functional_enrichment.smk
+        "results/functional_enrichment/run_gsea/.done.txt",
