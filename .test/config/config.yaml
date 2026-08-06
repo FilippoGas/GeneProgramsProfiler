@@ -14,6 +14,8 @@ preprocess:
     cores: 1
     rstudio_memory: 400
     time: "00:15:00"
+    sample_column: "Sample_Name"
+    condition_column: "Diagnosis"
 # Module 2: spectra.smk
 spectra:
   # Rule 1: prepare_cytopus_list
@@ -26,7 +28,7 @@ spectra:
   run_spectra:
     lambda: 0.1
     cores: 16
-    mem_mb: 153600
+    mem_mb: 15360
     time: ""
   # Rule 3: rename_programs
   rename_programs:
@@ -42,8 +44,6 @@ DE_analysis:
     time: "00:20:00"
     logFC: 1.5
     FDR: 0.05
-    sample_column: "Sample_Name"
-    condition_column: "Diagnosis"
   # Rule 2: DEA_plots
   DEA_plots:
     cores: 1
