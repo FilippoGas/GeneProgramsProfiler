@@ -177,10 +177,21 @@ properties:
             pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
           padj_thresh:
             type: number
+      # Rule 3: rename_programs
+      rename_programs:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
         required:
           - cores
           - mem_mb
-          - padj_thresh
 required:
   - scRNAseq
   - celltype_conversion_dictionary
