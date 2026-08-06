@@ -78,3 +78,31 @@ rule rename_programs:
         "Label unknown programs in the cell scores matrix."
     script:
         "../scripts/spectra/rename_programs.R"
+
+
+rule spectra_WMW:
+    """
+    Analyze spectra results and test for differential activation of gene programs
+    between the two conditions. Gene programs activation differences will be
+    tested with Wilcoxon-Mann-Whitney U-test.
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
+    output:
+        gp_activation_WMW=f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
+    log:
+        f"logs/{config["analysis_name"]}/spectra/spectra_WMW.log",
+    conda:
+        "../envs/spectra.yaml"
+    threads: config["spectra"]["spectra_WMW"]["cores"]
+    resources:
+        mem_mb=config["spectra"]["spectra_WMW"]["mem_mb"],
+        time=config["spectra"]["spectra_WMW"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        control=config["control_condition"],
+        case=config["case_condition"],
+    message:
+        "Analyze spectra's results and test for differential program activation with Wilcoxon-Mann-Whitney U-test."
+    script:
+        "../scripts/spectra/spectra_WMW.R"
