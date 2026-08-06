@@ -27,9 +27,9 @@ spectra:
   # Rule 2: run_spectra
   run_spectra:
     lambda: 0.1
-    cores: 16
-    mem_mb: 15360
-    time: ""
+    cores: 4
+    mem_mb: 12000
+    time: "15:00:00"
   # Rule 3: rename_programs
   rename_programs:
     cores: 1
