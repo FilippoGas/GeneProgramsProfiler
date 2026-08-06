@@ -117,7 +117,7 @@ data_pb <- AggregateExpression(data,
 # Create new idents
 data_pb$celltype_condition <- paste0(data_pb@meta.data[, "celltype"],
                                      "-",
-                                     data_pb@meta.data[, diagnosis])
+                                     data_pb@meta.data[, "diagnosis"])
 Idents(data_pb) <- "celltype_condition"
 # Run DE for each cell type
 res_DE_pb <- lapply(unique(data_pb@meta.data[, "celltype"]),
