@@ -2,6 +2,8 @@ name: spectra
 dependencies:
   - python=3.12.12
   - pip=25.3
+  - r-base=4.4.3
+  - r-tidyverse=2.0.0
   - pip:
     - "git+https://github.com/wallet-maker/cytopus.git@v2.0"
     - matplotlib==3.10.7
