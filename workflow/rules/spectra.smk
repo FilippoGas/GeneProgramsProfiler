@@ -50,3 +50,30 @@ rule run_spectra:
         "Run spectra to identify activated gene programs in the single cell RNA seq dataset."
     script:
         "../scripts/spectra/run_spectra.py"
+
+rule rename_programs:
+    """
+    Spectra might fail to label some factors (gene programs) due to low overlap with
+    cytopus gene sets. Here we try to label them through ORA enrichment of the marker
+    genes of each unlabeled factor
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        factor_markers=f"results/{config["analysis_name"]}/spectra/spectra_output/factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
+        cytopus_list=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
+        metadata=f"results/{config["analysis_name"]}/DE_analysis/metadata.csv"
+    output:
+        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv"
+    log:
+        f"logs/{config["analysis_name"]}/spectra/rename_programs.log"
+    conda:
+        "../envs/spectra.yaml"
+    threads: config["spectra"]["rename_programs"]["cores"]
+    resources:
+        mem_mb=config["spectra"]["rename_programs"]["mem_mb"],
+        time=config["spectra"]["rename_programs"]["time"],
+        queue=config["queues"]["cpu"]
+    message:
+        "Label unknown programs in the cell scores matrix."
+    script:
+        "../scripts/spectra/rename_programs.R"
