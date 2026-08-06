@@ -34,6 +34,11 @@ spectra:
     cores: 1
     mem_mb: 2500
     time: "00:15:00"
+  # Rule 4: spectra_WMW
+  spectra_WMW:
+    mem_mb: 2500
+    time: "00:15:00"
+    cores: 4
 # Module 3: DE_analysis
 DE_analysis:
   # Rule 1: run_DE_analysis

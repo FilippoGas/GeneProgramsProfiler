@@ -113,6 +113,21 @@ properties:
         required:
           - cores
           - mem_mb
+      # Rule 4: spectra_WMW
+      spectra_WMW:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+        required:
+          - cores
+          - mem_mb
   # Module 3: DE_analysis.smk
   DE_analysis:
     type: object

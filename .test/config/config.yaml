@@ -29,12 +29,17 @@ spectra:
     lambda: 0.1
     cores: 4
     mem_mb: 12000
-    time: "15:00:00"
+    time: "02:00:00"
   # Rule 3: rename_programs
   rename_programs:
     cores: 1
     mem_mb: 2500
     time: "00:15:00"
+  # Rule 4: spectra_WMW
+  spectra_WMW:
+    mem_mb: 2500
+    time: "00:15:00"
+    cores: 4
 # Module 3: DE_analysis.smk
 DE_analysis:
   # Rule 1: run_DE_analysis
