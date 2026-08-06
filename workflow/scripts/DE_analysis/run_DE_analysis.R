@@ -10,12 +10,16 @@
 #   - snakemake@input[["sc_dataset"]] : Path to seurat object (.rds)
 #
 # Snakemake Expected Outputs:
-#   - snakemake@output[["DEGs_sc"]]   : Path to save DEGs according to single 
-#                                       cell analysis
-#   - snakemake@output[["DEGs_pb"]]   : Path to save DEGs according to 
-#                                       pseudobulk analysis
+#   - snakemake@output[["DEGs_sc"]] : Path to save DEGs according to single 
+#                                     cell analysis
+#   - snakemake@output[["DEGs_pb"]] : Path to save DEGs according to 
+#                                     pseudobulk analysis
 #   - snakemake@output[["DEGs_both"]] : Path to save DEGs according to both 
 #                                       analysis
+#   - snakemake@output[["gene_list"]] : Path to save the list of genes present
+#                                       in the dataset
+#   - snakemake@output[["metadata"]] : Path to save seurat's object meteadata
+#
 # Snakemake expected params:
 #   - snakemake@params[["case"]]   : Name of case condition
 #   - snakemake@params[["control]] : Name of control condition
@@ -50,11 +54,6 @@ message("FDR threshold: ", snakemake@params[["FDR_thresh"]])
 fdr_thresh <- snakemake@params[["FDR_thresh"]]
 message("logFC thresh: ", snakemake@params[["logFC_thresh"]])
 logFC_thresh <- snakemake@params[["logFC_thresh"]]
-message("Sample name column: ", snakemake@params[["sample_col"]])
-sample_col <- snakemake@params[["sample_col"]]
-message("Condition name column: ", snakemake@params[["condition_col"]])
-condition_col <- snakemake@params[["condition_col"]]
-message("Done")
 
 # 2. Run single cell differential analysis ####
 # ------------------------------------------------------------------------------
@@ -64,7 +63,7 @@ data@meta.data <- data@meta.data %>%
         mutate(celltype_condition = paste0(
                                         celltype,
                                         "-",
-                                        Diagnosis)
+                                        diagnosis)
                )
 Idents(data) <- "celltype_condition"
 # Run DE for each celltype
@@ -111,14 +110,14 @@ message("Running pseudo-bulk differential analysis ...")
 data_pb <- AggregateExpression(data,
                                assays = "RNA",
                                return.seurat = TRUE,
-                               group.by = c(sample_col,
-                                            condition_col,
+                               group.by = c(sample_name,
+                                            diagnosis,
                                             "celltype")
                                )
 # Create new idents
 data_pb$celltype_condition <- paste0(data_pb@meta.data[, "celltype"],
                                      "-",
-                                     data_pb@meta.data[, condition_col])
+                                     data_pb@meta.data[, diagnosis])
 Idents(data_pb) <- "celltype_condition"
 # Run DE for each cell type
 res_DE_pb <- lapply(unique(data_pb@meta.data[, "celltype"]),
@@ -158,7 +157,7 @@ DEGs_pb <- DEGs_pb %>%
                rank   = -log10(FDR+lowest_p)*avg_log2FC)
 message("Done")
 
-# 4. Save DEGs csv tables ####
+# 4. Save DEGs csv tables, gene list and metadata ####
 # ------------------------------------------------------------------------------
 message("Saving single cell DEGs to ", snakemake@output[["DEGs_sc"]], " ...")
 write_csv(DEGs_sc, file = snakemake@output[["DEGs_sc"]])
@@ -182,6 +181,9 @@ write_csv(DEGs_both, file = snakemake@output[["DEGs_both"]])
 message("Done")
 message("Saving gene list to ", snakemake@output[["gene_list"]])
 write(rownames(data@assays$RNA@data), snakemake@output[["gene_list"]])
+message("Done")
+message("Saving metadata to ", snakemake@output[["metadata"]])
+write_csv(data@metadata, snakemake@output[["metadata"]])
 message("Done")
 # Close Logging ----------------------------------------------------------------
 sink(type="message")

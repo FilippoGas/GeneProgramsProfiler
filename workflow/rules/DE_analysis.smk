@@ -10,7 +10,8 @@ rule run_DE_analysis:
         DEGs_sc=f"results/{config["analysis_name"]}/DE_analysis/DEGs_sc.csv",
         DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",
         DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
-        gene_list=f"results/{config["analysis_name"]}/DE_analysis/gene_list.txt"
+        gene_list=f"results/{config["analysis_name"]}/DE_analysis/gene_list.txt",
+        metadata=f"results/{config["analysis_name"]}/DE_analysis/metadata.csv",
     log:
         f"logs/{config["analysis_name"]}/DE_analysis/run_DE_analysis.log",
     conda:
@@ -25,8 +26,6 @@ rule run_DE_analysis:
         FDR_thresh=config["DE_analysis"]["run_DE_analysis"]["FDR"],
         control=config["control_condition"],
         case=config["case_condition"],
-        sample_col=config["DE_analysis"]["run_DE_analysis"]["sample_column"],
-        condition_col=config["DE_analysis"]["run_DE_analysis"]["condition_column"],
     message:
         "Run differential expression analysis in single cell and pseudo bulk mode on the scRNAseq dataset."
     script:

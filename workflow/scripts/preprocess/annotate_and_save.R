@@ -23,6 +23,10 @@
 #   - snakemake@params[["annotation_column"]] : Name of the column containing
 #                                               cell type annotation in the
 #                                               original dataset
+#   - snakemake@params[["sample_col"]] : Name of the column holding sample 
+#                                        names in the metadata
+#   - snakemake@params[["condition_col"]] : Name of the column holding sample 
+#                                        condition in the metadata
 # ==============================================================================
 
 # Setup Logging ----------------------------------------------------------------
@@ -63,20 +67,40 @@ message("Loading annotation column name: ",
         snakemake@params[["annotation_colname"]])
 celltype_annotation_colname <- snakemake@params[["annotation_colname"]]
 message("Done")
+message("Loading diagnosis column name: ",
+        snakemake@params[["condition_col"]])
+condition_annotation_colname <- snakemake@params[["condition_col"]]
+message("Done")
+message("Loading sample name column name: ",
+        snakemake@params[["sample_col"]])
+sample_name_colname <- snakemake@params[["sample_col"]]
+message("Done")
 
 # 3. Add cytopus cell type annotation ####
 # ------------------------------------------------------------------------------
 message("Adding cell type annotations from Cytopus... ")
 # Make sure the default assay for the seurat object is set to "RNA"
 DefaultAssay(data) <- "RNA"
-# Rename original celltype annotation column to "celltype"
+# Rename original metadata columns
 data@meta.data <- data@meta.data %>%
                         dplyr::rename(
                                 "celltype" = all_of(
                                         celltype_annotation_colname
                                         )
                                 )
-# Add annotations to metadata in all datasets
+data@meta.data <- data@meta.data %>%
+                        dplyr::rename(
+                                "diagnosis" = all_of(
+                                        condition_annotation_colname
+                                )
+                        )
+data@meta.data <- data@meta.data %>%
+        dplyr::rename(
+                "sample_name" = all_of(
+                        condition_annotation_colname
+                )
+        )
+# Add annotations to metadata 
 data@meta.data <- data@meta.data %>% 
         rownames_to_column("barcode") %>%
         left_join(celltype_conversion_dict, by = "celltype") %>%
