@@ -42,10 +42,18 @@ properties:
             type: string
             description: "Job walltime, if required by computing infrastructure."
             pattern: "^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          sample_column:
+            type: string
+            description: "Column of sample name in the Seurat metadata"
+          condition_column:
+            type: string
+            description: "Column of condition name in the Seurat metadata"
         required:
           - cores
           - celltype_annotation_colname
           - rstudio_memory
+          - sample_column
+          - condition_column
   # Module 2: spectra.smk
   spectra:
     type: object
@@ -127,19 +135,11 @@ properties:
           FDR:
             type: number
             description: "False Discovery Rate threshold to consider a gene to be differentially expressed"
-          sample_column:
-            type: string
-            description: "Column of sample name in the Seurat metadata"
-          condition_column:
-            type: string
-            description: "Column of condition name in the Seurat metadata"
         required:
           - cores
           - mem_mb
           - logFC
           - FDR
-          - sample_column
-          - condition_column
       # Rule 2: DEA_plots
       DEA_plots:
         type: object
