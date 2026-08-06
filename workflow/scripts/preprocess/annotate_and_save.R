@@ -81,6 +81,7 @@ message("Done")
 message("Adding cell type annotations from Cytopus... ")
 # Make sure the default assay for the seurat object is set to "RNA"
 DefaultAssay(data) <- "RNA"
+message(colnames(data@meta.data))
 # Rename original metadata columns
 data@meta.data <- data@meta.data %>%
                         dplyr::rename(
@@ -97,7 +98,7 @@ data@meta.data <- data@meta.data %>%
 data@meta.data <- data@meta.data %>%
         dplyr::rename(
                 "sample_name" = all_of(
-                        condition_annotation_colname
+                        sample_name_colname
                 )
         )
 # Add annotations to metadata 
