@@ -27,6 +27,11 @@ spectra:
     cores: 1
     mem_mb: 100
     time: "hh:mm:ss"
+  # Rule 3: rename_programs
+  rename_programs:
+    cores: 1
+    mem_mb: 2500
+    time: "00:15:00"
 # Module 3: DE_analysis
 DE_analysis:
   # Rule 1: run_DE_analysis
@@ -57,8 +62,3 @@ functional_enrichment:
     mem_mb: 2500
     time: "00:15:00"
     padj_thresh: 0.05
-  # Rule 3: rename_programs
-  rename_programs:
-    cores: 1
-    mem_mb: 2500
-    time: "00:15:00"
