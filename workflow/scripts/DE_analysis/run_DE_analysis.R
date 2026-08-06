@@ -110,8 +110,8 @@ message("Running pseudo-bulk differential analysis ...")
 data_pb <- AggregateExpression(data,
                                assays = "RNA",
                                return.seurat = TRUE,
-                               group.by = c(sample_name,
-                                            diagnosis,
+                               group.by = c("sample_name",
+                                            "diagnosis",
                                             "celltype")
                                )
 # Create new idents
