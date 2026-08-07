@@ -106,3 +106,35 @@ rule spectra_WMW:
         "Analyze spectra's results and test for differential program activation with Wilcoxon-Mann-Whitney U-test."
     script:
         "../scripts/spectra/spectra_WMW.R"
+
+
+rule spectra_plot:
+    """
+    Plot results of the differential activation analysis of spectra's output.
+    The number of output for this rule is not defined a priori, as it depends on the 
+    number of deregulated programs. For this reason a fake output is used to
+    understand when the rule terminated.
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
+        gp_activation_WMW=f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
+    output:
+        f"results/{config["analysis_name"]}/spectra/spectra_plots/.done.txt"
+    log:
+        "logs/spectra/spectra_plots.log",
+    conda:
+        "../envs/spectra.yaml"
+    threads: config["spectra"]["spectra_plots"]["cores"]
+    resources:
+        mem_mb=config["spectra"]["spectra_plots"]["mem_mb"],
+        time=config["spectra"]["spectra_plots"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        effect_size_thresh=config["spectra"]["spectra_plots"]["effect_size_thresh"],
+        FDR_thresh=config["spectra"]["spectra_plots"]["FDR_thresh"],
+    message:
+        """
+        Plot results from differential analysis on spectra's results.
+        """
+    script:
+        "../scripts/spectra/spectra_plots.R"
