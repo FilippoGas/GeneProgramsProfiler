@@ -128,6 +128,29 @@ properties:
         required:
           - cores
           - mem_mb
+      # Rule 5: spectra_plots
+      spectra_plots:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          effect_size_thresh:
+            type: number
+            description: "Effect size threshold for Wilcoxon-Mann-Whitney U-test's rank-biserial correlation"
+          FDR_thresh:
+            type: number
+            description: "False Discovery Rate threshold for Wilcoxon-Mann-Whitney U-test"
+        required:
+          - cores
+          - mem_mb
+          - effect_size_thresh
+          - FDR_thresh
   # Module 3: DE_analysis.smk
   DE_analysis:
     type: object
