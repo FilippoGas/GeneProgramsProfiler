@@ -111,7 +111,7 @@ rule spectra_WMW:
 rule spectra_plot:
     """
     Plot results of the differential activation analysis of spectra's output.
-    The number of output for this rule is not defined a priori, as it depends on the 
+    The number of output for this rule is not defined a priori, as it depends on the
     number of deregulated programs. For this reason a fake output is used to
     understand when the rule terminated.
     """
@@ -119,7 +119,7 @@ rule spectra_plot:
         cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
         gp_activation_WMW=f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
     output:
-        f"results/{config["analysis_name"]}/spectra/spectra_plots/.done.txt"
+        f"results/{config["analysis_name"]}/spectra/spectra_plots/.done.txt",
     log:
         "logs/spectra/spectra_plots.log",
     conda:
