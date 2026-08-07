@@ -29,7 +29,7 @@ spectra:
     lambda: 0.1
     cores: 4
     mem_mb: 12000
-    time: "02:00:00"
+    time: "05:00:00"
   # Rule 3: rename_programs
   rename_programs:
     cores: 1
