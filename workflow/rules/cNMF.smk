@@ -20,12 +20,15 @@ rule cNMF_prepare:
         time=config["cNMF"]["cNMF_prepare"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/",
+        out_dir = "your/output/path",
+        k_vals = " ".join(map(str, range(config["cNMF"]["cNMF_prepare"]["k_min"], config["cNMF"]["cNMF_prepare"]["k_max"], config["cNMF"]["cNMF_prepare"]["k_step"])))
     shell:
-        "cnmf prepare \
+        """
+        cnmf prepare \
             --output-dir {params.out_dir} \
-            --name " + config["analysis_name"] + " \
+            --name {config[analysis_name]} \
             -c {input.matrix} \
-            --max-nmf-iter " + str(config["cNMF"]["cNMF_prepare"]["max_nmf_iter"]) + " \
-            -k " + str(list(range(config["cNMF"]["cNMF_prepare"]["k_min"], config["cNMF"]["cNMF_prepare"]["k_max"], config["cNMF"]["cNMF_prepare"]["k_step"]))) + " \
-            --n-iter " + str(config["cNMF"]["cNMF_prepare"]["n_iter"])
+            --max-nmf-iter {config[cNMF][cNMF_prepare][max_nmf_iter]} \
+            -k {params.k_vals} \
+            --n-iter {config[cNMF][cNMF_prepare][n_iter]}
+        """
