@@ -108,7 +108,7 @@ rule cNMF_combine:
         time=config["cNMF"]["cNMF_combine"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        out_dir=lambda wildcards, output: os.path.dirname({output.done}),
+        out_dir=lambda wildcards, output: os.path.dirname(output.done),
         analysis_name=config["analysis_name"],
     shell:
         """
