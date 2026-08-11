@@ -130,6 +130,7 @@ write.table(
         snakemake@output[["barcodes"]],
         col.names = FALSE,
         row.names = FALSE,
+        quote = FALSE,
         sep = "\t"
 )
 message("Done")
@@ -141,8 +142,12 @@ features <- data.frame(
         "type"       = "Gene Expression"
 )
 write.table(
-        as.data.frame(features),
-        snakemake@output[["genes"]]
+        features,
+        snakemake@output[["genes"]],
+        sep = "\t",
+        row.names = FALSE,
+        col.names = FALSE,
+        quote = FALSE
 )
 message("Done")
 

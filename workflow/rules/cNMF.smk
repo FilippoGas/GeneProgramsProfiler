@@ -20,7 +20,7 @@ rule cNMF_prepare:
         time=config["cNMF"]["cNMF_prepare"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        out_dir = "your/output/path",
+        out_dir = f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/",
         k_vals = " ".join(map(str, range(config["cNMF"]["cNMF_prepare"]["k_min"], config["cNMF"]["cNMF_prepare"]["k_max"], config["cNMF"]["cNMF_prepare"]["k_step"])))
     shell:
         """
