@@ -47,7 +47,6 @@ rule cNMF_factorize:
     resources:
         mem_mb=config["cNMF"]["cNMF_factorize"]["mem_mb"],
         time=config["cNMF"]["cNMF_factorize"]["time"],
-        cores=config["cNMF"]["cNMF_factorize"]["cores"]
     params:
         out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/"
     shell:
