@@ -87,3 +87,8 @@ cNMF:
     k_max: 210
     k_step: 10
     n_iter: 100
+  # Rule 2: cNMF_factorize
+  cNMF_factorize:
+    mem_mb: 30000
+    time: "10:00:00"
+    cores: 10
