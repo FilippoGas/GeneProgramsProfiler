@@ -70,6 +70,6 @@ rule cNMF_factorize:
                 --total-workers {threads} \
                 &
         done \
-        && wait
+            && wait
         touch {output.done}
         """
