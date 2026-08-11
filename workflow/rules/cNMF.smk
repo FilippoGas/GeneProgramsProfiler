@@ -36,7 +36,7 @@ rule cNMF_prepare:
 
 rule cNMF_factorize:
     input:
-        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done_prepare.txt"
+        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt"
     output:
         done=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/.done.txt"
     log:
@@ -47,6 +47,7 @@ rule cNMF_factorize:
     resources:
         mem_mb=config["cNMF"]["cNMF_factorize"]["mem_mb"],
         time=config["cNMF"]["cNMF_factorize"]["time"],
+        queue=config["queues"]["cpu"]
     params:
         out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/"
     shell:
