@@ -1,0 +1,9 @@
+name: cNMF
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - python=3.12.12
+  - pip=25.3
+  - pip:
+      - cnmf==1.7.1

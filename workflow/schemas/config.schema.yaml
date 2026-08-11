@@ -230,6 +230,44 @@ properties:
             pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
           padj_thresh:
             type: number
+  # Module 5: cNMF.smk
+  cNMF:
+    type: object
+    properties:
+      # Rule 1: cNMF_prepare
+      cNMF_prepare:
+        type: object
+        properties:
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          cores:
+            type: integer
+          max_nmf_iter:
+            type: integer
+            description: "maximum number of optimization iterations that the underlying Non-negative Matrix Factorization (NMF) solver is allowed to perform in order to reach convergence during a single factorization replicate."
+          k_min:
+            type: integer
+            description: "Minimum value of k to try"
+          k_max:
+            type: integer
+            description: "Maximum value of k to try"
+          k_step:
+            type: integer
+          n_iter:
+            type: integer
+            description: "Number of iterations for each k"
+        required:
+          - mem_mb
+          - cores
+          - max_nmf_iter
+          - k_min
+          - k_max
+          - k_step
+          - n_iter
 required:
   - scRNAseq
   - celltype_conversion_dictionary

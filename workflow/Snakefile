@@ -15,6 +15,7 @@ include: "rules/spectra.smk"
 include: "rules/preprocess.smk"
 include: "rules/DE_analysis.smk"
 include: "rules/functional_enrichment.smk"
+include: "rules/cNMF.smk"
 
 
 # optional messages, log and error handling
@@ -35,10 +36,6 @@ onerror:
 # -----------------------------------------------------
 rule all:
     input:
-        # preprocess.smk
-        f"results/{config["analysis_name"]}/preprocess/mtx/matrix.mtx",
-        f"results/{config["analysis_name"]}/preprocess/mtx/barcodes.tsv",
-        f"results/{config["analysis_name"]}/preprocess/mtx/genes.tsv",
         # spectra.smk
         f"results/{config["analysis_name"]}/spectra/spectra_output/gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
@@ -51,3 +48,5 @@ rule all:
         # functional_enrichment.smk
         f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
         f"results/{config["analysis_name"]}/functional_enrichment/run_ora/.done.txt",
+        # cNMF.fmk
+        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",

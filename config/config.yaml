@@ -74,3 +74,15 @@ functional_enrichment:
     mem_mb: 2500
     time: "00:15:00"
     padj_thresh: 0.05
+# Module 5: cNMF.smk
+cNMF:
+  # Rule 1: cNMF_prepare
+  cNMF_prepare:
+    mem_mb: 2500
+    time: "00:30:00"
+    cores: 1
+    max_nmf_iter: 2000
+    k_min: 20
+    k_max: 210
+    k_step: 10
+    n_iter: 20
