@@ -37,9 +37,6 @@ onerror:
 rule all:
     input:
         # spectra.smk
-        f"results/{config["analysis_name"]}/spectra/spectra_output/gene_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
-        f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
-        f"results/{config["analysis_name"]}/spectra/spectra_output/factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
         # DE_analysis.smk
         f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
@@ -49,4 +46,4 @@ rule all:
         f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
         f"results/{config["analysis_name"]}/functional_enrichment/run_ora/.done.txt",
         # cNMF.fmk
-        f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/.done.txt",
+        f"results/{config["analysis_name"]}/cNMF/cNMF_combine/.done.txt",
