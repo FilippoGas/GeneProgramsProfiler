@@ -49,4 +49,4 @@ rule all:
         f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
         f"results/{config["analysis_name"]}/functional_enrichment/run_ora/.done.txt",
         # cNMF.fmk
-        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",
+        f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/.done.txt",
