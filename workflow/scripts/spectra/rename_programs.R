@@ -51,7 +51,7 @@ message("Done")
 message("Loading seurat's metadata from: ", snakemake@input[["metadata"]])
 metadata <- read_csv(snakemake@input[["metadata"]])
 # Only keep metadata for cells in the spectra output
-metadata <- metadata %>% filter(cell_id %in% cell_scores$cell_id)
+metadata <- metadata %>% dplyr::filter(cell_id %in% cell_scores$cell_id)
 message("Done")
 
 # 2. Annotate cell scores matrix with metadata ####

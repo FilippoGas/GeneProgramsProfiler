@@ -183,7 +183,9 @@ message("Saving gene list to ", snakemake@output[["gene_list"]])
 write(rownames(data@assays$RNA@data), snakemake@output[["gene_list"]])
 message("Done")
 message("Saving metadata to ", snakemake@output[["metadata"]])
-write_csv(data@meta.data, snakemake@output[["metadata"]])
+metadata <- data@meta.data
+metadata <- rownames_to_column(var = "cell_id")
+write_csv(metadata, snakemake@output[["metadata"]])
 message("Done")
 # Close Logging ----------------------------------------------------------------
 sink(type="message")
