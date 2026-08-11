@@ -52,6 +52,12 @@ rule cNMF_prepare:
 
 
 rule cNMF_factorize:
+    """
+    Run the actual factorization step with the configuration specified in the
+    previous step.
+    The script only requires a output directory not a filename so a fake output is used instead and the output dir is
+    passed as a parameter.
+    """
     input:
         f"results/{config['analysis_name']}/cNMF/cNMF_prepare/.done.txt",
     output:
@@ -79,4 +85,35 @@ rule cNMF_factorize:
         done
         wait
         touch {output.done}
+        """
+
+
+rule cNMF_combine:
+    """
+    Combine the results from different values of K.
+    The script only requires a output directory not a filename so a
+    fake output is used instead and the output dir is passed as a parameter.
+    """
+    input:
+        f"results/{config['analysis_name']}/cNMF/cNMF_factorize/.done.txt",
+    output:
+        done=f"results/{config["analysis_name"]}/cNMF/cNMF_combine/.done.txt",
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_combine.log",
+    conda:
+        "../envs/cNMF.yaml"
+    threads: config["cNMF"]["cNMF_combine"]["cores"]
+    resources:
+        mem_mb=config["cNMF"]["cNMF_combine"]["mem_mb"],
+        time=config["cNMF"]["cNMF_combine"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        out_dir=lambda wildcards, output: os.path.dirname({output.done}),
+        analysis_name=config["analysis_name"],
+    shell:
+        """
+        cnmf combine
+        --output-dir {params.out_dir}
+        --name {params.analysis_name} \
+            && touch {output.done}
         """
