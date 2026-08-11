@@ -9,7 +9,7 @@ rule cNMF_prepare:
         barcodes=f"results/{config["analysis_name"]}/preprocess/mtx/barcodes.tsv",
         genes=f"results/{config["analysis_name"]}/preprocess/mtx/genes.tsv",
     output:
-        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",
+        done=f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",
     log:
         f"results/{config["analysis_name"]}/cNMF/cNMF_prepare.log",
     conda:
@@ -30,5 +30,6 @@ rule cNMF_prepare:
             -c {input.matrix} \
             --max-nmf-iter {config[cNMF][cNMF_prepare][max_nmf_iter]} \
             -k {params.k_vals} \
-            --n-iter {config[cNMF][cNMF_prepare][n_iter]}
+            --n-iter {config[cNMF][cNMF_prepare][n_iter]} && \
+        touch {output.done}
         """
