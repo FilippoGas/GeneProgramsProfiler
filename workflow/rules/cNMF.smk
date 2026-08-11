@@ -46,11 +46,7 @@ rule cNMF_prepare:
 
 rule cNMF_factorize:
     input:
-<<<<<<< HEAD
         f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",
-=======
-        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt"
->>>>>>> b152431527fe3e78489598210f52f03f0573a6d2
     output:
         done=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/.done.txt",
     log:
@@ -61,11 +57,7 @@ rule cNMF_factorize:
     resources:
         mem_mb=config["cNMF"]["cNMF_factorize"]["mem_mb"],
         time=config["cNMF"]["cNMF_factorize"]["time"],
-<<<<<<< HEAD
         queue=config["queues"]["cpu"],
-=======
-        queue=config["queues"]["cpu"]
->>>>>>> b152431527fe3e78489598210f52f03f0573a6d2
     params:
         out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/",
     shell:
@@ -78,6 +70,6 @@ rule cNMF_factorize:
                 --total-workers {threads} \
                 &
         done \
-            && wait
+        && wait
         touch {output.done}
         """
