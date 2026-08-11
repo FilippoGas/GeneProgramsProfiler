@@ -21,7 +21,16 @@ rule cNMF_prepare:
         queue=config["queues"]["cpu"],
     params:
         out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/",
-        k_vals=" ".join(map(str, range(config["cNMF"]["cNMF_prepare"]["k_min"], config["cNMF"]["cNMF_prepare"]["k_max"], config["cNMF"]["cNMF_prepare"]["k_step"])))
+        k_vals=" ".join(
+            map(
+                str,
+                range(
+                    config["cNMF"]["cNMF_prepare"]["k_min"],
+                    config["cNMF"]["cNMF_prepare"]["k_max"],
+                    config["cNMF"]["cNMF_prepare"]["k_step"],
+                ),
+            )
+        ),
     shell:
         """
         cnmf prepare \
@@ -30,34 +39,37 @@ rule cNMF_prepare:
             -c {input.matrix} \
             --max-nmf-iter {config[cNMF][cNMF_prepare][max_nmf_iter]} \
             -k {params.k_vals} \
-            --n-iter {config[cNMF][cNMF_prepare][n_iter]} && \
-        touch {output.done}
+            --n-iter {config[cNMF][cNMF_prepare][n_iter]} \
+            && touch {output.done}
         """
+
 
 rule cNMF_factorize:
     input:
-        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done_prepare.txt"
+        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",
     output:
-        done=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/.done.txt"
+        done=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/.done.txt",
     log:
-        f"logs/{config["analysis_name"]}/cNMF/cNMF_factorize.log"
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_factorize.log",
     conda:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_factorize"]["cores"]
     resources:
         mem_mb=config["cNMF"]["cNMF_factorize"]["mem_mb"],
         time=config["cNMF"]["cNMF_factorize"]["time"],
+        queue=config["queues"]["cpu"],
     params:
-        out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/"
+        out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/",
     shell:
         """
-        for core in $(seq 0 1 $(({threads}-1))); do \
+        for core in $(seq 0 1 $(({threads} - 1))); do
             cnmf factorize \
                 --output-dir {params.out_dir} \
                 --name {config[analysis_name]} \
                 --worker-index $core \
                 --total-workers {threads} \
-                & \
-        ; done && \
+                &
+        done \
+            && wait
         touch {output.done}
         """
