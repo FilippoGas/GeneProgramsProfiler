@@ -1,3 +1,6 @@
+import os
+
+
 rule cNMF_prepare:
     """
     Prepare step which normalizes the count matrix and prepares the factorization step (https://github.com/dylkot/cNMF).
@@ -5,13 +8,13 @@ rule cNMF_prepare:
     passed as a parameter.
     """
     input:
-        matrix=f"results/{config["analysis_name"]}/preprocess/mtx/matrix.mtx",
-        barcodes=f"results/{config["analysis_name"]}/preprocess/mtx/barcodes.tsv",
-        genes=f"results/{config["analysis_name"]}/preprocess/mtx/genes.tsv",
+        matrix=f"results/{config['analysis_name']}/preprocess/mtx/matrix.mtx",
+        barcodes=f"results/{config['analysis_name']}/preprocess/mtx/barcodes.tsv",
+        genes=f"results/{config['analysis_name']}/preprocess/mtx/genes.tsv",
     output:
-        done=f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",
+        done=f"results/{config['analysis_name']}/cNMF/cNMF_prepare/.done.txt",
     log:
-        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare.log",
+        f"results/{config['analysis_name']}/cNMF/cNMF_prepare.log",
     conda:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_prepare"]["cores"]
@@ -20,7 +23,10 @@ rule cNMF_prepare:
         time=config["cNMF"]["cNMF_prepare"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/",
+        out_dir=lambda wildcards, output: os.path.dirname(output.done),
+        analysis_name=config["analysis_name"],
+        max_nmf_iter=config["cNMF"]["cNMF_prepare"]["max_nmf_iter"],
+        n_iter=config["cNMF"]["cNMF_prepare"]["n_iter"],
         k_vals=" ".join(
             map(
                 str,
@@ -35,22 +41,23 @@ rule cNMF_prepare:
         """
         cnmf prepare \
             --output-dir {params.out_dir} \
-            --name {config[analysis_name]} \
+            --name {params.analysis_name} \
             -c {input.matrix} \
-            --max-nmf-iter {config[cNMF][cNMF_prepare][max_nmf_iter]} \
+            --max-nmf-iter {params.max_nmf_iter} \
             -k {params.k_vals} \
-            --n-iter {config[cNMF][cNMF_prepare][n_iter]} \
-            && touch {output.done}
+            --n-iter {params.n_iter}
+
+        touch {output.done}
         """
 
 
 rule cNMF_factorize:
     input:
-        f"results/{config["analysis_name"]}/cNMF/cNMF_prepare/.done.txt",
+        f"results/{config['analysis_name']}/cNMF/cNMF_prepare/.done.txt",
     output:
-        done=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/.done.txt",
+        done=f"results/{config['analysis_name']}/cNMF/cNMF_factorize/.done.txt",
     log:
-        f"logs/{config["analysis_name"]}/cNMF/cNMF_factorize.log",
+        f"logs/{config['analysis_name']}/cNMF/cNMF_factorize.log",
     conda:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_factorize"]["cores"]
@@ -59,17 +66,17 @@ rule cNMF_factorize:
         time=config["cNMF"]["cNMF_factorize"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        out_dir=f"results/{config["analysis_name"]}/cNMF/cNMF_factorize/",
+        out_dir=lambda wildcards, output: os.path.dirname(output.done),
+        analysis_name=config["analysis_name"],
     shell:
         """
         for core in $(seq 0 1 $(({threads} - 1))); do
             cnmf factorize \
                 --output-dir {params.out_dir} \
-                --name {config[analysis_name]} \
+                --name {params.analysis_name} \
                 --worker-index $core \
-                --total-workers {threads} \
-                &
-        done \
-            && wait
+                --total-workers {threads} &
+        done
+        wait
         touch {output.done}
         """
