@@ -12,7 +12,7 @@ rule cNMF_prepare:
         barcodes=f"results/{config['analysis_name']}/preprocess/mtx/barcodes.tsv",
         genes=f"results/{config['analysis_name']}/preprocess/mtx/genes.tsv",
     output:
-        done=f"results/{config['analysis_name']}/cNMF/cNMF_prepare/.done.txt",
+        done=f"results/{config['analysis_name']}/cNMF/.done_prepare.txt",
     log:
         f"results/{config['analysis_name']}/cNMF/cNMF_prepare.log",
     conda:
@@ -59,9 +59,9 @@ rule cNMF_factorize:
     passed as a parameter.
     """
     input:
-        f"results/{config['analysis_name']}/cNMF/cNMF_prepare/.done.txt",
+        f"results/{config['analysis_name']}/cNMF/.done_prepare.txt",
     output:
-        done=f"results/{config['analysis_name']}/cNMF/cNMF_factorize/.done.txt",
+        done=f"results/{config['analysis_name']}/cNMF/.done_factorize.txt",
     log:
         f"logs/{config['analysis_name']}/cNMF/cNMF_factorize.log",
     conda:
@@ -95,9 +95,9 @@ rule cNMF_combine:
     fake output is used instead and the output dir is passed as a parameter.
     """
     input:
-        f"results/{config['analysis_name']}/cNMF/cNMF_factorize/.done.txt",
+        f"results/{config['analysis_name']}/cNMF/.done_factorize.txt",
     output:
-        done=f"results/{config["analysis_name"]}/cNMF/cNMF_combine/.done.txt",
+        done=f"results/{config["analysis_name"]}/cNMF/.done_combine.txt",
     log:
         f"logs/{config["analysis_name"]}/cNMF/cNMF_combine.log",
     conda:
@@ -113,7 +113,7 @@ rule cNMF_combine:
     shell:
         """
         cnmf combine
-        --output-dir {params.out_dir}
-        --name {params.analysis_name} \
-            && touch {output.done}
+            --output-dir {params.out_dir}
+            --name {params.analysis_name}
+        && touch {output.done}
         """
