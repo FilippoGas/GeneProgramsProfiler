@@ -28,6 +28,7 @@ sink(log, type="message")
 # Load Libraries ---------------------------------------------------------------
 suppressPackageStartupMessages({
         library(tidyverse)
+        library(parallel)
 })
 
 message("Starting R script \"spectra_WMW.R\"...")
@@ -35,8 +36,7 @@ message("Starting R script \"spectra_WMW.R\"...")
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
 message("Loading cell score matrix from: ", snakemake@input[["cell_scores"]])
-cell_scores <- read_csv(snakemake@input[["cell_scores"]]) %>% 
-        dplyr::rename("cell_id"="...1")
+cell_scores <- read_csv(snakemake@input[["cell_scores"]])
 message("Done")
 message("Loading case condition name: ", snakemake@params[["case"]])
 case <- snakemake@params[["case"]]
@@ -69,11 +69,11 @@ res_WMW <- mclapply(unique(cell_scores$celltype), function(cell_type){
                 
                 # Extract active cells
                 vec_control <- celltype_cell_score %>%
-                        dplyr::filter(Diagnosis == "Control" & 
+                        dplyr::filter(diagnosis == "Control" & 
                                       .[[program]] > 0.001) %>%
                         pull(all_of(program))
                 vec_ipf     <- celltype_cell_score %>%
-                        dplyr::filter(Diagnosis == "IPF" &
+                        dplyr::filter(diagnosis == "IPF" &
                                       .[[program]] > 0.001) %>%
                         pull(all_of(program))
                 
@@ -113,9 +113,9 @@ res_WMW <- mclapply(unique(cell_scores$celltype), function(cell_type){
         }
         return(bind_rows(tests_list))
 },
-mc.cores = snakemake@threads,
-mc.cleanup = TRUE,
-mc.preschedule = TRUE)
+mc.cores=snakemake@threads,
+mc.preschedule = TRUE,
+mc.cleanup=TRUE)
 
 # Bind all cell types together
 pg_activation_WMW <- bind_rows(res_WMW)

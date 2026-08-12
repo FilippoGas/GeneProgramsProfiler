@@ -149,14 +149,16 @@ res <- lapply(unknown_programs, function(factor){
 })
 factor_names <- bind_rows(res)
 # Add name to the programs that were identified
-colnames(unknown_cell_scores)[6:ncol(cell_scores)] <- factor_names$name
+colnames(unknown_cell_scores)[6:ncol(unknown_cell_scores)] <- factor_names$name
 # Identify programs that remained unknown and remove them
 unknown_programs <- grep("\\d+$", colnames(unknown_cell_scores)[6:length(colnames(unknown_cell_scores))], value = TRUE)
 unknown_cell_scores <- unknown_cell_scores %>%
         dplyr::select(-all_of(unknown_programs))
 # Merge cell_scores and unknown_cell_scores
+message(colnames(cell_scores))
+message(colnames(unknown_cell_scores))
 cell_scores <- cell_scores %>%
-        left_join(unknown_cell_scores %>% dplyr::select(-c(1:4)),
+        left_join(unknown_cell_scores %>% dplyr::select(-c(1:3)),
                   by = "cell_id")
 message("Done")
 
