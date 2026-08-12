@@ -87,7 +87,7 @@ cNMF:
     k_step: 10
     n_iter: 20
   # Rule 2: cNMF_factorize
-  cNMF_factorize:
+  cNMF_factorize_worker:
     mem_mb: 30000
     time: "10:00:00"
     cores: 2

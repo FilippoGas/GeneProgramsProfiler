@@ -68,13 +68,13 @@ rule cNMF_factorize_worker:
         "../envs/cNMF.yaml"
     threads: 1
     resources:
-        mem_mb=config["cNMF"]["cNMF_factorize"]["mem_mb"],
-        time=config["cNMF"]["cNMF_factorize"]["time"],
+        mem_mb=config["cNMF"]["cNMF_factorize_worker"]["mem_mb"],
+        time=config["cNMF"]["cNMF_factorize_worker"]["time"],
         queue=config["queues"]["cpu"],
     params:
         out_dir=lambda wildcards, output: os.path.dirname(output.done),
         analysis_name=config["analysis_name"],
-        total_workers=config["cNMF"]["cNMF_factorize"]["cores"],
+        total_workers=config["cNMF"]["cNMF_factorize_worker"]["cores"],
     shell:
         """
         cnmf factorize \

@@ -269,7 +269,7 @@ properties:
           - k_step
           - n_iter
       # Rule 2: cNMF_factorize
-      cNMF_factorize:
+      cNMF_factorize_worker:
         type: object
         properties:
           mem_mb:
