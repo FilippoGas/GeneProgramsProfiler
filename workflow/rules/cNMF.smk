@@ -1,7 +1,7 @@
 import os
 
 # Define the list of worker indices (e.g., ["0", "1", "2", ...]) based on config cores
-WORKERS = [str(i) for i in range(config["cNMF"]["cNMF_factorize"]["cores"])]
+WORKERS = [str(i) for i in range(config["cNMF"]["cNMF_factorize_worker"]["cores"])]
 
 
 rule cNMF_prepare:
