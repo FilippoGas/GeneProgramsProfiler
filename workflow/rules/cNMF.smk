@@ -98,6 +98,10 @@ rule cNMF_factorize:
         ),
     output:
         done=f"results/{config['analysis_name']}/cNMF/.done_factorize.txt",
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_factorize.log"
+    conda:
+        "../envs/cNMF.yaml"
     localrule: True
     shell:
         """
