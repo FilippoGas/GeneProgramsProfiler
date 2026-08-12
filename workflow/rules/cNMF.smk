@@ -1,11 +1,13 @@
 import os
 
+# Define the list of worker indices (e.g., ["0", "1", "2", ...]) based on config cores
+WORKERS = [str(i) for i in range(config["cNMF"]["cNMF_factorize"]["cores"])]
+
 
 rule cNMF_prepare:
     """
     Prepare step which normalizes the count matrix and prepares the factorization step (https://github.com/dylkot/cNMF).
-    The script only requires a output directory not a filename so a fake output is used instead and the output dir is
-    passed as a parameter.
+
     """
     input:
         matrix=f"results/{config['analysis_name']}/preprocess/mtx/matrix.mtx",
@@ -51,22 +53,20 @@ rule cNMF_prepare:
         """
 
 
-rule cNMF_factorize:
+rule cNMF_factorize_worker:
     """
-    Run the actual factorization step with the configuration specified in the
-    previous step.
-    The script only requires a output directory not a filename so a fake output is used instead and the output dir is
-    passed as a parameter.
+    Performs the actual matrix factorization.
+    Submits an independent 1-core job for a single worker.
     """
     input:
         f"results/{config['analysis_name']}/cNMF/.done_prepare.txt",
     output:
-        done=f"results/{config['analysis_name']}/cNMF/.done_factorize.txt",
+        done=f"results/{config['analysis_name']}/cNMF/.done_factorize_worker_{{worker}}.txt",
     log:
-        f"logs/{config['analysis_name']}/cNMF/cNMF_factorize.log",
+        f"logs/{config['analysis_name']}/cNMF/cNMF_factorize_worker_{{worker}}.log",
     conda:
         "../envs/cNMF.yaml"
-    threads: config["cNMF"]["cNMF_factorize"]["cores"]
+    threads: 1
     resources:
         mem_mb=config["cNMF"]["cNMF_factorize"]["mem_mb"],
         time=config["cNMF"]["cNMF_factorize"]["time"],
@@ -74,16 +74,33 @@ rule cNMF_factorize:
     params:
         out_dir=lambda wildcards, output: os.path.dirname(output.done),
         analysis_name=config["analysis_name"],
+        total_workers=config["cNMF"]["cNMF_factorize"]["cores"],
     shell:
         """
-        for core in $(seq 0 1 $(({threads} - 1))); do
-            cnmf factorize \
-                --output-dir {params.out_dir} \
-                --name {params.analysis_name} \
-                --worker-index $core \
-                --total-workers {threads} &
-        done
-        wait
+        cnmf factorize \
+            --output-dir {params.out_dir} \
+            --name {params.analysis_name} \
+            --worker-index {wildcards.worker} \
+            --total-workers {params.total_workers}
+
+        touch {output.done}
+        """
+
+
+rule cNMF_factorize:
+    """
+    Tells Snakemake to wait until all individual worker files exist.
+    """
+    input:
+        expand(
+            f"results/{config['analysis_name']}/cNMF/.done_factorize_worker_{{worker}}.txt",
+            worker=WORKERS,
+        ),
+    output:
+        done=f"results/{config['analysis_name']}/cNMF/.done_factorize.txt",
+    localrule: True
+    shell:
+        """
         touch {output.done}
         """
 
@@ -91,15 +108,13 @@ rule cNMF_factorize:
 rule cNMF_combine:
     """
     Combine the results from different values of K.
-    The script only requires a output directory not a filename so a
-    fake output is used instead and the output dir is passed as a parameter.
     """
     input:
         f"results/{config['analysis_name']}/cNMF/.done_factorize.txt",
     output:
-        done=f"results/{config["analysis_name"]}/cNMF/.done_combine.txt",
+        done=f"results/{config['analysis_name']}/cNMF/.done_combine.txt",
     log:
-        f"logs/{config["analysis_name"]}/cNMF/cNMF_combine.log",
+        f"logs/{config['analysis_name']}/cNMF/cNMF_combine.log",
     conda:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_combine"]["cores"]
@@ -112,8 +127,9 @@ rule cNMF_combine:
         analysis_name=config["analysis_name"],
     shell:
         """
-        cnmf combine
-        --output-dir {params.out_dir}
-        --name {params.analysis_name} \
-            && touch {output.done}
+        cnmf combine \
+            --output-dir {params.out_dir} \
+            --name {params.analysis_name}
+
+        touch {output.done}
         """
