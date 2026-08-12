@@ -113,7 +113,7 @@ rule cNMF_combine:
     shell:
         """
         cnmf combine
-            --output-dir {params.out_dir}
-            --name {params.analysis_name}
-        && touch {output.done}
+        --output-dir {params.out_dir}
+        --name {params.analysis_name} \
+            && touch {output.done}
         """
