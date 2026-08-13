@@ -84,16 +84,21 @@ cNMF:
     cores: 1
     max_nmf_iter: 2000
     k_min: 20
-    k_max: 210
+    k_max: 410
     k_step: 10
     n_iter: 100
   # Rule 2: cNMF_factorize
   cNMF_factorize_worker:
     mem_mb: 30000
     time: "10:00:00"
-    cores: 10
+    cores: 50
   # Rule 3: cNMF_combine
   cNMF_combine:
-    mem_mb: 1000
-    time: "00:20:00"
+    mem_mb: 5000
+    time: "05:00:00"
+    cores: 1
+  # Rule 4: cNMF_k_selection_plot:
+  cNMF_k_selection_plot:
+    mem_mb: 20000
+    time: "05:00:00"
     cores: 1

@@ -298,6 +298,21 @@ properties:
         required:
           - mem_mb
           - cores
+      # Rule 4: cNMF_k_selection_plot
+      cNMF_k_selection_plot:
+        type: object
+        properties:
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          cores:
+            type: integer
+        required:
+          - mem_mb
+          - cores
 required:
   - scRNAseq
   - celltype_conversion_dictionary
