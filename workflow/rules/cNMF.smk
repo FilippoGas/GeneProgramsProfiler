@@ -16,7 +16,7 @@ rule cNMF_prepare:
     output:
         done=f"results/{config['analysis_name']}/cNMF/.done_prepare.txt",
     log:
-        f"results/{config['analysis_name']}/cNMF/cNMF_prepare.log",
+        f"logs/{config['analysis_name']}/cNMF/cNMF_prepare.log",
     conda:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_prepare"]["cores"]
@@ -135,5 +135,35 @@ rule cNMF_combine:
             --output-dir {params.out_dir} \
             --name {params.analysis_name}
 
+        touch {output.done}
+        """
+
+
+rule cNMF_k_selection_plot:
+    """
+    Make a plot estimating the trade-off between higher values of K and stability and error.
+    (Just for debuggig purpose, the actual k will be selected automatically)
+    """
+    input:
+        f"results/{config['analysis_name']}/cNMF/.done_combine.txt"
+    output:
+        done=f"results/{config['analysis_name']}/cNMF/.done_k_selection_plot.txt"
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_K_selection_plot.log"
+    conda:
+        "../envs/cNMF.yaml"
+    threads: config["cNMF"]["cNMF_k_selection_plot"]["cores"]
+    resources:
+        mem_mb=config["cNMF"]["cNMF_k_selection_plot"]["mem_mb"],
+        time=config["cNMF"]["cNMF_k_selection_plot"]["time"],
+        queue=config["queues"]["cpu"]
+    params:
+        out_dir=lambda wildcards, output: os.path.dirname(output.done),
+        analysis_name=config["analysis_name"]
+    shell:
+        """
+        cnmf k_selection_plot \
+            --output-dir {params.out_dir} \
+            --name {params.analysis_name}
         touch {output.done}
         """
