@@ -84,13 +84,13 @@ cNMF:
     cores: 1
     max_nmf_iter: 2000
     k_min: 20
-    k_max: 410
+    k_max: 110
     k_step: 10
     n_iter: 100
   # Rule 2: cNMF_factorize
   cNMF_factorize_worker:
     mem_mb: 30000
-    time: "10:00:00"
+    time: "30:00:00"
     cores: 50
   # Rule 3: cNMF_combine
   cNMF_combine:
