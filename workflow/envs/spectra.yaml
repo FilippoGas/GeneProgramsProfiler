@@ -1,4 +1,7 @@
 name: spectra
+channels:
+  - conda-forge
+  - bioconda
 dependencies:
   - python=3.12.12
   - pip=25.3

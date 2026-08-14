@@ -1,9 +1,12 @@
 name: cNMF
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
 dependencies:
   - python=3.12.12
   - pip=25.3
+  - r-base=4.4.3
+  - r-tidyverse=2.0.0
+  - r-reticulate=1.44.0
   - pip:
       - cnmf==1.7.1
