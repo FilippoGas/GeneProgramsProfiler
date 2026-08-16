@@ -148,6 +148,7 @@ rule cNMF_k_selection_plot:
         f"results/{config['analysis_name']}/cNMF/.done_combine.txt",
     output:
         done=f"results/{config['analysis_name']}/cNMF/.done_k_selection_plot.txt",
+        k_plot_data=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.k_selection_stats.df.npz",
     log:
         f"logs/{config["analysis_name"]}/cNMF/cNMF_K_selection_plot.log",
     conda:
