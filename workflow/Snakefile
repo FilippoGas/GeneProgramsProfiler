@@ -42,6 +42,6 @@ rule all:
         f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",
         f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
         # cNMF.fmk
-        f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/.best_k.txt",
+        f"results/{config['analysis_name']}/cNMF/.done_consensus.txt",
         # collect_results.smk
         f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
