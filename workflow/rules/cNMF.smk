@@ -145,7 +145,7 @@ rule cNMF_k_selection_plot:
     (Just for debuggig purpose, the actual k will be selected automatically)
     """
     input:
-        f"results/{config['analysis_name']}/cNMF/.done_combine.txt",
+        done=f"results/{config['analysis_name']}/cNMF/.done_combine.txt",
     output:
         k_plot_data=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.k_selection_stats.df.npz",
     log:
@@ -158,7 +158,7 @@ rule cNMF_k_selection_plot:
         time=config["cNMF"]["cNMF_k_selection_plot"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        out_dir=lambda wildcards, output: os.path.dirname(output.k_plot_data),
+        out_dir=lambda wildcards, input: os.path.dirname(input.done),
         analysis_name=config["analysis_name"],
     shell:
         """
