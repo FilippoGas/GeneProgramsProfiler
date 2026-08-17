@@ -149,7 +149,7 @@ rule cNMF_k_selection_plot:
     output:
         k_plot_data=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.k_selection_stats.df.npz",
     log:
-        f"logs/{config["analysis_name"]}/cNMF/cNMF_K_selection_plot.log",
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_k_selection_plot.log",
     conda:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_k_selection_plot"]["cores"]
