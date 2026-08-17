@@ -77,7 +77,7 @@ jobs:
       - name: Test report
         if: success()
         run: |
-          source /path/to/miniconda3/etc/profile.d/conda.sh
+          source ~/miniconda3/etc/profile.d/conda.sh
           conda activate snakemake_env
           snakemake --snakefile workflow/Snakefile --directory . --report report.zip
 
