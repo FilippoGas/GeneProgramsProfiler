@@ -34,7 +34,7 @@ message("Starting R script \"extract_best_k.R\"...")
 # ------------------------------------------------------------------------------
 message("Loading stats on k selection from: ",
         snakemake@input[["k_selection_stats"]])
-k_stats <- np$load(snakemake@input["k_selection_stats"])
+k_stats <- np$load(snakemake@input["k_selection_stats"], allow_pickle=TRUE)
 message("Done")
 
 # 2. Choose best K ####

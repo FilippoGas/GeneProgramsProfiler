@@ -178,7 +178,7 @@ rule extract_best_k:
     #TODO is this the best way to choose k? check the script
     """
     input:
-        k_plot_data=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.k_selection_stats.df.npz",
+        k_selection_stats=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.k_selection_stats.df.npz",
     output:
         best_k=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/.best_k.txt",
     log:
