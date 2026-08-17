@@ -58,7 +58,7 @@ my_dataframe <- my_dataframe %>%
                delta=silhouette-prediction_error)
 # Always close the connection
 k_stats$close()
-Message("Done")
+message("Done")
 message("Saving best K to a :", snakemake@output["best_k"])
 selected_k <- my_dataframe[my_dataframe$delta==max(my_dataframe$delta),"k"]
 write(as.character(selected_k), snakemake@output["best_k"])
