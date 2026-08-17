@@ -328,6 +328,23 @@ properties:
         required:
           - mem_mb
           - cores
+  # Module 6: collect_results.smk
+  collect_results.smk:
+    type: object
+    properties:
+      # Rule 1: make_comp_table:
+      make_comp_table:
+        type: object
+        properties:
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          cores:
+            type: integer
+        required:
 required:
   - scRNAseq
   - celltype_conversion_dictionary
