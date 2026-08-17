@@ -39,51 +39,30 @@ jobs:
       - Linting
       - Formatting
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Cache slow pipeline step
-        id: cache-slow-step
-        uses: actions/cache@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          path: |
-            results/preprocess/
-            results/spectra/
-          key: ${{ runner.os }}-slow-step-${{ hashFiles('workflow/rules/spectra.smk', 'workflow/scripts/spectra/run_spectra.py', 'workflow/scripts/spectra/prepare_cytopus_list.py', 'workflow/rules/preprocess.smk', 'workflow/scripts/preprocess/annotate_and_save.R') }}
-
-      - name: Update timestamps to prevent Snakemake rerun
-        if: steps.cache-slow-step.outputs.cache-hit == 'true'
-        run: |
-          find results/spectra/ results/preprocess/ -type f -exec touch {} +
+          clean: false
 
       - name: Test workflow
         env:
           PIP_NO_CACHE_DIR: 1
         run: |
-          source ~/miniconda3/etc/profile.d/conda.sh
-
-          conda activate snakemake
-
-          # 3. Execute Snakemake with your flags
+          source /shares/CIBIO-Storage/BCG/scratch/fgastaldello/miniconda3/etc/profile.d/conda.sh
+          conda activate snakemake_env
+          
           snakemake \
             --snakefile workflow/Snakefile \
             --directory . \
             --sdm conda \
+            --conda-prefix /shares/CIBIO-Storage/BCG/scratch/fgastaldello/actions-runner/conda_cache \
             --show-failed-logs \
-            --cores 50 \
-            --latency-wait 120 \
-            --conda-cleanup-pkgs cache \
-            --all-temp
+            --cores 2 \
+            --latency-wait 120
 
       - name: Test report
         if: success()
         run: |
-          source ~/miniconda3/etc/profile.d/conda.sh
+          source /shares/CIBIO-Storage/BCG/scratch/fgastaldello/miniconda3/etc/profile.d/conda.sh
           conda activate snakemake_env
           snakemake --snakefile workflow/Snakefile --directory . --report report.zip
-
-      - name: Clean up HPC workspace
-        if: always()
-        run: |
-          # Remove checkout files and scratch artifacts to prevent HPC disk buildup
-          rm -rf ${{ github.workspace }}/*
-          rm -rf ${{ github.workspace }}/.* 2>/dev/null || true
