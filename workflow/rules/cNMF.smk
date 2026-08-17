@@ -220,5 +220,5 @@ rule cNMF_consensus:
             --output-dir {params.output_dir} \
             --components {params.k} \
             --local-density-threshold {params.ldt} \
-            --show-clustering #TODO in README.dm want that adjusting ldt may be needed
+            --show-clustering #TODO in README.md warn that adjusting ldt may be needed
         """
