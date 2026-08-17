@@ -1,5 +1,6 @@
 import os
 
+
 rule make_comp_table:
     """
     Put togheter results from different methods in one table allowing
@@ -22,6 +23,6 @@ rule make_comp_table:
         time=config["collect_results"]["make_comp_table"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        enrichment_dir=f"results/{config["analysis_name"]}/functional_enrichment/
+        enrichment_dir=f"results/{config["analysis_name"]}/functional_enrichment/",
     script:
         "../scripts/collect_results/make_comp_table.R"
