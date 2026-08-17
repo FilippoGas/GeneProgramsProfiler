@@ -147,7 +147,6 @@ rule cNMF_k_selection_plot:
     input:
         f"results/{config['analysis_name']}/cNMF/.done_combine.txt",
     output:
-        done=f"results/{config['analysis_name']}/cNMF/.done_k_selection_plot.txt",
         k_plot_data=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.k_selection_stats.df.npz",
     log:
         f"logs/{config["analysis_name"]}/cNMF/cNMF_K_selection_plot.log",
@@ -159,7 +158,7 @@ rule cNMF_k_selection_plot:
         time=config["cNMF"]["cNMF_k_selection_plot"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        out_dir=lambda wildcards, output: os.path.dirname(output.done),
+        out_dir=lambda wildcards, output: os.path.dirname(output.k_plot_data),
         analysis_name=config["analysis_name"],
     shell:
         """
@@ -180,7 +179,7 @@ rule extract_best_k:
     input:
         k_selection_stats=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.k_selection_stats.df.npz",
     output:
-        best_k=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/.best_k.txt",
+        best_k=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/best_k.txt",
     log:
         f"logs/{config["analysis_name"]}/cNMF/extract_best_k.log",
     conda:
@@ -192,3 +191,34 @@ rule extract_best_k:
         queue=config["queues"]["cpu"],
     script:
         "../scripts/cNMF/extract_best_k.R"
+
+
+rule cNMF_consensus:
+    """
+    Generate program usage tables for the selected k
+    """
+    input:
+        best_k=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/best_k.txt",
+    output:
+        done=f"results/{config['analysis_name']}/cNMF/.done_consensus.txt",
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_consensus.log",
+    conda:
+        "../envs/cNMF.yaml"
+    threads: config["cNMF"]["cNMF_consensus"]["cores"]
+    resources:
+        mem_mb=config["cNMF"]["cNMF_consensus"]["cores"],
+        time=config["cNMF"]["cNMF_consensus"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        output_dir=lambda wildcards, output: os.path.dirname(output.done),
+        k=lambda wildcards, input: open(input.best_k, "r").read().strip(),
+        ldt=config["cNMF"]["cNMF_consensus"]["local_density_threshold"],
+    shell:
+        """
+        cnmf consensus \
+            --output-dir {params.output_dir} \
+            --components {params.k} \
+            --local-density-threshold {params.ldt} \
+            --show-clustering #TODO in README.dm want that adjusting ldt may be needed
+        """
