@@ -54,7 +54,7 @@ jobs:
         run: |
           source /shares/CIBIO-Storage/BCG/scratch/fgastaldello/miniconda3/etc/profile.d/conda.sh
           conda activate snakemake_env
-          
+
           snakemake \
             --snakefile workflow/Snakefile \
             --directory . \
