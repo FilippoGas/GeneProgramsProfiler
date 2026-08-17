@@ -165,7 +165,7 @@ rule cNMF_k_selection_plot:
         cnmf k_selection_plot \
             --output-dir {params.out_dir} \
             --name {params.analysis_name}
-        touch {output.done}
+        touch {output.k_plot_data}
         """
 
 
