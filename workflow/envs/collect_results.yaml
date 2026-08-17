@@ -1,0 +1,9 @@
+name: collect_results
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4.3
+  - r-tidyverse=2.0.0
+  - r-jsonlite=2.0.0
+  - r-readxl=1.4.5

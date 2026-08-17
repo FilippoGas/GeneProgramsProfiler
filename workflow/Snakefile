@@ -16,6 +16,7 @@ include: "rules/preprocess.smk"
 include: "rules/DE_analysis.smk"
 include: "rules/functional_enrichment.smk"
 include: "rules/cNMF.smk"
+include: "rules/collect_results.smk"
 
 
 # optional messages, log and error handling
@@ -36,14 +37,11 @@ onerror:
 # -----------------------------------------------------
 rule all:
     input:
-        # spectra.smk
-        f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
         # DE_analysis.smk
         f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
         f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",
         f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
-        # functional_enrichment.smk
-        f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
-        f"results/{config["analysis_name"]}/functional_enrichment/run_ora/.done.txt",
         # cNMF.fmk
         f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/.best_k.txt",
+        # collect_results.smk
+        f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",

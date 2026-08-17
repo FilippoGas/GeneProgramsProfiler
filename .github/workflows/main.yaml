@@ -34,21 +34,11 @@ jobs:
           args: "--lint"
 
   Testing:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs:
       - Linting
       - Formatting
     steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
       - uses: actions/checkout@v4
 
       - name: Cache slow pipeline step
@@ -66,17 +56,34 @@ jobs:
           find results/spectra/ results/preprocess/ -type f -exec touch {} +
 
       - name: Test workflow
-        uses: snakemake/snakemake-github-action@v2
         env:
           PIP_NO_CACHE_DIR: 1
-        with:
-          directory: .
-          snakefile: workflow/Snakefile
-          args: "--sdm conda --show-failed-logs --cores 2 --latency-wait 120 --conda-cleanup-pkgs cache --all-temp"
+        run: |
+          source /path/to/miniconda3/etc/profile.d/conda.sh
+          
+          conda activate snakemake_env
+          
+          # 3. Execute Snakemake with your flags
+          snakemake \
+            --snakefile workflow/Snakefile \
+            --directory . \
+            --sdm conda \
+            --show-failed-logs \
+            --cores 2 \
+            --latency-wait 120 \
+            --conda-cleanup-pkgs cache \
+            --all-temp
 
       - name: Test report
-        uses: snakemake/snakemake-github-action@v2
-        with:
-          directory: .
-          snakefile: workflow/Snakefile
-          args: "--report report.zip"
+        if: success()
+        run: |
+          source /path/to/miniconda3/etc/profile.d/conda.sh
+          conda activate snakemake_env
+          snakemake --snakefile workflow/Snakefile --directory . --report report.zip
+
+      - name: Clean up HPC workspace
+        if: always()
+        run: |
+          # Remove checkout files and scratch artifacts to prevent HPC disk buildup
+          rm -rf ${{ github.workspace }}/*
+          rm -rf ${{ github.workspace }}/.* 2>/dev/null || true
