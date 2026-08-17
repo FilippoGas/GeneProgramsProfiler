@@ -61,7 +61,7 @@ k_stats$close()
 message("Done")
 message("Saving best K to a :", snakemake@output["best_k"])
 selected_k <- my_dataframe[my_dataframe$delta==max(my_dataframe$delta),"k"]
-write(as.character(selected_k), snakemake@output["best_k"])
+write(x = as.character(selected_k), file = snakemake@output[["best_k"]])
 message("Done")
 
 # Close Logging ----------------------------------------------------------------
