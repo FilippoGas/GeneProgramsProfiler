@@ -59,10 +59,10 @@ jobs:
         env:
           PIP_NO_CACHE_DIR: 1
         run: |
-          source /path/to/miniconda3/etc/profile.d/conda.sh
-          
+          source ~/miniconda3/etc/profile.d/conda.sh
+
           conda activate snakemake_env
-          
+
           # 3. Execute Snakemake with your flags
           snakemake \
             --snakefile workflow/Snakefile \
