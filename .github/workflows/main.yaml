@@ -61,7 +61,7 @@ jobs:
         run: |
           source ~/miniconda3/etc/profile.d/conda.sh
 
-          conda activate snakemake_env
+          conda activate snakemake
 
           # 3. Execute Snakemake with your flags
           snakemake \
@@ -69,7 +69,7 @@ jobs:
             --directory . \
             --sdm conda \
             --show-failed-logs \
-            --cores 2 \
+            --cores 50 \
             --latency-wait 120 \
             --conda-cleanup-pkgs cache \
             --all-temp
