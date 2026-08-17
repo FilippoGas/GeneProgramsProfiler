@@ -10,6 +10,6 @@ snakemake \
     --cluster-generic-status-cmd "python workflow/scripts/cluster_status/PBS_status.py" \
     --jobs 50 \
     --keep-going \
-    --use-conda \
+    --sdm conda \
     --rerun-incomplete \
     --latency-wait 120
