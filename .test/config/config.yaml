@@ -91,7 +91,7 @@ cNMF:
   cNMF_factorize_worker:
     mem_mb: 30000
     time: "30:00:00"
-    cores: 40
+    cores: 16
   # Rule 3: cNMF_combine
   cNMF_combine:
     mem_mb: 5000
