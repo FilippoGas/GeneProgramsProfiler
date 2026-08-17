@@ -105,7 +105,7 @@ cNMF:
   # Rule 5: extract_best_k
   extract_best_k:
     mem_mb: 600
-    time: "00:05:00"
+    time: "00:10:00"
     cores: 1
 # Module 6: collect_results.smk
 collect_results:
