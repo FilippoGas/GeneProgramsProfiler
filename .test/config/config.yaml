@@ -107,6 +107,12 @@ cNMF:
     mem_mb: 600
     time: "00:10:00"
     cores: 1
+  # Rule 6: cNMF_consensus
+  cNMF_consensus:
+    mem_mb: 2500
+    time: "00:20:00"
+    cores: 1
+    local_density_threshold: 0.5
 # Module 6: collect_results.smk
 collect_results:
   # Rule 1: make_comp_table

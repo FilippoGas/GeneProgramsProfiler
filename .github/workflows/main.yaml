@@ -61,7 +61,7 @@ jobs:
             --sdm conda \
             --conda-prefix /shares/CIBIO-Storage/BCG/scratch/fgastaldello/actions-runner/conda_cache \
             --show-failed-logs \
-            --cores 10 \
+            --cores 4 \
             --latency-wait 120
 
       - name: Test report
