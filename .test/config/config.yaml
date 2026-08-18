@@ -41,13 +41,18 @@ spectra:
     mem_mb: 2500
     time: "00:15:00"
     cores: 4
-  # Rule 5: spectra_plots
+  # Rule 5: spectra_WMW_plots
   spectra_WMW_plots:
     cores: 1
     mem_mb: 2500
     time: "00:10:00"
     effect_size_thresh: 0.3
     FDR_thresh: 0.05
+  # Rule 4: spectra_LMM
+  spectra_LMM:
+    mem_mb: 2500
+    time: "00:30:00"
+    cores: 4
 # Module 3: DE_analysis.smk
 DE_analysis:
   # Rule 1: run_DE_analysis

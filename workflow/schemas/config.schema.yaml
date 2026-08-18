@@ -57,7 +57,7 @@ properties:
           - rstudio_memory
           - sample_column
           - condition_column
-          - cell_cycle_phase_condition
+          - cell_cycle_phase_column
   # Module 2: spectra.smk
   spectra:
     type: object
@@ -155,6 +155,21 @@ properties:
           - mem_mb
           - effect_size_thresh
           - FDR_thresh
+      # Rule 6: spectra_LMM
+      spectra_LMM:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+        required:
+          - cores
+          - mem_mb
   # Module 3: DE_analysis.smk
   DE_analysis:
     type: object
