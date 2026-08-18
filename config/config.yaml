@@ -112,6 +112,11 @@ cNMF:
     time: "00:20:00"
     cores: 1
     local_density_threshold: 0.5
+  # Rule 7: cNMF_rename_programs
+  cNMF_rename_programs:
+    mem_mb: 3500
+    time: "00:30:00"
+    cores: 1
 # Module 6: collect_results.smk
 collect_results:
   # Rule 1: make_comp_table
