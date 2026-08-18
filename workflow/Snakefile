@@ -43,7 +43,7 @@ rule all:
         f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
         # spectra.smk
         f"results/{config["analysis_name"]}/spectra/spectra_WMW_plots/.done.txt",
-        f"results/{config["analysis_name"]}/spectra/spectra_LMM/gp_activation_LMM.csv",
+        f"results/{config["analysis_name"]}/spectra/spectra_LMM_plots/GP_deregulation_LMM_volcano.pdf",
         # cNMF.fmk
         f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.labeled_cell_score.csv",
         # collect_results.smk
