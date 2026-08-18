@@ -16,6 +16,7 @@ preprocess:
     time: "00:15:00"
     sample_column: "Sample_Name"
     condition_column: "Diagnosis"
+    cell_cycle_phase_column: "Phase"
 # Module 2: spectra.smk
 spectra:
   # Rule 1: prepare_cytopus_list
@@ -41,7 +42,7 @@ spectra:
     time: "00:15:00"
     cores: 4
   # Rule 5: spectra_plots
-  spectra_plots:
+  spectra_WMW_plots:
     cores: 1
     mem_mb: 2500
     time: "00:10:00"

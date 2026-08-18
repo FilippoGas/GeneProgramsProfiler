@@ -48,12 +48,16 @@ properties:
           condition_column:
             type: string
             description: "Column of condition name in the Seurat metadata"
+          cell_cycle_phase_column:
+            type: string
+            description: "Column of condition cell cycle phase in the Seurat metadata"
         required:
           - cores
           - celltype_annotation_colname
           - rstudio_memory
           - sample_column
           - condition_column
+          - cell_cycle_phase_condition
   # Module 2: spectra.smk
   spectra:
     type: object
@@ -129,7 +133,7 @@ properties:
           - cores
           - mem_mb
       # Rule 5: spectra_plots
-      spectra_plots:
+      spectra_WMW_plots:
         type: object
         properties:
           cores:
