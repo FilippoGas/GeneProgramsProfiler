@@ -55,6 +55,8 @@ jobs:
           source ~/miniconda3/etc/profile.d/conda.sh
           conda activate snakemake
 
+          snakemake --snakefile workflow/Snakefile --directory . --unlock
+          
           snakemake \
             --snakefile workflow/Snakefile \
             --directory . \
