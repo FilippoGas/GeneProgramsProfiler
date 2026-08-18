@@ -1,5 +1,5 @@
 # ==============================================================================
-# Script: spectra_plots.R
+# Script: spectra_WMW_plots.R
 # Author: Filippo Gastaldello
 # Date: 07/08/2026
 # Description: 
@@ -32,7 +32,7 @@ suppressPackageStartupMessages({
         library(tidyverse)
 })
 
-message("Starting R script \"spectra_plots.R\"...")
+message("Starting R script \"spectra_WMW_plots.R\"...")
 
 # 1. Load Data ####
 # ------------------------------------------------------------------------------

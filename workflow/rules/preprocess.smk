@@ -28,6 +28,7 @@ rule annotate_and_save:
         ],
         sample_col=config["preprocess"]["annotate_and_save"]["sample_column"],
         condition_col=config["preprocess"]["annotate_and_save"]["condition_column"],
+        phase_col=config["preprocess"]["annotate_and_save"]["cell_cycle_phase_column"],
     message:
         "Annotate Seurat object's metadata with cytopus cell types and save as .rds, 10x-Genomics-formatted mtx and h5ad."
     script:

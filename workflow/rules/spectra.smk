@@ -83,7 +83,7 @@ rule spectra_rename_programs:
 rule spectra_WMW:
     """
     Analyze spectra results and test for differential activation of gene programs
-    between the two conditions. Gene programs activation differences will be
+    between the two conditions. Gene programs activation differences are
     tested with Wilcoxon-Mann-Whitney U-test.
     """
     input:
@@ -108,7 +108,7 @@ rule spectra_WMW:
         "../scripts/spectra/spectra_WMW.R"
 
 
-rule spectra_plot:
+rule spectra_WMW_plot:
     """
     Plot results of the differential activation analysis of spectra's output.
     The number of output for this rule is not defined a priori, as it depends on the
@@ -119,22 +119,49 @@ rule spectra_plot:
         cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
         gp_activation_WMW=f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
     output:
-        f"results/{config["analysis_name"]}/spectra/spectra_plots/.done.txt",
+        f"results/{config["analysis_name"]}/spectra/spectra_WMW_plots/.done.txt",
     log:
-        "logs/spectra/spectra_plots.log",
+        "logs/spectra/spectra_WMW_plots.log",
     conda:
         "../envs/spectra.yaml"
-    threads: config["spectra"]["spectra_plots"]["cores"]
+    threads: config["spectra"]["spectra_WMW_plots"]["cores"]
     resources:
-        mem_mb=config["spectra"]["spectra_plots"]["mem_mb"],
-        time=config["spectra"]["spectra_plots"]["time"],
+        mem_mb=config["spectra"]["spectra_WMW_plots"]["mem_mb"],
+        time=config["spectra"]["spectra_WMW_plots"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        effect_size_thresh=config["spectra"]["spectra_plots"]["effect_size_thresh"],
-        FDR_thresh=config["spectra"]["spectra_plots"]["FDR_thresh"],
+        effect_size_thresh=config["spectra"]["spectra_WMW_plots"]["effect_size_thresh"],
+        FDR_thresh=config["spectra"]["spectra_WMW_plots"]["FDR_thresh"],
     message:
         """
         Plot results from differential analysis on spectra's results.
         """
     script:
-        "../scripts/spectra/spectra_plots.R"
+        "../scripts/spectra/spectra_WMW_plots.R"
+
+rule spectra_lmm:
+    """
+    Analyze spectra results and test for differential activation of gene programs
+    between the two conditions. Gene programs activation differences are
+    tested with Linear Mixed Models.
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
+    output:
+        gp_activation_LMM=f"results/{config["analysis_name"]}/spectra/spectra_LMM/gp_activation_LMM.csv",
+    log:
+        f"logs/{config["analysis_name"]}/spectra/spectra_LMM.log",
+    conda:
+        "../envs/spectra.yaml"
+    threads: config["spectra"]["spectra_LMM"]["cores"]
+    resources:
+        mem_mb=config["spectra"]["spectra_LMM"]["mem_mb"],
+        time=config["spectra"]["spectra_LMM"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        control=config["control_condition"],
+        case=config["case_condition"],
+    message:
+        "Analyze spectra's results and test for differential program activation with Linear Mixed Models."
+    script:
+        "../scripts/spectra/spectra_LMM.R"

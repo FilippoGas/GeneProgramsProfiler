@@ -27,6 +27,8 @@
 #                                        names in the metadata
 #   - snakemake@params[["condition_col"]] : Name of the column holding sample 
 #                                        condition in the metadata
+#   - snakemake@params[["phase_col"]] : Name of the column holding cell cycle 
+#                                       phase in the metadata
 # ==============================================================================
 
 # Setup Logging ----------------------------------------------------------------
@@ -75,6 +77,10 @@ message("Loading sample name column name: ",
         snakemake@params[["sample_col"]])
 sample_name_colname <- snakemake@params[["sample_col"]]
 message("Done")
+message("Loading cell cycle phase column name: ",
+        snakemake@params[["phase_col"]])
+cell_cycle_phase_colname <- snakemake@params[["phase_col"]]
+message("Done")
 
 # 3. Add cytopus cell type annotation ####
 # ------------------------------------------------------------------------------
@@ -99,6 +105,12 @@ data@meta.data <- data@meta.data %>%
         dplyr::rename(
                 "sample_name" = all_of(
                         sample_name_colname
+                )
+        )
+data@meta.data <- data@meta.data %>%
+        dplyr::rename(
+                "phase" = all_of(
+                        cell_cycle_phase_colname
                 )
         )
 # Add annotations to metadata 

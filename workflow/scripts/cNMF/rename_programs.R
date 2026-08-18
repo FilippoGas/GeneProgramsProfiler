@@ -88,8 +88,10 @@ cell_scores <- cell_scores %>%
         left_join(metadata %>% dplyr::select(cell_id,
                                              diagnosis,
                                              sample_name,
+                                             phase,
                                              celltype)) %>%
         relocate(diagnosis, .before = cell_id) %>%
+        relocate(phase, .before = diagnosis) %>%
         relocate(sample_name, .before = diagnosis) %>% 
         relocate(celltype, .after=diagnosis)
 message("Done")
@@ -160,7 +162,7 @@ res <- lapply(unknown_programs, function(factor){
 })
 factor_names <- bind_rows(res)
 # Add name to the programs that were identified
-colnames(cell_scores)[5:ncol(cell_scores)] <- factor_names$name
+colnames(cell_scores)[6:ncol(cell_scores)] <- factor_names$name
 # Identify programs that remained unknown and remove them
 unknown_programs <- grep("\\d+$", colnames(cell_scores)[6:length(colnames(cell_scores))], value = TRUE)
 cell_scores <- cell_scores %>%
