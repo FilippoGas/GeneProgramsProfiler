@@ -53,6 +53,13 @@ spectra:
     mem_mb: 2500
     time: "00:15:00"
     cores: 4
+  # Rule 5: spectra_LMM_plots
+  spectra_LMM_plots:
+    cores: 1
+    mem_mb: 2500
+    time: "00:10:00"
+    log2FC_thresh: 1.5
+    FDR_thresh: 0.05
 # Module 3: DE_analysis
 DE_analysis:
   # Rule 1: run_DE_analysis
