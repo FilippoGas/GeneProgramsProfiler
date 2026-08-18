@@ -109,7 +109,7 @@ cNMF:
     cores: 1
   # Rule 6: cNMF_consensus
   cNMF_consensus:
-    mem_mb: 2500
+    mem_mb: 10000
     time: "00:20:00"
     cores: 1
     local_density_threshold: 0.5

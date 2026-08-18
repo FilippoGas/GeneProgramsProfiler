@@ -207,18 +207,48 @@ rule cNMF_consensus:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_consensus"]["cores"]
     resources:
-        mem_mb=config["cNMF"]["cNMF_consensus"]["cores"],
+        mem_mb=config["cNMF"]["cNMF_consensus"]["mem_mb"],
         time=config["cNMF"]["cNMF_consensus"]["time"],
         queue=config["queues"]["cpu"],
     params:
         output_dir=lambda wildcards, output: os.path.dirname(output.done),
         k=lambda wildcards, input: open(input.best_k, "r").read().strip(),
         ldt=config["cNMF"]["cNMF_consensus"]["local_density_threshold"],
+        analysis_name=config["analysis_name"],
     shell:
         """
         cnmf consensus \
             --output-dir {params.output_dir} \
+            --name {params.analysis_name} \
             --components {params.k} \
             --local-density-threshold {params.ldt} \
             --show-clustering #TODO in README.md warn that adjusting ldt may be needed
+        touch {output.done}
         """
+
+    rule cNMF_rename_programs:
+        """
+        Run Over Representation Analysis on gene program's markers to label them
+        """
+        input:
+            f"results/{config['analysis_name']}/cNMF/.done_consensus.txt",
+            cytopus_list=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
+            metadata=f"results/{config["analysis_name"]}/DE_analysis/metadata.csv",
+        output:
+            labeled_cell_scores=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.labeled_cell_score.csv",
+        log:
+            f"logs/{config["analysis_name"]}/cNMF/cNMF_rename_programs.log"
+        conda:
+            "../envs/cNMF.yaml"
+        threads: config["cNMF"]["cNMF_rename_programs"]["cores"]
+        resources:
+            mem_mb=config["cNMF"]["cNMF_rename_programs"]["mem_mb"],
+            time=config["cNMF"]["cNMF_rename_programs"]["time"],
+            queue=config["queues"]["cpu"],
+        params:
+            output_dir=lambda wildcards, output: os.path.dirname(output.done),
+            k=lambda wildcards, input: open(input.best_k, "r").read().strip(),
+            ldt=config["cNMF"]["cNMF_consensus"]["local_density_threshold"],
+            analysis_name=config["analysis_name"],
+        script:
+            "../scripts/cNMF/rename_programs.R"
