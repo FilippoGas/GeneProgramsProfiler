@@ -3,8 +3,7 @@ import os
 
 rule make_comp_table:
     """
-    Put togheter results from different methods in one table allowing
-    direct comparison between different methods
+    Put togheter results from different methods in one table allowing direct comparison 
     """
     input:
         cytopus=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
@@ -24,5 +23,7 @@ rule make_comp_table:
         queue=config["queues"]["cpu"],
     params:
         enrichment_dir=lambda wildcards, input: input.gsea.split("run_gsea")[0],
+    message:
+        "Put togheter results from different methods in one table allowing direct comparison."
     script:
         "../scripts/collect_results/make_comp_table.R"
