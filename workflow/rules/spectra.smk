@@ -52,7 +52,7 @@ rule run_spectra:
         "../scripts/spectra/run_spectra.py"
 
 
-rule rename_programs:
+rule spectra_rename_programs:
     """
     Spectra might fail to label some factors (gene programs) due to low overlap with
     cytopus gene sets. Here we try to label them through ORA enrichment of the marker
