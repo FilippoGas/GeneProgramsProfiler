@@ -139,11 +139,12 @@ rule spectra_WMW_plot:
     script:
         "../scripts/spectra/spectra_WMW_plots.R"
 
+
 rule spectra_lmm:
     """
     Analyze spectra results and test for differential activation of gene programs
     between the two conditions. Gene programs activation differences are
-    tested with Linear Mixed Models.
+    tested with Linear Mixed Models to correct for cell cycle phase.
     """
     input:
         cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
