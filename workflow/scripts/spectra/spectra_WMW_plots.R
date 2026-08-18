@@ -10,9 +10,6 @@
 #                                       output)
 #   - snakemake@input[["gp_activation_WMW"]] : Path to differential activation
 #                                              analysis results
-# Snakemake Expected Outputs:
-#   - snakemake@output[["gp_activation_WMW"]] : Results from the WMW test
-#                                       
 # Snakemake Expected Params:
 #   - snakemake@params[["effect_size_thresh"]] : "Effect size threshold for 
 #                                                 Wilcoxon-Mann-Whitney U-test's
