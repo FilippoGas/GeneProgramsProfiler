@@ -166,3 +166,35 @@ rule spectra_lmm:
         "Analyze spectra's results and test for differential program activation with Linear Mixed Models."
     script:
         "../scripts/spectra/spectra_LMM.R"
+
+
+rule spectra_LMM_plot:
+    """
+    Plot results of the differential activation analysis of spectra's output.
+    The number of output for this rule is not defined a priori, as it depends on the
+    number of deregulated programs. For this reason a fake output is used to
+    understand when the rule terminated.
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
+        gp_activation_LMM=f"results/{config["analysis_name"]}/spectra/spectra_LMM/gp_activation_LMM.csv",
+    output:
+        volcano=f"results/{config["analysis_name"]}/spectra/spectra_LMM_plots/GP_deregulation_LMM_volcano.pdf",
+    log:
+        "logs/spectra/spectra_LMM_plots.log",
+    conda:
+        "../envs/spectra.yaml"
+    threads: config["spectra"]["spectra_LMM_plots"]["cores"]
+    resources:
+        mem_mb=config["spectra"]["spectra_LMM_plots"]["mem_mb"],
+        time=config["spectra"]["spectra_LMM_plots"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        effect_size_thresh=config["spectra"]["spectra_LMM_plots"]["effect_size_thresh"],
+        FDR_thresh=config["spectra"]["spectra_LMM_plots"]["FDR_thresh"],
+    message:
+        """
+        Plot results from differential analysis on spectra's results.
+        """
+    script:
+        "../scripts/spectra/spectra_LMM_plots.R"
