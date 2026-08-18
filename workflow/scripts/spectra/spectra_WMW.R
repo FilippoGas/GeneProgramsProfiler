@@ -3,7 +3,7 @@
 # Author: Filippo Gastaldello
 # Date: 06/08/2026
 # Description: 
-#   Analyze results spectra output and looks for deregulated gene programs. 
+#   Analyze spectra output and looks for deregulated gene programs. 
 #   Gene program activations are tested for differences between the condition,
 #   per each celltype and per each patient using Wilcoxon-Mann-Whitney U-test
 #
