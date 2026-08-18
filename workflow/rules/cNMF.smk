@@ -247,7 +247,7 @@ rule cNMF_rename_programs:
         time=config["cNMF"]["cNMF_rename_programs"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        output_dir=lambda wildcards, output: os.path.dirname(output.done),
+        output_dir=lambda wildcards, output: os.path.dirname(output.labeled_cell_scores),
         k=lambda wildcards, input: open(input.best_k, "r").read().strip(),
         ldt=config["cNMF"]["cNMF_consensus"]["local_density_threshold"],
         analysis_name=config["analysis_name"],
