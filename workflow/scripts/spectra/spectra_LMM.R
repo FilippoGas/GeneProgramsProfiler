@@ -51,7 +51,7 @@ message("Done")
 # 2. Test differential activation using LMMs ####
 # ------------------------------------------------------------------------------
 message("Testing differential gene program activation with Linear Mixed Models...")
-res_lmm <- lapply(unique(cell_scores$celltype),
+res_lmm <- mclapply(unique(cell_scores$celltype),
                   function(cell_type){
                           # Subset cell scores to keep only current cell type
                           celltype_cell_score <- cell_scores %>% 
@@ -112,7 +112,10 @@ res_lmm <- lapply(unique(cell_scores$celltype),
                                   }
                           }
                           return(tests)
-                  }
+                  },
+                  mc.cores=snakemake@threads,
+                  mc.preschedule=TRUE,
+                  mc.cleanup=TRUE
 )
 GP_activation_lmm_phase_corrected <- bind_rows(res_lmm)
 GP_activation_lmm_phase_corrected <- GP_activation_lmm_phase_corrected %>% 
