@@ -190,7 +190,7 @@ rule spectra_LMM_plot:
         time=config["spectra"]["spectra_LMM_plots"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        effect_size_thresh=config["spectra"]["spectra_LMM_plots"]["effect_size_thresh"],
+        log2FC_thresh=config["spectra"]["spectra_LMM_plots"]["log2FC_thresh"],
         FDR_thresh=config["spectra"]["spectra_LMM_plots"]["FDR_thresh"],
     message:
         """
