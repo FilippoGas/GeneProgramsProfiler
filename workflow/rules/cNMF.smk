@@ -232,7 +232,8 @@ rule cNMF_rename_programs:
     Run Over Representation Analysis on gene program's markers to label them
     """
     input:
-        f"results/{config['analysis_name']}/cNMF/.done_consensus.txt",
+        best_k=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/best_k.txt",
+        done=f"results/{config['analysis_name']}/cNMF/.done_consensus.txt",
         cytopus_list=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
         metadata=f"results/{config["analysis_name"]}/DE_analysis/metadata.csv",
     output:
