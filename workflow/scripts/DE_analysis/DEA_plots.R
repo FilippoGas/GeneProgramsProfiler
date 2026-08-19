@@ -105,12 +105,8 @@ plot_list <- lapply(unique(c(DEGs_sc$celltype, DEGs_pb$celltype)),
 })
 
 combined_plot <- wrap_plots(plot_list) + 
-        plot_annotation(title    = "Overlap between DEGs_sc found in scDE 
-                                    and pseudo-bulkDE analyses",
-                        subtitle = "Scatterplot showing logFC correlation
-                                    between genes significantly altered
-                                    (FDR<0.05 and log2FC>1) in both analyses
-                                    (venn intersection)"
+        plot_annotation(title    = "Overlap between DEGs_sc found in scDE and pseudo-bulkDE analyses",
+                        subtitle = "Scatterplot showing logFC correlation between genes significantly altered (FDR<0.05 and log2FC>1) in both analyses (venn intersection)"
                         )
 ggsave(filename = snakemake@output[["overlap"]],
        plot = combined_plot,
@@ -142,8 +138,7 @@ p1 <- DEGs_both %>%
                         linewidth = 0.25
                         ) +
                 labs(
-                        title = "Significant in at least one of the two
-                                 analyses"
+                        title = "Significant in at least one of the two analyses"
                         ) +
                 theme_minimal()
 
@@ -172,8 +167,7 @@ p2 <- DEGs_both %>%
         theme_minimal()
 p <- wrap_plots(p1, p2) +
         plot_annotation(
-                title = "Correlation between single cell and pseudobulk
-                         FDRs of differential analysis",
+                title = "Correlation between single cell and pseudobulk FDRs of differential analysis",
                 subtitle = "(Removed genes where single cell FDR was zero)")
 ggsave(p,
        filename = snakemake@output[["FDR_correlation"]],
@@ -205,8 +199,7 @@ p1 <- DEGs_both %>%
                         linewidth = 0.25
                         ) +
                 labs(
-                        title = "Significant in at least one of the two 
-                                 analyses"
+                        title = "Significant in at least one of the two analyses"
                         ) +
                 theme_minimal()
 # Significant in both
@@ -233,8 +226,7 @@ p2 <- DEGs_both %>%
                 theme_minimal()
 p <- wrap_plots(p1, p2) +
         plot_annotation(
-                title = "Correlation between single cell and pseudobulk
-                         Log2FC of differential analysis"
+                title = "Correlation between single cell and pseudobulk Log2FC of differential analysis"
                 )
 ggsave(p,
        filename = snakemake@output[["log2FC_correlation"]],
