@@ -281,7 +281,7 @@ rule cNMF_WMW:
     output:
         gp_activation_WMW=f"results/{config["analysis_name"]}/cNMF/cNMF_WMW/gp_activation_WMW.csv",
     log:
-        f"logs/{config["analysis_name"]}/cNMF/cNMF_WMW.log"
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_WMW.log",
     conda:
         "../envs/cNMF.yaml"
     threads: config["cNMF"]["cNMF_WMW"]["cores"]
