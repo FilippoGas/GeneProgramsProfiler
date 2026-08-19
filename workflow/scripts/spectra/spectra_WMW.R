@@ -29,6 +29,7 @@ sink(log, type="message")
 suppressPackageStartupMessages({
         library(tidyverse)
         library(parallel)
+        library(effectsize)
 })
 
 message("Starting R script \"spectra_WMW.R\"...")
@@ -49,79 +50,97 @@ message("Done")
 # ------------------------------------------------------------------------------
 message("Starting Wilcoxon-Mann-Whitney U-test to look for deregulated
         gene programs ...")
-res_WMW <- mclapply(unique(cell_scores$celltype), function(cell_type){
+res_WMW_sample_agg <- lapply(unique(cell_scores$celltype), function(cell_type){
         
         # Subset cell scores to keep only current cell type
-        celltype_cell_score <- cell_scores %>%
-                dplyr::filter(celltype == cell_type)
+        celltype_cell_score <- cell_scores %>% dplyr::filter(celltype == cell_type)
         
         # Store total cells for percentages
         n_total_control <- sum(celltype_cell_score$diagnosis == control)
         n_total_ipf     <- sum(celltype_cell_score$diagnosis == case)
         
-        # Use a list to store loop results
         tests_list <- list()
         
-        programs <- colnames(
-                celltype_cell_score)[6:length(colnames(celltype_cell_score))]
+        programs <- colnames(celltype_cell_score)[6:length(colnames(celltype_cell_score))]
         
         for (program in programs) {
                 
                 # Extract active cells
-                vec_control <- celltype_cell_score %>%
-                        dplyr::filter(diagnosis == "Control" & 
-                                      .[[program]] > 0.001) %>%
-                        pull(all_of(program))
+                vec_control <- celltype_cell_score %>% 
+                        dplyr::filter(diagnosis == control & .[[program]] > 0.001) %>%
+                        dplyr::select(all_of(program), sample_name)
                 vec_ipf     <- celltype_cell_score %>%
-                        dplyr::filter(diagnosis == "IPF" &
-                                      .[[program]] > 0.001) %>%
-                        pull(all_of(program))
+                        dplyr::filter(diagnosis == case & .[[program]] > 0.001) %>%
+                        dplyr::select(all_of(program), sample_name)
                 
-                n_active_control <- length(vec_control)
-                n_active_case    <- length(vec_ipf)
+                n_active_control <- nrow(vec_control)
+                n_active_case    <- nrow(vec_ipf)
                 
-                perc_active_control <- round((n_active_control / 
-                                              n_total_control) * 100, 2)
-                perc_active_case    <- round((n_active_case /
-                                              n_total_ipf) * 100, 2)
+                perc_active_control <- round((n_active_control / n_total_control) * 100, 2)
+                perc_active_case    <- round((n_active_case / n_total_ipf) * 100, 2)
+                
+                # Aggregate cell scores per sample
+                vec_control_agg <- vec_control %>% summarise(.by = sample_name, score = mean(.data[[program]]))
+                vec_ipf_agg     <- vec_ipf     %>% summarise(.by = sample_name, score = mean(.data[[program]]))
+                
+                # Extract the numeric vectors for the test
+                scores_control <- vec_control_agg %>% pull(score)
+                scores_ipf     <- vec_ipf_agg %>% pull(score)
                 
                 # Try to compute the test
-                test_res <- try(wilcox.test(x = vec_control,
-                                            y = vec_ipf,
-                                            paired = FALSE),
+                test_res <- try(wilcox.test(x          = scores_control,
+                                            y          = scores_ipf,
+                                            conf.int   = TRUE,
+                                            paired     = FALSE),
                                 silent = TRUE)
                 
-                if (inherits(test_res, "try-error")) {
-                        stat <- NA
-                        pval <- NA
-                }else{
+                if (inherits(test_res, "try-error") || length(scores_control) == 0 || length(scores_ipf) == 0) {
+                        stat       <- NA
+                        pval       <- NA
+                        es         <- NA
+                        es_ci_low  <- NA
+                        es_ci_high <- NA
+                } else {
                         stat <- test_res$statistic
                         pval <- test_res$p.value
+                        
+                        # Compute effect size and 95% CI on the sample-aggregated data
+                        es_res <- effectsize::rank_biserial(x = scores_ipf, 
+                                                            y = scores_control,  # The second group is used as reference by default 
+                                                            ci = 0.95)
+                        
+                        es         <- es_res$r_rank_biserial
+                        es_ci_low  <- es_res$CI_low
+                        es_ci_high <- es_res$CI_high
                 }
                 
-                # Store results, including the active sample sizes
+                # Store results
                 tests_list[[program]] <- data.frame(
-                        cell_type = cell_type, 
-                        program = program, 
+                        cell_type                 = cell_type, 
+                        program                   = program, 
                         active_cells_control_perc = perc_active_control,
-                        active_cells_case_perc = perc_active_case, 
-                        n_active_control = n_active_control, 
-                        n_active_case = n_active_case,       
-                        statistic = stat, 
-                        p = pval
+                        active_cells_case_perc    = perc_active_case, 
+                        n_active_control          = n_active_control, 
+                        n_active_case             = n_active_case,
+                        n_samples_control         = length(scores_control),
+                        n_samples_case            = length(scores_ipf),
+                        avg_activation_control    = mean(scores_control),
+                        avg_activation_case       = mean(scores_ipf),
+                        statistic                 = stat, 
+                        p                         = pval,
+                        effect_size               = es,
+                        effect_size_CI_lower      = es_ci_low,
+                        effect_size_CI_upper      = es_ci_high
                 )
         }
         return(bind_rows(tests_list))
-},
-mc.cores=snakemake@threads,
-mc.preschedule = TRUE,
-mc.cleanup=TRUE)
+})
 
 # Bind all cell types together
-pg_activation_WMW <- bind_rows(res_WMW)
+gp_activation_WMW <- bind_rows(res_WMW_sample_agg)
 
 # Compute FDR and Effect Size
-pg_activation_WMW <- pg_activation_WMW %>%
+gp_activation_WMW <- gp_activation_WMW %>%
         drop_na(p) %>% 
         group_by(cell_type) %>% 
         mutate(FDR = p.adjust(p, method = "fdr")) %>% 
@@ -131,7 +150,7 @@ pg_activation_WMW <- pg_activation_WMW %>%
         mutate(effect_size = abs(1 - (2 * statistic) /
                                 (n_active_control * n_active_case)))
 
-write_csv(pg_activation_WMW, snakemake@output[["gp_activation_WMW"]])
+write_csv(gp_activation_WMW, snakemake@output[["gp_activation_WMW"]])
 message("Done")
 
 # Close Logging ----------------------------------------------------------------

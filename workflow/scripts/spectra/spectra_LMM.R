@@ -77,17 +77,17 @@ res_lmm <- mclapply(unique(cell_scores$celltype),
                                                                               length())/length(rownames(celltype_cell_score))*100,
                                                                      2)
                                   perc_active_cells_case <-    round((celltype_cell_score %>%
-                                                                              dplyr::filter(Diagnosis == case & .[[program]]>0.1) %>%
+                                                                              dplyr::filter(diagnosis == case & .[[program]]>0.1) %>%
                                                                               rownames() %>%
                                                                               length())/length(rownames(celltype_cell_score))*100,
                                                                      2)
                                   # Compute average activation in case vs control
                                   avg_control_activation <- celltype_cell_score %>%
-                                          dplyr::filter(Diagnosis == control) %>% 
+                                          dplyr::filter(diagnosis == control) %>% 
                                           pull(any_of(program)) %>% 
                                           mean()
                                   avg_case_activation <- celltype_cell_score %>%
-                                          dplyr::filter(Diagnosis == case) %>% 
+                                          dplyr::filter(diagnosis == case) %>% 
                                           pull(any_of(program)) %>% 
                                           mean()
                                   # Try to compute the test, it might fail if not enough cells are active
@@ -113,7 +113,7 @@ res_lmm <- mclapply(unique(cell_scores$celltype),
                           }
                           return(tests)
                   },
-                  mc.cores=snakemake@threads,
+                  mc.cores=4,
                   mc.preschedule=TRUE,
                   mc.cleanup=TRUE
 )
