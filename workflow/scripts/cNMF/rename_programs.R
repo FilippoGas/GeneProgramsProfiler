@@ -36,6 +36,7 @@ sink(log, type="message")
 # Load Libraries ---------------------------------------------------------------
 suppressPackageStartupMessages({
         library(tidyverse)
+        library(parallel)
         library(jsonlite)
         library(clusterProfiler)
         library(org.Hs.eg.db)
@@ -118,7 +119,7 @@ universe_symbol <- markers %>%
         unique()
 
 # Perform enrichment
-res <- lapply(unknown_programs, function(factor){
+res <- mclapply(unknown_programs, function(factor){
         
         # Extract markers for current program
         current_markers <- markers %>% 
@@ -163,7 +164,9 @@ res <- lapply(unknown_programs, function(factor){
                                         factor,
                                         "-X-",
                                         ora_results)))
-})
+},
+mc.cores=snakemake@threads,
+mc.cleanup=TRUE)
 factor_names <- bind_rows(res)
 # Add name to the programs that were identified
 colnames(cell_scores)[6:ncol(cell_scores)] <- factor_names$name
