@@ -28,6 +28,7 @@ sink(log, type="message")
 
 # Load Libraries ---------------------------------------------------------------
 suppressPackageStartupMessages({
+        library(parallel)
         library(tidyverse)
         library(jsonlite)
         library(clusterProfiler)
@@ -98,7 +99,7 @@ universe_symbol <- markers %>%
         unique()
 
 # Perform enrichment
-res <- lapply(unknown_programs, function(factor){
+res <- mclapply(unknown_programs, function(factor){
         
         cell_type <- str_split_i(factor, "-X-", 2)
         cell_type <- ifelse(cell_type == "global", "all", cell_type)
@@ -148,7 +149,9 @@ res <- lapply(unknown_programs, function(factor){
                                         str_split_i(factor, "-X-",2),
                                         "-X-",
                                         ora_results)))
-})
+},
+mc.cores=snakemake@threads,
+mc.cleanup = TRUE)
 factor_names <- bind_rows(res)
 # Add name to the programs that were identified
 colnames(unknown_cell_scores)[6:ncol(unknown_cell_scores)] <- factor_names$name
