@@ -57,7 +57,8 @@ spectra_WMW <- read_csv(snakemake@input[["spectra_GP_activation_WMW"]]) %>%
                       program,
                       FDR,
                       effect_size) %>%
-        mutate(cell_type = gsub("/","_", cell_type))
+        mutate(cell_type = gsub("/","_", cell_type)) %>% 
+        mutate(program_short = str_split_i(str_split_i(program, "-X-", 3),fixed("-(ORA)"),1))
 message("Done")
 message("Loading spectra differential gene programs activation data from: ",
         snakemake@input[["spectra_GP_activation_LMM"]])
@@ -65,6 +66,7 @@ spectra_LMM <- read_csv(snakemake@input[["spectra_GP_activation_LMM"]]) %>%
         dplyr::filter(term == "DiagnosisIPF") %>% 
         dplyr::select(cell_type, program, FDR, log2FC) %>%
         mutate(cell_type = gsub("/","_", cell_type)) %>% 
+        mutate(program_short = str_split_i(str_split_i(program, "-X-", 3),fixed("-(ORA)"),1)) %>% 
         dplyr::rename("FDR_lmm_spectra"="FDR", "log2FC_lmm_spectra"="log2FC")
 message("Done")
 message("Loading cNMF differential gene programs activation data from: ",
@@ -74,25 +76,26 @@ cNMF_WMW <- read_csv(snakemake@input[["cNMF_GP_activation_WMW"]]) %>%
                       program,
                       FDR,
                       effect_size) %>%
-        mutate(cell_type = gsub("/","_", cell_type))
+        mutate(cell_type = gsub("/","_", cell_type)) %>% 
+        mutate(program_short = str_split_i(str_split_i(program, "-X-", 3),fixed("-(ORA)"),1))
 message("Done")
 message("Loading cNMF differential gene programs activation data from: ",
         snakemake@input[["cNMF_GP_activation_LMM"]])
 cNMF_LMM <- read_csv(snakemake@input[["cNMF_GP_activation_LMM"]]) %>%
         dplyr::filter(term == "DiagnosisIPF") %>% 
         dplyr::select(cell_type, program, FDR, log2FC) %>%
-        mutate(cell_type = gsub("/","_", cell_type))
+        mutate(cell_type = gsub("/","_", cell_type)) %>% 
+        mutate(program_short = str_split_i(str_split_i(program, "-X-", 3),fixed("-(ORA)"),1))
 message("Done")
 
 # 2. join different methods (leave enrichments for later) ####
 # ------------------------------------------------------------------------------
-comp_table <- spectra_LMM %>% 
-        mutate(program_short = str_split_i(program, "-X-", 3)) %>% 
+comp_table <- spectra_LMM  %>% 
         relocate(program_short, .after = program) %>% 
-        full_join(spectra_WMW %>% dplyr::rename("FDR_wmw_spectra" = "FDR", "effect_size_wmw_spectra" = "effect_size"), by = c("cell_type", "program")) %>% 
-        full_join(cNMF_WMW %>% dplyr::rename("FDR_wmw_cNMF" = "FDR", "effect_size_wmw_cNMF" = "effect_size"), by = c("cell_type", "program"))  %>% 
-        full_join(cNMF_LMM %>% dplyr::rename("FDR_lmm_cNMF"="FDR", "log2FC_lmm_cNMF"="log2FC"), by = c("cell_type", "program")) %>% 
-        mutate(program_short = ifelse(is.na(program_short), str_split_i(program, "-X-", 3), program_short))
+        full_join(spectra_WMW %>% dplyr::rename("FDR_wmw_spectra" = "FDR", "effect_size_wmw_spectra" = "effect_size") %>% select(-c(program)), by = c("cell_type", "program_short")) %>% 
+        full_join(cNMF_WMW %>% dplyr::rename("FDR_wmw_cNMF" = "FDR", "effect_size_wmw_cNMF" = "effect_size") %>% select(-c(program)), by = c("cell_type", "program_short"))  %>% 
+        full_join(cNMF_LMM %>% dplyr::rename("FDR_lmm_cNMF"="FDR", "log2FC_lmm_cNMF"="log2FC") %>% select(-c(program)), by = c("cell_type", "program_short")) %>% 
+        mutate(program_short = ifelse(is.na(program_short), str_split_i(str_split_i(program, "-X-", 3),fixed("-(ORA)"),1), program_short))
 
 # 3. Retrieve all GSEA and ORA output files ####
 # ------------------------------------------------------------------------------
