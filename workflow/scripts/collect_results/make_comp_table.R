@@ -61,7 +61,7 @@ spectra_WMW <- read_csv(snakemake@input[["spectra_GP_activation_WMW"]]) %>%
 message("Done")
 message("Loading spectra differential gene programs activation data from: ",
         snakemake@input[["spectra_GP_activation_LMM"]])
-cNMF_LMM <- read_csv(snakemake@input[["cNMF_GP_activation_LMM"]]) %>%
+spectra_LMM <- read_csv(snakemake@input[["spectra_GP_activation_LMM"]]) %>%
         dplyr::filter(term == "DiagnosisIPF") %>% 
         dplyr::select(cell_type, program, FDR, log2FC) %>%
         mutate(cell_type = gsub("/","_", cell_type)) %>% 
