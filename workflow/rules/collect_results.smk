@@ -3,7 +3,8 @@ import os
 
 rule make_comp_table:
     """
-    Put togheter results from different methods in one table allowing direct comparison 
+    Put togheter results from different methods in one table allowing direct comparison
+
     """
     input:
         cytopus=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",

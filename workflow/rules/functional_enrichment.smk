@@ -28,6 +28,7 @@ rule run_gsea:
     script:
         "../scripts/functional_enrichment/run_gsea.R"
 
+
 rule run_ora:
     """
     Run Over Representation Analysis on the results of the differential analyses,
@@ -53,7 +54,7 @@ rule run_ora:
         time=config["functional_enrichment"]["run_ora"]["time"],
         queue=config["queues"]["cpu"],
     params:
-        padj_thresh=config["functional_enrichment"]["run_gsea"]["padj_thresh"]
+        padj_thresh=config["functional_enrichment"]["run_gsea"]["padj_thresh"],
     message:
         "Run Over Representation Analysis on the results of the differential expression analyses."
     script:
