@@ -310,7 +310,7 @@ rule cNMF_WMW_plot:
         cell_scores=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.labeled_cell_score.csv",
         gp_activation_WMW=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_WMW/gp_activation_WMW.csv",
     output:
-        done=f"results/{config["analysis_name"]}/cNMF/cNMF_WMW_plots/.done.txt",
+        done=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_WMW_plots/.done.txt",
     log:
         f"logs/{config["analysis_name"]}/cNMF/cNMF_WMW_plots.log",
     conda:
@@ -366,7 +366,7 @@ rule cNMF_LMM_plot:
     understand when the rule terminated.
     """
     input:
-        gp_activation_LMM=f"results/{config["analysis_name"]}/cNMF/cNMF_LMM/gp_activation_LMM.csv",
+        gp_activation_LMM=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_LMM/gp_activation_LMM.csv",
     output:
         volcano=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_LMM_plots/GP_deregulation_LMM_volcano.pdf",
     log:
