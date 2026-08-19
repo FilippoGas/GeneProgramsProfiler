@@ -82,13 +82,13 @@ functional_enrichment:
   run_gsea:
     cores: 1
     mem_mb: 2500
-    time: "00:15:00"
+    time: "00:45:00"
     padj_thresh: 0.05
   # Rule 2: run_ora
   run_ora:
     cores: 1
     mem_mb: 2500
-    time: "00:15:00"
+    time: "00:45:00"
     padj_thresh: 0.05
 # Module 5: cNMF.smk
 cNMF:
@@ -131,7 +131,7 @@ cNMF:
   # Rule 7: cNMF_rename_programs
   cNMF_rename_programs:
     mem_mb: 3500
-    time: "00:30:00"
+    time: "01:00:00"
     cores: 4
 # Module 6: collect_results.smk
 collect_results:
