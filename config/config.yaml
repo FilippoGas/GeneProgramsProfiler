@@ -41,6 +41,7 @@ spectra:
     mem_mb: 2500
     time: "00:15:00"
     cores: 4
+    active_cell_thresh: 0.001
   # Rule 5: spectra_WMW_plots
   spectra_WMW_plots:
     cores: 1
@@ -53,6 +54,7 @@ spectra:
     mem_mb: 2500
     time: "00:15:00"
     cores: 4
+    active_cell_thresh: 0.1
   # Rule 5: spectra_LMM_plots
   spectra_LMM_plots:
     cores: 1
