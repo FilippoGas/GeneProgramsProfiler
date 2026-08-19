@@ -1,9 +1,9 @@
 # ==============================================================================
-# Script: spectra_LMM.R
+# Script: LMM.R
 # Author: Filippo Gastaldello
 # Date: 18/08/2026
 # Description: 
-#   Analyze spectra output and looks for deregulated gene programs. 
+#   Analyze gene program activation data and look for deregulated gene programs. 
 #   Gene program activations are tested for differences between the condition,
 #   per each celltype and per each patient using Linear Mixed models to correct
 #   for cell cycle phase
@@ -18,6 +18,9 @@
 #   - snakemake@params[["case"]] : Name of the case condition in the metadata
 #   - snakemake@params[["control]] : Name of the control condition in the 
 #                                    metadata
+#   - snakemake@params[["active_cell_thresh"]] : Activation threshold to
+#                                                to consider a program active
+#                                                in a cell
 # ==============================================================================
 
 # Setup Logging ----------------------------------------------------------------
@@ -34,7 +37,7 @@ suppressPackageStartupMessages({
         library(lmerTest)
 })
 
-message("Starting R script \"spectra_LMM.R\"...")
+message("Starting R script \"LMM.R\"...")
 
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
@@ -46,6 +49,9 @@ case <- snakemake@params[["case"]]
 message("Done")
 message("Loading control condition name: ", snakemake@params[["control"]])
 control <- snakemake@params[["control"]]
+message("Done")
+message("Loading activation threshold: ", snakemake@params[["active_cell_thresh"]])
+active_cell_thresh <- snakemake@params[["active_cell_thresh"]]
 message("Done")
 
 # 2. Test differential activation using LMMs ####
@@ -68,16 +74,16 @@ res_lmm <- mclapply(unique(cell_scores$celltype),
                                               "std.err"=numeric(),
                                               "statistic"=numeric(),
                                               "p"=numeric())
-                          # For each program, test for difference in activation between case and control, only in active cells (activation > 0.001) as per Authors suggestion
+                          # For each program, test for difference in activation between case and control, only in active cells 
                           for (program in colnames(celltype_cell_score)[6:length(colnames(celltype_cell_score))]) {
                                   # Compute number of active cells (activation > 0.001) in this cell type
                                   perc_active_cells_control <- round((celltype_cell_score %>%
-                                                                              dplyr::filter(diagnosis == control & .[[program]]>0.1) %>%
+                                                                              dplyr::filter(diagnosis == control & .[[program]]>active_cell_thresh) %>%
                                                                               rownames() %>%
                                                                               length())/length(rownames(celltype_cell_score))*100,
                                                                      2)
                                   perc_active_cells_case <-    round((celltype_cell_score %>%
-                                                                              dplyr::filter(diagnosis == case & .[[program]]>0.1) %>%
+                                                                              dplyr::filter(diagnosis == case & .[[program]]>active_cell_thresh) %>%
                                                                               rownames() %>%
                                                                               length())/length(rownames(celltype_cell_score))*100,
                                                                      2)
@@ -91,7 +97,7 @@ res_lmm <- mclapply(unique(cell_scores$celltype),
                                           pull(any_of(program)) %>% 
                                           mean()
                                   # Try to compute the test, it might fail if not enough cells are active
-                                  data <- celltype_cell_score %>% dplyr::select(diagnosis, sample_name, phase, all_of(program)) %>% dplyr::filter(.[[program]]>0.1)
+                                  data <- celltype_cell_score %>% dplyr::select(diagnosis, sample_name, phase, all_of(program)) %>% dplyr::filter(.[[program]]>active_cell_thresh)
                                   colnames(data) <- c("diagnosis", "sample_name", "phase", "program")
                                   test_res <- try(lmer(program ~ diagnosis + phase + (1|sample_name), data = data),
                                                   silent = TRUE)

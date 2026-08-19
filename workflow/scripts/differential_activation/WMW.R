@@ -1,9 +1,9 @@
 # ==============================================================================
-# Script: spectra_WMW.R
+# Script: WMW.R
 # Author: Filippo Gastaldello
 # Date: 06/08/2026
 # Description: 
-#   Analyze spectra output and looks for deregulated gene programs. 
+#   Analyze gene program activation data and look for deregulated gene programs. 
 #   Gene program activations are tested for differences between the condition,
 #   per each celltype and per each patient using Wilcoxon-Mann-Whitney U-test
 #
@@ -17,6 +17,9 @@
 #   - snakemake@params[["case"]] : Name of the case condition in the metadata
 #   - snakemake@params[["control]] : Name of the control condition in the 
 #                                    metadata
+#   - snakemake@params[["active_cell_thresh"]] : Activation threshold to 
+#                                                consider a program active in
+#                                                cell
 # ==============================================================================
 
 # Setup Logging ----------------------------------------------------------------
@@ -32,7 +35,7 @@ suppressPackageStartupMessages({
         library(effectsize)
 })
 
-message("Starting R script \"spectra_WMW.R\"...")
+message("Starting R script \"WMW.R\"...")
 
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
@@ -44,6 +47,10 @@ case <- snakemake@params[["case"]]
 message("Done")
 message("Loading control condition name: ", snakemake@params[["control"]])
 control <- snakemake@params[["control"]]
+message("Done")
+message("Loading program activation threshold: ",
+        snakemake@params[["active_cell_thresh"]])
+active_cell_thresh <- snakemake@params[["active_cell_thresh"]]
 message("Done")
 
 # 2. Test gene program activation differences between case and coltrol ####
@@ -67,10 +74,10 @@ res_WMW_sample_agg <- lapply(unique(cell_scores$celltype), function(cell_type){
                 
                 # Extract active cells
                 vec_control <- celltype_cell_score %>% 
-                        dplyr::filter(diagnosis == control & .[[program]] > 0.001) %>%
+                        dplyr::filter(diagnosis == control & .[[program]] > active_cell_thresh) %>%
                         dplyr::select(all_of(program), sample_name)
                 vec_ipf     <- celltype_cell_score %>%
-                        dplyr::filter(diagnosis == case & .[[program]] > 0.001) %>%
+                        dplyr::filter(diagnosis == case & .[[program]] > active_cell_thresh) %>%
                         dplyr::select(all_of(program), sample_name)
                 
                 n_active_control <- nrow(vec_control)
