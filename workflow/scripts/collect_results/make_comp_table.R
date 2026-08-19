@@ -58,7 +58,8 @@ message("Loading spectra differential gene programs activation data from: ",
 spectra_LMM <- read_csv(snakemake@input[["spectra_GP_activation_LMM"]]) %>%
         dplyr::filter(term == "DiagnosisIPF") %>% 
         dplyr::select(cell_type, program, FDR, log2FC) %>%
-        mutate(cell_type = gsub("/","_", cell_type))
+        mutate(cell_type = gsub("/","_", cell_type)) %>% 
+        dplyr::rename("FDR_lmm"=="FDR", "log2FC_lmm"=="log2FC")
 message("Done")
 
 # 2. join different methods (leave enrichments for later) ####
