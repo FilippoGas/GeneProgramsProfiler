@@ -45,7 +45,7 @@ rule all:
         f"results/{config["analysis_name"]}/spectra/spectra_WMW_plots/.done.txt",
         f"results/{config["analysis_name"]}/spectra/spectra_LMM_plots/GP_deregulation_LMM_volcano.pdf",
         # cNMF.fmk
-        f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}cNMF_WMW_plots/.done.txt",
-        f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}cNMF_LMM_plots/GP_deregulation_LMM_volcano.pdf",
+        f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_WMW_plots/.done.txt",
+        f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_LMM_plots/GP_deregulation_LMM_volcano.pdf",
         # collect_results.smk
         f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
