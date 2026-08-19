@@ -35,6 +35,7 @@ suppressPackageStartupMessages({
         library(parallel)
         library(lme4)
         library(lmerTest)
+        library(broom.mixed)
 })
 
 message("Starting R script \"LMM.R\"...")

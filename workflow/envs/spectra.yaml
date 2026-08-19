@@ -14,6 +14,7 @@ dependencies:
   - r-ggrepel=0.9.6
   - r-ggpubr=0.6.3
   - r-effectsize=1.0.2
+  - r-broom.mixed=0.2.9.7
   - pip:
       - "git+https://github.com/wallet-maker/cytopus.git@v2.0"
       - matplotlib==3.10.7

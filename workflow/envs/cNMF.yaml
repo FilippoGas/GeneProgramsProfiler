@@ -15,5 +15,6 @@ dependencies:
   - r-ggrepel=0.9.6
   - r-ggpubr=0.6.3
   - r-effectsize=1.0.2
+  - r-broom.mixed=0.2.9.7
   - pip:
       - cnmf==1.7.1
