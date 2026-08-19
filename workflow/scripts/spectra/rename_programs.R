@@ -157,10 +157,8 @@ unknown_programs <- grep("\\d+$", colnames(unknown_cell_scores)[6:length(colname
 unknown_cell_scores <- unknown_cell_scores %>%
         dplyr::select(-all_of(unknown_programs))
 # Merge cell_scores and unknown_cell_scores
-message(colnames(cell_scores))
-message(colnames(unknown_cell_scores))
 cell_scores <- cell_scores %>%
-        left_join(unknown_cell_scores %>% dplyr::select(-c(1:3,5)),
+        left_join(unknown_cell_scores %>% dplyr::select(-c(1:4)),
                   by = "cell_id")
 message("Done")
 
