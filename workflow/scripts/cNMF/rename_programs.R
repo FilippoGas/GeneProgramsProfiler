@@ -46,14 +46,18 @@ message("Starting R script \"rename_programs.R\"...")
 # 1. Generate paths ####
 # ------------------------------------------------------------------------------
 message("Generating input paths ...")
-cell_scores_path <- paste0(snakemake@params[["analysis_name"]],
+cell_scores_path <- paste0(snakemake@params[["output_dir"]],
+                           "/",
+                           snakemake@params[["analysis_name"]],
                            ".usages.k_",
                            snakemake@params[["k"]],
                            ".dt_",
                            gsub("\\.","_",snakemake@params[["ldt"]]),
                            ".consensus.txt"
                            )
-markers_path <- paste0(snakemake@params[["analysis_name"]],
+markers_path <- paste0(snakemake@params[["output_dir"]],
+                       "/",
+                       snakemake@params[["analysis_name"]],
                        ".gene_spectra_score.k_",
                        snakemake@params[["k"]],
                        ".dt_",
