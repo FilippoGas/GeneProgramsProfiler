@@ -10,8 +10,8 @@ rule make_comp_table:
         cytopus=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
         spectra_GP_activation_WMW=f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
         spectra_GP_activation_LMM=f"results/{config["analysis_name"]}/spectra/spectra_LMM/gp_activation_LMM.csv",
-        cNMF_GP_activation_WMW=f"results/{config["analysis_name"]}/cNMF/cNMF_WMW/gp_activation_WMW.csv",
-        cNMF_GP_activation_LMM=f"results/{config["analysis_name"]}/cNMF/cNMF_LMM/gp_activation_LMM.csv",
+        cNMF_GP_activation_WMW=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_WMW/gp_activation_WMW.csv",
+        cNMF_GP_activation_LMM=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/cNMF_LMM/gp_activation_LMM.csv",
         gsea=f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
         ora=f"results/{config["analysis_name"]}/functional_enrichment/run_ora/.done.txt",
     output:
