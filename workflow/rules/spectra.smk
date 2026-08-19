@@ -119,9 +119,9 @@ rule spectra_WMW_plot:
         cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
         gp_activation_WMW=f"results/{config["analysis_name"]}/spectra/spectra_WMW/gp_activation_WMW.csv",
     output:
-        f"results/{config["analysis_name"]}/spectra/spectra_WMW_plots/.done.txt",
+        done=f"results/{config["analysis_name"]}/spectra/spectra_WMW_plots/.done.txt",
     log:
-        "logs/spectra/spectra_WMW_plots.log",
+        f"logs/{config["analysis_name"]}/spectra/spectra_WMW_plots.log",
     conda:
         "../envs/spectra.yaml"
     threads: config["spectra"]["spectra_WMW_plots"]["cores"]
@@ -133,9 +133,7 @@ rule spectra_WMW_plot:
         effect_size_thresh=config["spectra"]["spectra_WMW_plots"]["effect_size_thresh"],
         FDR_thresh=config["spectra"]["spectra_WMW_plots"]["FDR_thresh"],
     message:
-        """
-        Plot results from differential analysis on spectra's results.
-        """
+        "Plot results from differential gene program activation analysis (WMW)."
     script:
         "../scripts/spectra/spectra_WMW_plots.R"
 
@@ -176,12 +174,11 @@ rule spectra_LMM_plot:
     understand when the rule terminated.
     """
     input:
-        cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
         gp_activation_LMM=f"results/{config["analysis_name"]}/spectra/spectra_LMM/gp_activation_LMM.csv",
     output:
         volcano=f"results/{config["analysis_name"]}/spectra/spectra_LMM_plots/GP_deregulation_LMM_volcano.pdf",
     log:
-        "logs/spectra/spectra_LMM_plots.log",
+        f"logs/{config["analysis_name"]}/spectra/spectra_LMM_plots.log",
     conda:
         "../envs/spectra.yaml"
     threads: config["spectra"]["spectra_LMM_plots"]["cores"]
@@ -193,8 +190,6 @@ rule spectra_LMM_plot:
         log2FC_thresh=config["spectra"]["spectra_LMM_plots"]["log2FC_thresh"],
         FDR_thresh=config["spectra"]["spectra_LMM_plots"]["FDR_thresh"],
     message:
-        """
-        Plot results from differential analysis on spectra's results.
-        """
+        "Plot results from differential gene program activation analyis. (LMM)"
     script:
         "../scripts/spectra/spectra_LMM_plots.R"
