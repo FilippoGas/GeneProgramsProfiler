@@ -53,7 +53,7 @@ spectra:
     mem_mb: 2500
     time: "00:30:00"
     cores: 4
-# Rule 5: spectra_LMM_plots
+  # Rule 5: spectra_LMM_plots
   spectra_LMM_plots:
     cores: 1
     mem_mb: 2500
