@@ -102,7 +102,7 @@ rule spectra_WMW:
     params:
         control=config["control_condition"],
         case=config["case_condition"],
-        active_cell_thresh=config["spectra"]["spectra_WMW"]["active_cell_thresh"]
+        active_cell_thresh=config["spectra"]["spectra_WMW"]["active_cell_thresh"],
     message:
         "Analyze spectra's results and test for differential program activation with Wilcoxon-Mann-Whitney U-test."
     script:
@@ -161,7 +161,7 @@ rule spectra_LMM:
     params:
         control=config["control_condition"],
         case=config["case_condition"],
-        active_cell_thresh=config["spectra"]["spectra_LMM"]["active_cell_thresh"]
+        active_cell_thresh=config["spectra"]["spectra_LMM"]["active_cell_thresh"],
     message:
         "Analyze spectra's results and test for differential program activation with Linear Mixed Models."
     script:
