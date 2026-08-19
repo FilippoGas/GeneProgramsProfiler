@@ -194,4 +194,4 @@ rule spectra_LMM_plot:
     message:
         "Plot results from differential gene program activation analyis. (LMM)"
     script:
-        "../scripts/spectra/spectra_LMM_plots.R"
+        "../scripts/differential_activation/LMM_plots.R"
