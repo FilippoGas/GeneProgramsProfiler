@@ -139,7 +139,7 @@ rule spectra_WMW_plot:
         "../scripts/spectra/spectra_WMW_plots.R"
 
 
-rule spectra_lmm:
+rule spectra_LMM:
     """
     Analyze spectra results and test for differential activation of gene programs
     between the two conditions. Gene programs activation differences are
@@ -161,7 +161,7 @@ rule spectra_lmm:
     params:
         control=config["control_condition"],
         case=config["case_condition"],
-        active_cell_thresh=config["spectra"]["spectra_lmm"]["active_cell_thresh"]
+        active_cell_thresh=config["spectra"]["spectra_LMM"]["active_cell_thresh"]
     message:
         "Analyze spectra's results and test for differential program activation with Linear Mixed Models."
     script:
