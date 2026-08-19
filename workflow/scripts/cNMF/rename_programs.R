@@ -107,7 +107,7 @@ message("Running Over Representation Analysis to label programs ...")
 # Use Over Representation Analysis to give a name to programs
 
 # Get name of programs to label
-unknown_programs <- colnames(cell_scores)[5:ncol(cell_scores)]
+unknown_programs <- colnames(cell_scores)[6:ncol(cell_scores)]
 
 # Refactor markers df
 markers <- markers %>% pivot_longer(cols = 2:ncol(markers),
