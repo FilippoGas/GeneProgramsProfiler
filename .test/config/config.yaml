@@ -33,7 +33,7 @@ spectra:
     time: "05:00:00"
   # Rule 3: rename_programs
   rename_programs:
-    cores: 1
+    cores: 4
     mem_mb: 2500
     time: "00:15:00"
   # Rule 4: spectra_WMW
@@ -130,7 +130,7 @@ cNMF:
   cNMF_rename_programs:
     mem_mb: 3500
     time: "00:30:00"
-    cores: 1
+    cores: 4
 # Module 6: collect_results.smk
 collect_results:
   # Rule 1: make_comp_table
