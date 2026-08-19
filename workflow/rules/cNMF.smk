@@ -268,3 +268,120 @@ rule cNMF_rename_programs:
         "Run Over Representation Analysis on gene program's markers to label them."
     script:
         "../scripts/cNMF/rename_programs.R"
+
+
+rule cNMF_WMW:
+    """
+    Analyze spectra results and test for differential activation of gene programs
+    between the two conditions. Gene programs activation differences are
+    tested with Wilcoxon-Mann-Whitney U-test.
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.labeled_cell_score.csv",
+    output:
+        gp_activation_WMW=f"results/{config["analysis_name"]}/cNMF/cNMF_WMW/gp_activation_WMW.csv",
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_WMW.log"
+    conda:
+        "../envs/cNMF.yaml"
+    threads: config["cNMF"]["cNMF_WMW"]["cores"]
+    resources:
+        mem_mb=config["cNMF"]["cNMF_WMW"]["mem_mb"],
+        time=config["cNMF"]["cNMF_WMW"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        control=config["control_condition"],
+        case=config["case_condition"],
+        active_cell_thresh=config["cNMF"]["cNMF_WMW"]["active_cell_thresh"],
+    message:
+        "Analyze cNMF's results and test for differential program activation with Wilcoxon-Mann-Whitney U-test."
+    script:
+        "../scripts/differential_activation/WMW.R"
+
+
+rule cNMF_WMW_plot:
+    """
+    Plot results of the differential activation analysis of cNMF's output.
+    The number of output for this rule is not defined a priori, as it depends on the
+    number of deregulated programs. For this reason a fake output is used to
+    understand when the rule terminated.
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.labeled_cell_score.csv",
+        gp_activation_WMW=f"results/{config["analysis_name"]}/cNMF/cNMF_WMW/gp_activation_WMW.csv",
+    output:
+        done=f"results/{config["analysis_name"]}/cNMF/cNMF_WMW_plots/.done.txt",
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_WMW_plots.log",
+    conda:
+        "../envs/cNMF.yaml"
+    threads: config["cNMF"]["cNMF_WMW_plots"]["cores"]
+    resources:
+        mem_mb=config["cNMF"]["cNMF_WMW_plots"]["mem_mb"],
+        time=config["cNMF"]["cNMF_WMW_plots"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        effect_size_thresh=config["cNMF"]["cNMF_WMW_plots"]["effect_size_thresh"],
+        FDR_thresh=config["cNMF"]["cNMF_WMW_plots"]["FDR_thresh"],
+    message:
+        "Plot results from differential gene program activation analysis (WMW)."
+    script:
+        "../scripts/differential_activation/WMW_plots.R"
+
+
+rule cNMF_LMM:
+    """
+    Analyze cNMF results and test for differential activation of gene programs
+    between the two conditions. Gene programs activation differences are
+    tested with Linear Mixed Models to correct for cell cycle phase.
+    """
+    input:
+        cell_scores=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.labeled_cell_score.csv",
+    output:
+        gp_activation_LMM=f"results/{config["analysis_name"]}/cNMF/cNMF_LMM/gp_activation_LMM.csv",
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_LMM.log",
+    conda:
+        "../envs/cNMF.yaml"
+    threads: config["cNMF"]["cNMF_LMM"]["cores"]
+    resources:
+        mem_mb=config["cNMF"]["cNMF_LMM"]["mem_mb"],
+        time=config["cNMF"]["cNMF_LMM"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        control=config["control_condition"],
+        case=config["case_condition"],
+        active_cell_thresh=config["cNMF"]["cNMF_LMM"]["active_cell_thresh"],
+    message:
+        "Analyze cNMF's results and test for differential program activation with Linear Mixed Models."
+    script:
+        "../scripts/differential_activation/LMM.R"
+
+
+rule cNMF_LMM_plot:
+    """
+    Plot results of the differential activation analysis of cNMF's output.
+    The number of output for this rule is not defined a priori, as it depends on the
+    number of deregulated programs. For this reason a fake output is used to
+    understand when the rule terminated.
+    """
+    input:
+        gp_activation_LMM=f"results/{config["analysis_name"]}/cNMF/cNMF_LMM/gp_activation_LMM.csv",
+    output:
+        volcano=f"results/{config["analysis_name"]}/cNMF/cNMF_LMM_plots/GP_deregulation_LMM_volcano.pdf",
+    log:
+        f"logs/{config["analysis_name"]}/cNMF/cNMF_LMM_plots.log",
+    conda:
+        "../envs/cNMF.yaml"
+    threads: config["cNMF"]["cNMF_LMM_plots"]["cores"]
+    resources:
+        mem_mb=config["cNMF"]["cNMF_LMM_plots"]["mem_mb"],
+        time=config["cNMF"]["cNMF_LMM_plots"]["time"],
+        queue=config["queues"]["cpu"],
+    params:
+        log2FC_thresh=config["cNMF"]["cNMF_LMM_plots"]["log2FC_thresh"],
+        FDR_thresh=config["cNMF"]["cNMF_LMM_plots"]["FDR_thresh"],
+    message:
+        "Plot results from differential gene program activation analyis. (LMM)"
+    script:
+        "../scripts/differential_activation/LMM_plots.R"

@@ -133,6 +133,32 @@ cNMF:
     mem_mb: 3500
     time: "00:30:00"
     cores: 1
+  # Rule 8: cNMF_WMW
+  cNMF_WMW:
+    mem_mb: 2500
+    time: "00:15:00"
+    cores: 4
+    active_cell_thresh: 0.1
+  # Rule 9: cNMF_WMW_plots
+  cNMF_WMW_plots:
+    cores: 1
+    mem_mb: 2500
+    time: "00:10:00"
+    effect_size_thresh: 0.3
+    FDR_thresh: 0.05
+  # Rule 10: cNMF_LMM
+  cNMF_LMM:
+    mem_mb: 2500
+    time: "00:30:00"
+    cores: 4
+    active_cell_thresh: 0.1
+  # Rule 11: cNMF_LMM_plots
+  cNMF_LMM_plots:
+    cores: 1
+    mem_mb: 2500
+    time: "00:10:00"
+    log2FC_thresh: 1.5
+    FDR_thresh: 0.05
 # Module 6: collect_results.smk
 collect_results:
   # Rule 1: make_comp_table

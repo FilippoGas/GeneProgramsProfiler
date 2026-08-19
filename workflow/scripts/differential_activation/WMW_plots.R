@@ -1,13 +1,12 @@
 # ==============================================================================
-# Script: spectra_WMW_plots.R
+# Script: WMW_plots.R
 # Author: Filippo Gastaldello
 # Date: 07/08/2026
 # Description: 
 #   Plot results of differential gene program activation analysis 
 #
 # Snakemake Expected Inputs:
-#   - snakemake@input[["cell_scores]] : Path to cell scores matrix (spectra's
-#                                       output)
+#   - snakemake@input[["cell_scores]] : Path to cell scores matrix
 #   - snakemake@input[["gp_activation_WMW"]] : Path to differential activation
 #                                              analysis results
 #   - snakemake@input[["output"]] : Path to output placeholder
@@ -32,7 +31,7 @@ suppressPackageStartupMessages({
         library(ggrepel)
 })
 
-message("Starting R script \"spectra_WMW_plots.R\"...")
+message("Starting R script \"WMW_plots.R\"...")
 
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
@@ -192,7 +191,7 @@ if(!nrow(gp_activation_WMW)==0){
                         nudge_y = .5,
                 ) +
                 labs(
-                        title    = "Deregulated programs activations according to Spectra scores",
+                        title    = "Deregulated programs activations",
                         subtitle = "Wilcoxon unpaired test on sample aggregated scores per cell type.",
                         color    = "Deregulation effect"
                 ) +

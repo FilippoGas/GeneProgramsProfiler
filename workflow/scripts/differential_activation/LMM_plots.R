@@ -1,5 +1,5 @@
 # ==============================================================================
-# Script: spectra_LMM_plots.R
+# Script: LMM_plots.R
 # Author: Filippo Gastaldello
 # Date: 18/08/2026
 # Description: 
@@ -30,7 +30,7 @@ suppressPackageStartupMessages({
         library(ggpubr)
 })
 
-message("Starting R script \"spectra_LMM_plots.R\"...")
+message("Starting R script \"LMM_plots.R\"...")
 
 # 1. Load Data ####
 # ------------------------------------------------------------------------------

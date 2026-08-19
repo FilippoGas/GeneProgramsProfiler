@@ -136,7 +136,7 @@ rule spectra_WMW_plot:
     message:
         "Plot results from differential gene program activation analysis (WMW)."
     script:
-        "../scripts/spectra/spectra_WMW_plots.R"
+        "../scripts/differential_activation/WMW_plots.R"
 
 
 rule spectra_LMM:

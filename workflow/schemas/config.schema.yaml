@@ -412,6 +412,90 @@ properties:
         required:
           - mem_mb
           - cores
+      # Rule 8: cNMF_WMW
+      cNMF_WMW:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          active_cell_thresh:
+            type: number
+            description: "Activation threshold to consider a program active in a cell"
+        required:
+          - cores
+          - mem_mb
+          - active_cell_thresh
+      # Rule 9: cNMF_WMW_plots
+      cNMF_WMW_plots:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          effect_size_thresh:
+            type: number
+            description: "Effect size threshold for Wilcoxon-Mann-Whitney U-test's rank-biserial correlation"
+          FDR_thresh:
+            type: number
+            description: "False Discovery Rate threshold for Wilcoxon-Mann-Whitney U-test"
+        required:
+          - cores
+          - mem_mb
+          - effect_size_thresh
+          - FDR_thresh
+      # Rule 10: cNMF_LMM
+      cNMF_LMM:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          active_cell_thresh:
+            type: number
+            description: "Activation threshold to consider a program active in a cell"
+        required:
+          - cores
+          - mem_mb
+          - active_cell_thresh
+      # Rule 11: cNMF_LMM_plots
+      cNMF_LMM_plots:
+        type: object
+        properties:
+          cores:
+            type: integer
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          log2FC_thresh:
+            type: number
+            description: "Effect size threshold for Wilcoxon-Mann-Whitney U-test's rank-biserial correlation"
+          FDR_thresh:
+            type: number
+            description: "False Discovery Rate threshold for Wilcoxon-Mann-Whitney U-test"
+        required:
+          - cores
+          - mem_mb
+          - log2FC_thresh
+          - FDR_thresh
   # Module 6: collect_results.smk
   collect_results.smk:
     type: object
