@@ -512,7 +512,40 @@ properties:
             pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
           cores:
             type: integer
+          padj_thresh:
+            type: number
+            description: "Significance threshold for enrichments results to be included in the table"
         required:
+          - mem_mb
+          - cores
+          - padj_thresh
+      # Rule 2: comp_table_plots
+      comp_table_plots:
+        type: object
+        properties:
+          mem_mb:
+            type: integer
+          time:
+            type: string
+            description: "Job walltime, if required by computing infrastructure."
+            pattern: "^$|^[0-9]+:[0-5][0-9]:[0-5][0-9]$"
+          cores:
+            type: integer
+          FDR_thresh:
+            type: number
+            description: "Significance threshold for Wilcoxon-Mann-Whitney and Linear Mixed Models results to be included in the plots"
+          effect_size_thresh:
+            type: number
+            description: "Effect size threshold for Wilcoxon-Mann-Whitney results to be included in the plots"
+          log2FC_thresh:
+            type: number
+            description: "log2FC threshold for Linear Mixed Models results to be included in the plots"
+        required:
+          - mem_mb
+          - cores
+          - FDR_thresh
+          - effect_size_thresh
+          - log2FC_thresh
 required:
   - scRNAseq
   - celltype_conversion_dictionary

@@ -166,3 +166,12 @@ collect_results:
     mem_mb: 3500
     time: "00:20:00"
     cores: 1
+    padj_thresh: 0.05
+  # Rule2 : comp_table_plots
+  comp_table_plots:
+    mem_mb: 1000
+    time: "00:20:00"
+    cores: 1
+    FDR_thresh: 0.05
+    log2FC_thresh: 1.5
+    effect_size_thresh: 0.3
