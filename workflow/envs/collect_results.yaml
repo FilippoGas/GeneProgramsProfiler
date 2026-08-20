@@ -7,3 +7,6 @@ dependencies:
   - r-tidyverse=2.0.0
   - r-jsonlite=2.0.0
   - r-readxl=1.4.5
+  - r-upsetr=1.4.1
+  - bioconductor-complexheatmap=2.22.0
+  - r-openxlsx=4.2.8.1
