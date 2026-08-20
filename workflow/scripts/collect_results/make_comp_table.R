@@ -26,6 +26,8 @@
 # Snakemake Expected Params:
 #   - snakemake@params[["enrichment_dir"]]: Path to enrichment analysis results
 #   - snakemake@params[["case"]] : Name of the case condition in the metadata
+#   - snakemake@params[["padj_thresh"]] : Significance threshold for enrichment
+#                                         Results to be included in the table
 #                                       
 # ==============================================================================
 
@@ -53,6 +55,9 @@ cytopus <- unlist(cytopus, recursive = FALSE)
 message("Done")
 message("Loading case condition name: ", snakemake@params[["case"]])
 case <- snakemake@params[["case"]]
+message("Done")
+message("Loading p-value threshold : ", snakemake@params[["padj_thresh"]])
+padj_thresh <- snakemake@params[["padj_thresh"]]
 message("Done")
 message("Loading spectra differential gene programs activation data from: ",
         snakemake@input[["spectra_GP_activation_WMW"]])
@@ -183,7 +188,7 @@ for (DEG_set in c("sc", "pb", "both")) {
                                   "program",
                                   paste0("padj_ORA_UP_", DEG_set),
                                   paste0("GeneRatio_ORA_UP_", DEG_set))
-        enrich_res <- enrich_res %>% dplyr::filter(.[[3]]<0.05)
+        enrich_res <- enrich_res %>% dplyr::filter(.[[3]]<padj_thresh)
         comp_table <- comp_table %>% 
                 full_join(enrich_res %>%
                                   dplyr::rename("program_short" = "program"),
@@ -213,7 +218,7 @@ for (DEG_set in c("sc", "pb", "both")) {
                                   "program",
                                   paste0("padj_ORA_DOWN_", DEG_set),
                                   paste0("GeneRatio_ORA_DOWN_",DEG_set))
-        enrich_res <- enrich_res %>% dplyr::filter(.[[3]]<0.05)
+        enrich_res <- enrich_res %>% dplyr::filter(.[[3]]<padj_thresh)
         comp_table <- comp_table %>% 
                 full_join(enrich_res %>%
                                   dplyr::rename("program_short" = "program"),
