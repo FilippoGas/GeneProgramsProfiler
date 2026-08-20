@@ -27,6 +27,7 @@ rule make_comp_table:
         queue=config["queues"]["cpu"],
     params:
         enrichment_dir=lambda wildcards, input: input.gsea.split("run_gsea")[0],
+        case=config["case_condition"],
     message:
         "Put togheter results from different methods in one table allowing direct comparison."
     script:
