@@ -156,7 +156,7 @@ cNMF:
   cNMF_LMM_plots:
     cores: 1
     mem_mb: 2500
-    time: "00:10:00"
+    time: "00:20:00"
     log2FC_thresh: 1.5
     FDR_thresh: 0.05
 # Module 6: collect_results.smk

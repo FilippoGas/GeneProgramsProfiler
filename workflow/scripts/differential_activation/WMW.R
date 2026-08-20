@@ -152,10 +152,7 @@ gp_activation_WMW <- gp_activation_WMW %>%
         group_by(cell_type) %>% 
         mutate(FDR = p.adjust(p, method = "fdr")) %>% 
         ungroup() %>% 
-        relocate(FDR, .after = p) %>%
-        # Apply the Rank-Biserial Formula using the sample sizes
-        mutate(effect_size = abs(1 - (2 * statistic) /
-                                (n_active_control * n_active_case)))
+        relocate(FDR, .after = p)
 
 write_csv(gp_activation_WMW, snakemake@output[["gp_activation_WMW"]])
 message("Done")

@@ -109,7 +109,9 @@ res_lmm <- mclapply(unique(cell_scores$celltype),
                                                                     "avg_case_activation"=avg_case_activation, "estimate"=NA, "std.err"=NA, "statistic"=NA, "p"=NA)
                                           )
                                   }else{
-                                          test_res <- tidy(test_res, effects = "fixed")[2:3,]
+                                          target_term <- paste0("diagnosis", case)
+                                          test_res <- tidy(test_res, effects = "fixed") %>% 
+                                                  dplyr::filter(term == target_term)
                                           tests <- rbind(tests,
                                                          data_frame("cell_type"=cell_type, "program"=program, "term"=test_res$term,
                                                                     "active_cells_control_perc"=perc_active_cells_control, "active_cells_case_perc"=perc_active_cells_case,
