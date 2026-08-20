@@ -57,10 +57,10 @@ plot_data <- GP_activation_LMM %>%
 if(!nrow(GP_activation_LMM)==0){
         p <- plot_data %>% ggplot(aes(x=log2FC, y=-log10(FDR), color = diff_activated)) +
                 geom_point(size = 1) +
-                scale_color_manual(values = c("red", "grey", "purple"),
+                scale_color_manual(values = c("UP"="red", "NO"="grey", "DOWN"="purple"),
                                    labels = c("Downactivated", "Not significant", "Overactivated")) +
-                geom_vline(xintercept = c(-1, 1), col = 'grey', linetype = 'dashed') +
-                geom_hline(yintercept = -log10(0.05), col = 'grey', linetype = 'dashed') +
+                geom_vline(xintercept = c(-log2FC_thresh, log2FC_thresh), col = 'grey', linetype = 'dashed') +
+                geom_hline(yintercept = -log10(FDR_thresh), col = 'grey', linetype = 'dashed') +
                 labs(
                         title = "Linear Mixed Model - Sample ID as random effect, correcting for cell cycle phase",
                         subtitle = "comparison between activation in case vs control, for each program in each cell type",
