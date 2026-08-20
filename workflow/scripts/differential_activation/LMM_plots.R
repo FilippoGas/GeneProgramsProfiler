@@ -32,6 +32,9 @@ suppressPackageStartupMessages({
 
 message("Starting R script \"LMM_plots.R\"...")
 
+# Prevent R from generating the default Rplots.pdf file
+pdf(NULL)
+
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
 message("Loading differential activation dataset from: ",

@@ -33,6 +33,9 @@ suppressPackageStartupMessages({
 
 message("Starting R script \"WMW_plots.R\"...")
 
+# Prevent R from generating the default Rplots.pdf file
+pdf(NULL)
+
 # 1. Load Data ####
 # ------------------------------------------------------------------------------
 message("Loading cell scores matrix from: ",
