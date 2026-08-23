@@ -12,5 +12,4 @@ snakemake \
     --keep-going \
     --sdm conda \
     --rerun-incomplete \
-    --latency-wait 120 \
-    --rerun-trigger mtime
+    --latency-wait 120
