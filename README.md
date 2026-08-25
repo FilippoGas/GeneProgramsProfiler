@@ -4,7 +4,7 @@
 [![GitHub actions status](https://github.com/FilippoGas/GeneProgramsProfiler/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/FilippoGas/GeneProgramsProfiler/actions/workflows/main.yaml?query=branch%3Amain)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/FilippoGas/GeneProgramsProfiler)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 A Snakemake workflow for characterizing cell type-specific gene program deregulations from scRNA-seq datasets. The workflow takes a Seurat `.rds` object and a [cytopus](https://github.com/wallet-maker/cytopus) cell-type conversion dictionary as input, discovers gene programs using two complementary methods ([Spectra](https://github.com/dpeerlab/spectra) and [cNMF](https://github.com/dylkot/cNMF)), tests each program for differential activation between conditions, performs functional enrichment on differentially expressed genes, and produces a comparative cross-method analysis.
 
