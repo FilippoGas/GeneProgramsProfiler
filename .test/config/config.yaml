@@ -1,6 +1,6 @@
 # Global settings
-scRNAseq: "data/Natri_et_al_test_data.rds"
-celltype_conversion_dictionary: "data/Natri_et_al_cytopus_dict.json"
+scRNAseq: ".test/data/Natri_et_al_test_data.rds"
+celltype_conversion_dictionary: ".test/data/Natri_et_al_cytopus_dict.json"
 analysis_name: "Natri_et_al"
 case_condition: "IPF"
 control_condition: "Control"
