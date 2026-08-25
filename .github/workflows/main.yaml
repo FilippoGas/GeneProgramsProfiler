@@ -55,11 +55,11 @@ jobs:
           source ~/miniconda3/etc/profile.d/conda.sh
           conda activate snakemake
 
-          snakemake --snakefile workflow/Snakefile --directory . --unlock
-          
+          snakemake --snakefile workflow/Snakefile --directory .test --unlock
+
           snakemake \
             --snakefile workflow/Snakefile \
-            --directory . \
+            --directory .test \
             --sdm conda \
             --conda-prefix /shares/CIBIO-Storage/BCG/scratch/fgastaldello/actions-runner/conda_cache \
             --show-failed-logs \
@@ -71,4 +71,4 @@ jobs:
         run: |
           source ~/miniconda3/etc/profile.d/conda.sh
           conda activate snakemake
-          snakemake --snakefile workflow/Snakefile --directory . --report report.zip
+          snakemake --snakefile workflow/Snakefile --directory .test --report report.zip
