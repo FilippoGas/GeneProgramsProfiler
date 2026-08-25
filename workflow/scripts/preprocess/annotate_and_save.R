@@ -166,7 +166,7 @@ message("Done")
 # 3. Modify the object strictly for the h5ad converter
 message("Preparing matrix for h5ad export...")
 # Find variable features and subset before h5ad conversion
-#TODO make this optional and configurable from the config file
+# FIXME: make nfeatures configurable via config.yaml
 data <- FindVariableFeatures(data, selection.method = "vst", nfeatures = 4000) 
 # Subset the data to only keep those genes
 data <- data[VariableFeatures(data), ]

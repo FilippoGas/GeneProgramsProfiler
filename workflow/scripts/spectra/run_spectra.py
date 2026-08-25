@@ -30,7 +30,7 @@ import Spectra as spc
 # Load h5ad of scRNAseq dataset
 print("Loading h5ad dataset ...")
 adata = sc.read_h5ad(snakemake.input.sc_dataset)
-# Set all genes as variable genes #TODO make this optional by setting the config file
+# Set all genes as variable genes  # FIXME: make configurable via config.yaml
 adata.var["highly_variable"] = True 
 
 # RECOVERY CHECK: If adata.X was stripped, restore it from raw or layers

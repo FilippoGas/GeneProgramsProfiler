@@ -32,7 +32,7 @@ rule run_DE_analysis:
         "../scripts/DE_analysis/run_DE_analysis.R"
 
 
-# TODO improve plots quality
+# FIXME: improve DEA plot quality (resolution, labels, themes)
 rule DEA_plots:
     """
     Plot some summaries from the DE analysis
