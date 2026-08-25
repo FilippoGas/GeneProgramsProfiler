@@ -234,7 +234,7 @@ rule cNMF_consensus:
             --name {params.analysis_name} \
             --components {params.k} \
             --local-density-threshold {params.ldt} \
-            --show-clustering  # FIXME: document that local_density_threshold may need tuning
+            --show-clustering # FIXME: document that local_density_threshold may need tuning
         touch {output.done}
         """
 
