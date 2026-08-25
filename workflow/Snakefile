@@ -3,7 +3,7 @@ from snakemake.utils import validate
 
 # load and validate configuration
 # -----------------------------------------------------
-configfile: ".test/config/config.yaml"
+configfile: "config/config.yaml"
 
 
 validate(config, schema="schemas/config.schema.yaml")
