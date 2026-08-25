@@ -65,7 +65,7 @@ spectra:
 # Module 3: DE_analysis
 DE_analysis:
   # Rule 1: run_DE_analysis
-  run_DE_analisys:
+  run_DE_analysis:
     cores: 1
     mem_mb: 100
     time: "hh:mm:ss"
