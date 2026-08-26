@@ -30,7 +30,7 @@ See the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workf
 
 ## Prerequisites
 
-- **Python ≥ 3.12** (required for PEP 701 nested f-strings used throughout the workflow)
+- **Python ≥ 3.12**
 - **Snakemake ≥ 8.0**
 - **Conda** with strict channel priorities (`conda-forge` + `bioconda`)
 
@@ -45,7 +45,7 @@ cd GeneProgramsProfiler
 nano config/config.yaml
 
 # Dry run to verify the DAG
-snakemake --snakefile workflow/Snakefile --dry-run
+snakemake --snakefile workflow/Snakefile --configfile config/config.yaml --dry-run
 
 # Run the workflow
 snakemake --snakefile workflow/Snakefile --sdm conda --cores <N>
@@ -78,6 +78,7 @@ A PBS Pro launcher script is provided at `workflow/scripts/launchers/PBS.sh`. Ev
 ```bash
 bash workflow/scripts/launchers/PBS.sh
 ```
+**Remember** to either add `--configfile path/to/your/config.yaml` to the `snakemake` command in the PBS launcher script, or modify `workflow/Snakefile` to point to your config file.
 
 ## Configuration
 
