@@ -112,11 +112,9 @@ Logs follow a parallel structure under `logs/<analysis_name>/`. Some rules produ
 If you use this workflow, please cite:
 
 - **GeneProgramsProfiler**: [https://github.com/FilippoGas/GeneProgramsProfiler](https://github.com/FilippoGas/GeneProgramsProfiler)
-- **Spectra**: Peer, A., Xin, B., et al. Supervised discovery of interpretable gene programs from single-cell data. _Nature Biotechnology_, 2023. https://doi.org/10.1038/s41587-023-01940-3
-- **cNMF**: Kotliar, D., Veres, A., et al. Identifying gene expression programs of cell-type identity and cellular activity with non-negative matrix factorization. _eLife_, 2019. https://doi.org/10.7554/eLife.43803
+- **Spectra**: Kunes, R.Z., Walle, T., Land, M. et al. Supervised discovery of interpretable gene programs from single-cell data. Nat Biotechnol 42, 1084–1095 (2024). https://doi.org/10.1038/s41587-023-01940-3
+- **cNMF**: Kotliar et Al. (2019) Identifying gene expression programs of cell-type identity and cellular activity with single-cell RNA-Seq eLife 8:e43803 doi.org/10.7554/eLife.43803
 - **Cytopus**: [https://github.com/wallet-maker/cytopus](https://github.com/wallet-maker/cytopus) — [Zenodo DOI](https://zenodo.org/badge/latestdoi/389175717)
-- **Seurat**: Hao, Y., Hao, S., et al. Integrated analysis of multimodal single-cell data. _Cell_, 2021. https://doi.org/10.1016/j.cell.2021.04.048
-- **fgsea**: Korotkevich, G., Sukhov, V., et al. Fast gene set enrichment analysis. _bioRxiv_, 2021. https://doi.org/10.1101/060012
 - **Snakemake**: Köster, J., Mölder, F., et al. Sustainable data analysis with Snakemake. _F1000Research_, 2021. https://doi.org/10.12688/f1000research.29032.2
 
 ## License
