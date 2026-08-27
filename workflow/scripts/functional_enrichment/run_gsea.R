@@ -95,13 +95,23 @@ for (cell_type in unique(DEGs_both$celltype)) {
                 
                 # Create rank for this celltype based on the configuration
                 celltype_DEGs <- DEGs_both %>% 
-                        dplyr::filter(celltype == cell_type,
-                                      !is.na(.data[[cfg$sig_col]])) %>% 
+                        dplyr::filter(celltype == cell_type) %>%
+                        drop_na() %>% 
                         dplyr::arrange(desc(.data[[cfg$rank_col]]))
                 
                 rank        <- celltype_DEGs[[cfg$rank_col]]
                 names(rank) <- celltype_DEGs$gene
+                # Remove NAs
                 rank        <- rank[!is.na(rank)]
+                # Cap infinite values to the max/min finite values
+                if (any(is.infinite(rank))) {
+                        max_finite <- max(rank[is.finite(rank)])
+                        min_finite <- min(rank[is.finite(rank)])
+                        
+                        # Add a tiny amount to keep them strictly above/below the highest finite rank
+                        rank[is.infinite(rank) & rank > 0] <- max_finite + 1e-5
+                        rank[is.infinite(rank) & rank < 0] <- min_finite - 1e-5
+                }
                 set.seed(42)
                 fgsea_results <- fgsea(pathways = cytopus_list, 
                                        stats    = rank,
