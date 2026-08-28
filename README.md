@@ -33,6 +33,7 @@ See the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workf
 - **Python ≥ 3.12**
 - **Snakemake ≥ 8.0**
 - **Conda** with strict channel priorities (`conda-forge` + `bioconda`)
+- **`snakemake-executor-plugin-cluster-generic`** (only required for cluster execution — see [Running on a cluster](#running-on-a-cluster))
 
 ## Quick start
 
@@ -73,7 +74,19 @@ snakemake --snakefile workflow/Snakefile --configfile config/my_analysis.yaml \
 
 ## Running on a cluster
 
-A PBS Pro launcher script is provided at `workflow/scripts/launchers/PBS.sh`. Every rule carries `mem_mb`, `time`, and `queue` resources that are forwarded to the PBS scheduler. The launcher fans out cNMF factorization across up to 50 parallel jobs and uses a custom status-check script at `workflow/scripts/cluster_status/PBS_status.py`.
+A PBS Pro launcher script is provided at `workflow/scripts/launchers/PBS.sh`. Every rule carries `mem_mb`, `time`, and `queue` resources that are forwarded to the PBS scheduler. The launcher uses a custom status-check script at `workflow/scripts/cluster_status/PBS_status.py`.
+
+The launcher relies on the parameter `--executor cluster-generic`, which requires the **`snakemake-executor-plugin-cluster-generic`** plugin to be installed **in the environment that runs snakemake**. Install it with either:
+
+```bash
+# conda (recommended, matches the rest of the setup)
+conda install -c conda-forge -c bioconda snakemake-executor-plugin-cluster-generic
+
+# or pip
+pip install snakemake-executor-plugin-cluster-generic
+```
+
+This step is **not needed for local runs** (`snakemake --snakefile workflow/Snakefile --sdm conda --cores <N>`); it is only required when using the cluster launcher.
 
 ```bash
 bash workflow/scripts/launchers/PBS.sh
