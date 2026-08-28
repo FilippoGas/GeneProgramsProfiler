@@ -39,7 +39,7 @@ A JSON file mapping the cell-type labels present in your Seurat object to [cytop
 | `analysis_name` | string | Name of this analysis. All outputs are written to `results/<analysis_name>/` and logs to `logs/<analysis_name>/` |
 | `case_condition` | string | Label for the case/disease condition in the condition column |
 | `control_condition` | string | Label for the control condition in the condition column |
-| `queues.cpu` | string | HPC queue name for CPU jobs (used by the PBS launcher) |
+| `queues.cpu` | string | HPC queue name for CPU jobs (used by the cluster launcher) |
 
 ## Module 1: Preprocessing (`preprocess`)
 
@@ -69,7 +69,7 @@ Downloads cytopus gene sets for the cell types present in the dataset.
 |---|---|---|---|
 | `mem_mb` | integer | yes | Memory (MB) |
 | `cores` | integer | yes | Number of threads |
-| `global_celltype` | string | no | Cell type to use as global cell type in the cytopus list |
+| `global_celltype` | string | yes | Cell type to use as global cell type in the cytopus list |
 | `time` | string | no | Job walltime |
 
 ### `spectra.run_spectra`
