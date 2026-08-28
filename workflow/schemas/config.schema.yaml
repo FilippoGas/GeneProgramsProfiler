@@ -81,6 +81,7 @@ properties:
         required:
           - mem_mb
           - cores
+          - global_celltype
       # Rule 2: run_spectra
       run_spectra:
         type: object
