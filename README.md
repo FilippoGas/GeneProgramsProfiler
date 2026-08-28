@@ -74,9 +74,7 @@ snakemake --snakefile workflow/Snakefile --configfile config/my_analysis.yaml \
 
 ## Running on a cluster
 
-A PBS Pro launcher script is provided at `workflow/scripts/launchers/PBS.sh`. Every rule carries `mem_mb`, `time`, and `queue` resources that are forwarded to the PBS scheduler. The launcher uses a custom status-check script at `workflow/scripts/cluster_status/PBS_status.py`.
-
-The launcher relies on the parameter `--executor cluster-generic`, which requires the **`snakemake-executor-plugin-cluster-generic`** plugin to be installed **in the environment that runs snakemake**. Install it with either:
+Every rule carries `mem_mb`, `time`, and `queue` resources that are forwarded to the scheduler. Each launcher script relies on the parameter `--executor cluster-generic`, which requires the **`snakemake-executor-plugin-cluster-generic`** plugin to be installed **in the environment that runs snakemake**, regardless of whether you use PBS Pro or Slurm. Install it with either:
 
 ```bash
 # conda (recommended, matches the rest of the setup)
@@ -86,12 +84,29 @@ conda install -c conda-forge -c bioconda snakemake-executor-plugin-cluster-gener
 pip install snakemake-executor-plugin-cluster-generic
 ```
 
-This step is **not needed for local runs** (`snakemake --snakefile workflow/Snakefile --sdm conda --cores <N>`); it is only required when using the cluster launcher.
+This step is **not needed for local runs** (`snakemake --snakefile workflow/Snakefile --sdm conda --cores <N>`); it is only required when using a cluster launcher.
+
+### PBS Pro
+
+A PBS Pro launcher script is provided at `workflow/scripts/launchers/PBS.sh`. The launcher uses a custom status-check script at `workflow/scripts/cluster_status/PBS_status.py`.
 
 ```bash
 bash workflow/scripts/launchers/PBS.sh
 ```
 **Remember** to either add `--configfile path/to/your/config.yaml` to the `snakemake` command in the PBS launcher script, or modify `workflow/Snakefile` to point to your config file.
+
+### Slurm
+
+A Slurm launcher script is provided at `workflow/scripts/launchers/slurm.sh`. The `time` and `queue` resources map to Slurm's `--time` and `--partition` options. The launcher uses a custom status-check script at `workflow/scripts/cluster_status/slurm_status.py`, which queries `sacct`/`squeue` for the job state.
+
+```bash
+bash workflow/scripts/launchers/slurm.sh
+```
+**Remember** to either add `--configfile path/to/your/config.yaml` to the `snakemake` command in the Slurm launcher script, or modify `workflow/Snakefile` to point to your config file.
+
+### Other schedulers
+
+The `snakemake-executor-plugin-cluster-generic` plugin is scheduler-agnostic and will typically work with most schedulers out of the box. If your scheduler is not PBS Pro or Slurm, you will need to write your own launcher script (defining the `--cluster-generic-submit-cmd`) and your own cluster status script (defining the `--cluster-generic-status-cmd`, which must print `running`, `success`, or `failed` for a given job id). Download an additional executor plugin only if your scheduler requires a dedicated one.
 
 ## Configuration
 
