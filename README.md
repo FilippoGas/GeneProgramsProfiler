@@ -106,7 +106,7 @@ bash workflow/scripts/launchers/slurm.sh
 
 ### Other schedulers
 
-The `snakemake-executor-plugin-cluster-generic` plugin is scheduler-agnostic and will typically work with most schedulers out of the box. If your scheduler is not PBS Pro or Slurm, you will need to write your own launcher script (defining the `--cluster-generic-submit-cmd`) and your own cluster status script (defining the `--cluster-generic-status-cmd`, which must print `running`, `success`, or `failed` for a given job id). Download an additional executor plugin only if your scheduler requires a dedicated one.
+The `snakemake-executor-plugin-cluster-generic` plugin is scheduler-agnostic and will typically work with most schedulers out of the box. If your scheduler is not PBS Pro or Slurm, you will need to write your own launcher script (defining the `--cluster-generic-submit-cmd`) and your own cluster status script (defining the `--cluster-generic-status-cmd`, which must print `running`, `success`, or `failed` for a given job id, see `workflow/scripts/cluster_status/PBS_status.py` for reference). Download an additional executor plugin only if your scheduler requires a dedicated one.
 
 ## Configuration
 
