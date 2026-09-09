@@ -91,18 +91,17 @@ This step is **not needed for local runs** (`snakemake --snakefile workflow/Snak
 A PBS Pro launcher script is provided at `workflow/scripts/launchers/PBS.sh`. The launcher uses a custom status-check script at `workflow/scripts/cluster_status/PBS_status.py`.
 
 ```bash
-bash workflow/scripts/launchers/PBS.sh
+bash workflow/scripts/launchers/PBS.sh config/your_config.yaml
 ```
-**Remember** to either add `--configfile path/to/your/config.yaml` to the `snakemake` command in the PBS launcher script, or modify `workflow/Snakefile` to point to your config file.
 
 ### Slurm
 
 A Slurm launcher script is provided at `workflow/scripts/launchers/slurm.sh`. The `time` and `queue` resources map to Slurm's `--time` and `--partition` options. The launcher uses a custom status-check script at `workflow/scripts/cluster_status/slurm_status.py`, which queries `sacct`/`squeue` for the job state.
 
 ```bash
-bash workflow/scripts/launchers/slurm.sh
+bash workflow/scripts/launchers/slurm.sh config/your_config.yaml
 ```
-**Remember** to either add `--configfile path/to/your/config.yaml` to the `snakemake` command in the Slurm launcher script, or modify `workflow/Snakefile` to point to your config file.
+**Remember** to specify a config file to use when launching the workflow with one of these launchers. If not specified, snakemake will use the config file speficied at the top of `workflow/Snakemake`.
 
 ### Other schedulers
 
