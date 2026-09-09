@@ -11,7 +11,7 @@ rule run_DE_analysis:
         DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",
         DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
         gene_list=f"results/{config["analysis_name"]}/DE_analysis/gene_list.txt",
-        metadata=f"results/{config["analysis_name"]}/DE_analysis/metadata.csv",
+        metadata=f"results/{config["analysis_name"]}/DE_analysis/metadata.csv", #TODO move metadata generation in preprocess
     log:
         f"logs/{config["analysis_name"]}/DE_analysis/run_DE_analysis.log",
     conda:
