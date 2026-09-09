@@ -128,19 +128,30 @@ Idents(data_pb) <- "celltype_condition"
 # Run DE for each cell type
 res_DE_pb <- lapply(unique(data_pb@meta.data[, "celltype"]),
                     function(cell_type){
-                            return(FindMarkers(data_pb,
-                                               ident.1 = paste0(cell_type,
-                                                                "-",
-                                                                case),
-                                               ident.2 = paste0(cell_type,
-                                                                "-",
-                                                                control),
-                                               test.use = "DESeq2") %>%
-                                   mutate(celltype = cell_type,
-                                          FDR = p.adjust(p_val,
-                                                         method = "fdr")) %>%
-                                   rownames_to_column(var = "gene")
-                            )
+                            
+                            # Try catch because some cell types might not have enough 
+                            # patients to run the test
+                            tryCatch({
+                                    # Attempt to run FindMarkers
+                                    res <- FindMarkers(data_pb,
+                                                       ident.1 = paste0(cell_type,
+                                                                        "-",
+                                                                        case),
+                                                       ident.2 = paste0(cell_type,
+                                                                        "-",
+                                                                        control),
+                                                       test.use = "DESeq2") %>%
+                                            mutate(celltype = cell_type,
+                                                   FDR = p.adjust(p_val,
+                                                                  method = "fdr")) %>%
+                                            rownames_to_column(var = "gene")
+                                    return(res)
+                                    
+                            }, error = function(e) {
+                                    # Log the skip to the Snakemake log file instead of halting
+                                    message(sprintf("Skipping pseudobulk DE for %s: %s", cell_type, e$message))
+                                    return(NULL)
+                            })
                     }
 )
 # Combine results from different cell types
