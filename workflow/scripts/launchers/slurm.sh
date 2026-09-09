@@ -12,4 +12,5 @@ snakemake \
     --keep-going \
     --sdm conda \
     --rerun-incomplete \
-    --latency-wait 600
+    --latency-wait 600 \
+    --config-file $1
