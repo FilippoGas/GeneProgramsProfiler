@@ -69,20 +69,26 @@ Idents(data) <- "celltype_condition"
 # Run DE for each celltype
 res_DE <- mclapply(unique(data@meta.data[,"celltype"]),
                    function(cell_type){
-                           return(
-                                FindMarkers(data,
-                                            ident.1 = paste0(cell_type,
-                                                             "-",
-                                                             case),
-                                            ident.2 = paste0(cell_type,
-                                                             "-",
-                                                             control)
-                                              ) %>%
-                                mutate(celltype = cell_type,
-                                       FDR = p.adjust(p_val,
-                                                      method = "fdr")) %>%
-                                rownames_to_column(var = "gene")
-                                )
+                           # Make sure that the current cell type has both case and control cells
+                           if (paste0(cell_type, "-", case) %in% data@meta.data$celltype_condition &&
+                               paste0(cell_type, "-", control) %in% data@meta.data$celltype_condition) {
+                                   return(
+                                        FindMarkers(data,
+                                                    ident.1 = paste0(cell_type,
+                                                                     "-",
+                                                                     case),
+                                                    ident.2 = paste0(cell_type,
+                                                                     "-",
+                                                                     control)
+                                                      ) %>%
+                                        mutate(celltype = cell_type,
+                                               FDR = p.adjust(p_val,
+                                                              method = "fdr")) %>%
+                                        rownames_to_column(var = "gene")
+                                        )
+                           }else{
+                                   return(NULL)
+                           }
                    },
                    mc.cores = snakemake@threads-1,
                    mc.cleanup = TRUE)
