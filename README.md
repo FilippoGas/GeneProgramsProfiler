@@ -28,6 +28,28 @@ The pipeline is organized into six modules that run in dependency order:
 
 See the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/FilippoGas/GeneProgramsProfiler) for a visual workflow diagram and full parameter table.
 
+## Getting the code
+
+You can get the workflow in three ways:
+
+**1. Download a release ZIP (simplest).** On the GitHub **Releases** page pick a version (e.g. `v1.0.0`) and download the **Source code ZIP**. This gives you a static snapshot of that version — no git history, no way to update in place; you re-download for each new release.
+
+**2. `git clone` (latest development code).**
+```
+git clone git@github.com:FilippoGas/GeneProgramsProfiler.git
+```
+This follows the `main` branch — the newest code, which may include unreleased changes.
+
+**3. Clone, then check out a release tag (recommended).**
+```
+git clone git@github.com:FilippoGas/GeneProgramsProfiler.git
+cd GeneProgramsProfiler
+git checkout v1.0.0
+```
+This pins an exact released version (reproducible, like the ZIP) while keeping git history so you can switch tags later. You'll be on a detached HEAD, which is fine for running; create a branch only if you plan to modify the code.
+
+**Which should I choose?** For reproducible analyses, check out a specific `vX.Y.Z` release tag and record the version you used. Follow `main` only if you want the latest development code or plan to contribute. Releases are tagged `vX.Y.Z` from Conventional Commits, with changes tracked in `CHANGELOG.md`.
+
 ## Prerequisites
 
 - **Python ≥ 3.12**
