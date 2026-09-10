@@ -8,7 +8,7 @@ The test dataset (Natri et al., IPF vs Control) is configured in `.test/config/c
 
 ### Seurat object (`.rds`)
 
-A Seurat object with the following columns in its metadata:
+A **log-normalized** Seurat object with the following columns in its metadata:
 
 | Metadata column | Description |
 |---|---|
