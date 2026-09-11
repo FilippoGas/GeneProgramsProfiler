@@ -36,4 +36,4 @@ try:
         print("failed")
 
 except subprocess.CalledProcessError:
-    print("success")
+    print("running")
