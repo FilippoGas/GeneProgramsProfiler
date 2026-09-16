@@ -1,4 +1,4 @@
-# Snakemake workflow: GeneProgramsProfiler
+# GeneProgramsProfiler
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥8.0.0-brightgreen.svg)](https://snakemake.github.io)
 [![GitHub actions status](https://github.com/FilippoGas/GeneProgramsProfiler/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/FilippoGas/GeneProgramsProfiler/actions/workflows/main.yaml?query=branch%3Amain)
