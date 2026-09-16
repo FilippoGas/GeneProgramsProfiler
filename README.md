@@ -8,6 +8,8 @@
 
 A Snakemake workflow for characterizing cell type-specific gene program deregulations from scRNA-seq datasets. The workflow takes a Seurat `.rds` object and a [cytopus](https://github.com/wallet-maker/cytopus) cell-type conversion dictionary as inputs, discovers gene programs using two complementary methods ([Spectra](https://github.com/dpeerlab/spectra) and [cNMF](https://github.com/dylkot/cNMF)), tests each program for differential activation between conditions, performs functional enrichment on differentially expressed genes, and produces a comparative cross-method analysis.
 
+![Workflow diagram](workflow.png)
+
 ## Workflow overview
 
 The pipeline is organized into six modules that run in dependency order:
