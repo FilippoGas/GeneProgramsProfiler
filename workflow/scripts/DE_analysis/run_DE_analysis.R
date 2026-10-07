@@ -36,6 +36,7 @@ suppressPackageStartupMessages({
         library(tidyverse)
         library(Seurat)
         library(parallel)
+        library(BPCells)
 })
 
 message("Starting R script \"run_DE_analysis.R\"...")
@@ -197,7 +198,7 @@ message("Saving merged DEGs to ", snakemake@output[["DEGs_both"]], " ...")
 write_csv(DEGs_both, file = snakemake@output[["DEGs_both"]])
 message("Done")
 message("Saving gene list to ", snakemake@output[["gene_list"]])
-write(rownames(data@assays$RNA@data), snakemake@output[["gene_list"]])
+write(Features(data), snakemake@output[["gene_list"]])
 message("Done")
 message("Saving metadata to ", snakemake@output[["metadata"]])
 metadata <- data@meta.data
