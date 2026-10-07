@@ -49,7 +49,7 @@ rule cNMF_prepare:
             -c {input.matrix} \
             --max-nmf-iter {params.max_nmf_iter} \
             -k {params.k_vals} \
-            --n-iter {params.n_iter}
+            --n-iter {params.n_iter} >>{log} 2>&1
 
         touch {output.done}
         """
@@ -85,7 +85,7 @@ rule cNMF_factorize_worker:
             --output-dir {params.out_dir} \
             --name {params.analysis_name} \
             --worker-index {wildcards.worker} \
-            --total-workers {params.total_workers}
+            --total-workers {params.total_workers} >>{log} 2>&1
 
         touch {output.done}
         """
@@ -109,7 +109,7 @@ rule cNMF_factorize:
         "../envs/cNMF.yaml"
     shell:
         """
-        touch {output.done}
+        touch {output.done} >>{log} 2>&1
         """
 
 
@@ -139,7 +139,7 @@ rule cNMF_combine:
         """
         cnmf combine \
             --output-dir {params.out_dir} \
-            --name {params.analysis_name}
+            --name {params.analysis_name} >>{log} 2>&1
 
         touch {output.done}
         """
@@ -172,7 +172,7 @@ rule cNMF_k_selection_plot:
         """
         cnmf k_selection_plot \
             --output-dir {params.out_dir} \
-            --name {params.analysis_name}
+            --name {params.analysis_name} >>{log} 2>&1
         touch {output.k_plot_data}
         """
 
@@ -229,12 +229,13 @@ rule cNMF_consensus:
         "Generate program usage tables for the selected k."
     shell:
         """
+        # FIXME: document that local_density_threshold may need tuning
         cnmf consensus \
             --output-dir {params.output_dir} \
             --name {params.analysis_name} \
             --components {params.k} \
             --local-density-threshold {params.ldt} \
-            --show-clustering # FIXME: document that local_density_threshold may need tuning
+            --show-clustering >>{log} 2>&1
         touch {output.done}
         """
 
