@@ -10,3 +10,4 @@ dependencies:
   - r-tidyverse=2.0.0
   - bioconductor-anndatar=1.0.2
   - bioconductor-rhdf5=2.54.1
+  - bioconda::r-bpcells=0.3.1
