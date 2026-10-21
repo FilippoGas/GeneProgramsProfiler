@@ -20,6 +20,8 @@ rule prepare_cytopus_list:
         global_celltype=config["spectra"]["prepare_cytopus_list"]["global_celltype"],
     message:
         "Retrieve cytopus gene sets for the cell types in the dataset."
+    benchmark:
+        f"results/{config["analysis_name"]}/spectra/benchmarks/prepare_cytopus_list.tsv"
     script:
         "../scripts/spectra/prepare_cytopus_list.py"
 
@@ -48,6 +50,8 @@ rule run_spectra:
         lam=config["spectra"]["run_spectra"]["lambda"],
     message:
         "Run spectra to identify activated gene programs in the single cell RNA seq dataset."
+    benchmark:
+        f"results/{config["analysis_name"]}/spectra/benchmarks/run_spectra.tsv"
     script:
         "../scripts/spectra/run_spectra.py"
 
@@ -76,6 +80,8 @@ rule spectra_rename_programs:
         queue=config["queues"]["cpu"],
     message:
         "Label unknown programs in the cell scores matrix."
+    benchmark:
+        f"results/{config["analysis_name"]}/spectra/benchmarks/spectra_rename_programs.tsv"
     script:
         "../scripts/spectra/rename_programs.R"
 
@@ -105,6 +111,8 @@ rule spectra_WMW:
         active_cell_thresh=config["spectra"]["spectra_WMW"]["active_cell_thresh"],
     message:
         "Analyze spectra's results and test for differential program activation with Wilcoxon-Mann-Whitney U-test."
+    benchmark:
+        f"results/{config["analysis_name"]}/spectra/benchmarks/spectra_WMW.tsv"
     script:
         "../scripts/differential_activation/WMW.R"
 
@@ -135,6 +143,8 @@ rule spectra_WMW_plot:
         FDR_thresh=config["spectra"]["spectra_WMW_plots"]["FDR_thresh"],
     message:
         "Plot results from differential gene program activation analysis (WMW)."
+    benchmark:
+        f"results/{config["analysis_name"]}/spectra/benchmarks/spectra_WMW_plot.tsv"
     script:
         "../scripts/differential_activation/WMW_plots.R"
 
@@ -164,6 +174,8 @@ rule spectra_LMM:
         active_cell_thresh=config["spectra"]["spectra_LMM"]["active_cell_thresh"],
     message:
         "Analyze spectra's results and test for differential program activation with Linear Mixed Models."
+    benchmark:
+        f"results/{config["analysis_name"]}/spectra/benchmarks/spectra_LMM.tsv"
     script:
         "../scripts/differential_activation/LMM.R"
 
@@ -193,5 +205,7 @@ rule spectra_LMM_plot:
         FDR_thresh=config["spectra"]["spectra_LMM_plots"]["FDR_thresh"],
     message:
         "Plot results from differential gene program activation analyis. (LMM)"
+    benchmark:
+        f"results/{config["analysis_name"]}/spectra/benchmarks/spectra_LMM_plot.tsv"
     script:
         "../scripts/differential_activation/LMM_plots.R"

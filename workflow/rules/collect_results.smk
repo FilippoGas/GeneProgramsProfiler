@@ -28,6 +28,8 @@ rule make_comp_table:
         padj_thresh=config["collect_results"]["make_comp_table"]["padj_thresh"],
     message:
         "Put togheter results from different methods in one table allowing direct comparison."
+    benchmark:
+        f"results/{config["analysis_name"]}/collect_results/benchmarks/make_comp_table.tsv"
     script:
         "../scripts/collect_results/make_comp_table.R"
 
@@ -59,5 +61,7 @@ rule comp_table_plots:
         ],
     message:
         "Make concordance plots showing detected deregulations across methods."
+    benchmark:
+        f"results/{config["analysis_name"]}/collect_results/benchmarks/comp_table_plots.tsv"
     script:
         "../scripts/collect_results/comp_table_plots.R"

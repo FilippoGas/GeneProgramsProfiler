@@ -25,6 +25,8 @@ rule run_gsea:
         padj_thresh=config["functional_enrichment"]["run_gsea"]["padj_thresh"],
     message:
         "Run Gene Set Enrichment Analysis on the results of the differential expression analyses."
+    benchmark:
+        f"results/{config["analysis_name"]}/functional_enrichment/benchmarks/run_gsea.tsv"
     script:
         "../scripts/functional_enrichment/run_gsea.R"
 
@@ -57,5 +59,7 @@ rule run_ora:
         padj_thresh=config["functional_enrichment"]["run_gsea"]["padj_thresh"],
     message:
         "Run Over Representation Analysis on the results of the differential expression analyses."
+    benchmark:
+        f"results/{config["analysis_name"]}/functional_enrichment/benchmarks/run_ora.tsv"
     script:
         "../scripts/functional_enrichment/run_ora.R"

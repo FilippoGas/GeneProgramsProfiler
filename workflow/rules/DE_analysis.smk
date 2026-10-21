@@ -27,6 +27,8 @@ rule run_DE_analysis:
         case=config["case_condition"],
     message:
         "Run differential expression analysis in single cell and pseudo bulk mode on the scRNAseq dataset."
+    benchmark:
+        f"results/{config["analysis_name"]}/DE_analysis/benchmarks/run_DE_analysis.tsv"
     script:
         "../scripts/DE_analysis/run_DE_analysis.R"
 
@@ -55,5 +57,7 @@ rule DEA_plots:
         queue=config["queues"]["cpu"],
     message:
         "Plot summary of DE analysis."
+    benchmark:
+        f"results/{config["analysis_name"]}/DE_analysis/benchmarks/DEA_plots.tsv"
     script:
         "../scripts/DE_analysis/DEA_plots.R"
