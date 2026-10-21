@@ -13,6 +13,7 @@ rule annotate_and_save:
         matrix=f"results/{config["analysis_name"]}/preprocess/mtx/matrix.mtx",
         barcodes=f"results/{config["analysis_name"]}/preprocess/mtx/barcodes.tsv",
         genes=f"results/{config["analysis_name"]}/preprocess/mtx/genes.tsv",
+        metadata=f"results/{config["analysis_name"]}/preprocess/rds/metadata.csv"
     log:
         f"logs/{config["analysis_name"]}/preprocess/annotate_and_save.log",
     conda:

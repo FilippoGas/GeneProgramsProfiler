@@ -18,7 +18,6 @@
 #                                       analysis
 #   - snakemake@output[["gene_list"]] : Path to save the list of genes present
 #                                       in the dataset
-#   - snakemake@output[["metadata"]] : Path to save seurat's object meteadata
 #
 # Snakemake expected params:
 #   - snakemake@params[["case"]]   : Name of case condition
@@ -199,11 +198,6 @@ write_csv(DEGs_both, file = snakemake@output[["DEGs_both"]])
 message("Done")
 message("Saving gene list to ", snakemake@output[["gene_list"]])
 write(Features(data), snakemake@output[["gene_list"]])
-message("Done")
-message("Saving metadata to ", snakemake@output[["metadata"]])
-metadata <- data@meta.data
-metadata <- metadata %>% rownames_to_column(var = "cell_id")
-write_csv(metadata, snakemake@output[["metadata"]])
 message("Done")
 # Close Logging ----------------------------------------------------------------
 sink(type="message")

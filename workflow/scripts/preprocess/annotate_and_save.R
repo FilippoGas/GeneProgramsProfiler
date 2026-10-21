@@ -30,6 +30,7 @@
 #   - snakemake@output[["matrix"]]   : Path to save expression matrix (.mtx)
 #   - snakemake@output[["barcodes"]] : Path to save cell IDs (.mtx)
 #   - snakemake@output[["genes"]]    : Path to save gene names (.mtx)
+#   - snakemake@output[["metadata"]] : Path to save seurat's metadata (.csv)
 #
 # Snakemake Expected Params:
 #   - snakemake@params[["annotation_column"]] : Name of the column containing
@@ -181,6 +182,7 @@ message("Starting R script \"annotate_and_save.R\"...")
 # ------------------------------------------------------------------------------
 message("Loading Seurat object: ", snakemake@input[["sc_dataset"]])
 data <- read_rds(snakemake@input[["sc_dataset"]])
+metadata <- data@meta.data
 message("Done")
 message("Loading cell type conversion dictionary: ",
         snakemake@input[["dictionary"]])
@@ -256,7 +258,7 @@ if (on_disk) {
         message("Detected on-disk (BPCells) integrity layers: streaming all exports.")
 }
 
-# 1. Save RDS 
+# 1. Save RDS and metadata
 # ------------------------------------------------------------------------------
 message("Saving dataset as rds to ", snakemake@output[["rds"]])
 if (on_disk) {
@@ -291,6 +293,9 @@ if (on_disk) {
         }
 }
 saveRDS(data, snakemake@output[["rds"]])
+message("Done")
+message("Saving seurat's metadata to ", snakemake@output[["metadata"]])
+write_csv(metadata, snakemake@output[["metadata"]])
 message("Done")
 
 # 2. Save MTX and features using the original raw counts
