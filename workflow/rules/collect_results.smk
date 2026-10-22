@@ -12,7 +12,12 @@ rule make_comp_table:
         gsea=f"results/{config["analysis_name"]}/functional_enrichment/run_gsea/.done.txt",
         ora=f"results/{config["analysis_name"]}/functional_enrichment/run_ora/.done.txt",
     output:
-        table=f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
+        table=report(
+            f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
+            caption="../report/captions/collect_results/comparative_table.rst",
+            category="Method consensus",
+            subcategory="Comparison table"
+        ),
     log:
         f"logs/{config["analysis_name"]}/collect_results/make_comp_table.log",
     benchmark:
@@ -45,15 +50,20 @@ rule comp_table_plots:
             f"results/{config["analysis_name"]}/collect_results/horizontal_upset.pdf",
             caption="../report/captions/collect_results/horizontal_upset.rst",
             category="Methods consensus",
-            subcategory="comp_table_plots",
+            subcategory="comparison plots",
         ),
         vertical_upset=report(
             f"results/{config["analysis_name"]}/collect_results/vertical_upset.pdf",
             caption="../report/captions/collect_results/vertical_upset.rst",
             category="Methods consensus",
-            subcategory="comp_table_plots",
+            subcategory="comparison plots",
         ),
-        intersections=f"results/{config["analysis_name"]}/collect_results/vertical_upset_intersections.xlsx",
+        intersections=report(
+            f"results/{config["analysis_name"]}/collect_results/vertical_upset_intersections.xlsx",
+            caption="../report/captions/collect_results/vertical_upset_intersection.rst",
+            category="Methods consensus",
+            subcategory="comparison plots table"
+        ),
     log:
         f"logs/{config["analysis_name"]}/collect_results/comp_table_plots.log",
     benchmark:

@@ -1,0 +1,1 @@
+Table listing the full item list of each intersection in the vertical upset plot.
