@@ -1,0 +1,1 @@
+Merged cross-method comparison table: one row per gene program, reporting its Spectra and cNMF identity, its cell-type specificity, the differential activation statistics from both methods (LMM and WMW) and the functional enrichment statistics from GSEA and ORA. This table is the basis of the concordance plots.

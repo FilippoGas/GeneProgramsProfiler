@@ -15,8 +15,8 @@ rule make_comp_table:
         table=report(
             f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
             caption="../report/captions/collect_results/comparative_table.rst",
-            category="Method consensus",
-            subcategory="Comparison table"
+            category="Methods consensus",
+            subcategory="Comparison table",
         ),
     log:
         f"logs/{config["analysis_name"]}/collect_results/make_comp_table.log",
@@ -62,7 +62,7 @@ rule comp_table_plots:
             f"results/{config["analysis_name"]}/collect_results/vertical_upset_intersections.xlsx",
             caption="../report/captions/collect_results/vertical_upset_intersection.rst",
             category="Methods consensus",
-            subcategory="comparison plots table"
+            subcategory="comparison plots table",
         ),
     log:
         f"logs/{config["analysis_name"]}/collect_results/comp_table_plots.log",
