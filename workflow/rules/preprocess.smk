@@ -13,9 +13,11 @@ rule annotate_and_save:
         matrix=f"results/{config["analysis_name"]}/preprocess/mtx/matrix.mtx",
         barcodes=f"results/{config["analysis_name"]}/preprocess/mtx/barcodes.tsv",
         genes=f"results/{config["analysis_name"]}/preprocess/mtx/genes.tsv",
-        metadata=f"results/{config["analysis_name"]}/preprocess/rds/metadata.csv"
+        metadata=f"results/{config["analysis_name"]}/preprocess/rds/metadata.csv",
     log:
         f"logs/{config["analysis_name"]}/preprocess/annotate_and_save.log",
+    benchmark:
+        f"results/{config["analysis_name"]}/preprocess/benchmarks/annotate_and_save.tsv"
     conda:
         "../envs/preprocess.yaml"
     threads: config["preprocess"]["annotate_and_save"]["cores"]
@@ -32,7 +34,5 @@ rule annotate_and_save:
         phase_col=config["preprocess"]["annotate_and_save"]["cell_cycle_phase_column"],
     message:
         "Annotate Seurat object's metadata with cytopus cell types and save as .rds, 10x-Genomics-formatted mtx and h5ad."
-    benchmark:
-        f"results/{config["analysis_name"]}/preprocess/benchmarks/annotate_and_save.tsv"
     script:
         "../scripts/preprocess/annotate_and_save.R"

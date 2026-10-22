@@ -43,20 +43,20 @@ rule DEA_plots:
         DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",
         DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
     output:
-        report(
-            overlap=f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
+        overlap=report(
+            f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
             caption="../report/captions/DE_analysis/sc_pb_overlap.rst",
             category="DE Analysis",
             subcategory="DEA_plots",
         ),
-        report(
-            FDR_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",
+        FDR_correlation=report(
+            f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",
             caption="../report/captions/DE_analysis/FDR_correlation.rst",
             category="DE Analysis",
             subcategory="DEA_plots",
         ),
-        report(
-            log2FC_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
+        log2FC_correlation=report(
+            f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
             caption="../report/captions/DE_analysis/log2FC_correlation.rst",
             category="DE Analysis",
             subcategory="DEA_plots",
