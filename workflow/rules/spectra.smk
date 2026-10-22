@@ -66,7 +66,7 @@ rule spectra_rename_programs:
         cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         factor_markers=f"results/{config["analysis_name"]}/spectra/spectra_output/factor_markers_labmda_{config["spectra"]["run_spectra"]["lambda"]}.csv",
         cytopus_list=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
-        metadata=f"results/{config["analysis_name"]}/preprocess/metadata.csv",
+        metadata=f"results/{config["analysis_name"]}/preprocess/rds/metadata.csv",
     output:
         cell_scores=f"results/{config["analysis_name"]}/spectra/spectra_output/cell_scores_labmda_{config["spectra"]["run_spectra"]["lambda"]}_known_programs.csv",
     log:

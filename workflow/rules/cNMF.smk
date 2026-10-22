@@ -260,7 +260,7 @@ rule cNMF_rename_programs:
         best_k=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/best_k.txt",
         done=f"results/{config['analysis_name']}/cNMF/.done_consensus.txt",
         cytopus_list=f"results/{config["analysis_name"]}/spectra/cytopus_Gene_sets.json",
-        metadata=f"results/{config["analysis_name"]}/preprocess/metadata.csv",
+        metadata=f"results/{config["analysis_name"]}/preprocess/rds/metadata.csv",
     output:
         labeled_cell_scores=f"results/{config["analysis_name"]}/cNMF/{config["analysis_name"]}/{config["analysis_name"]}.labeled_cell_score.csv",
     log:
