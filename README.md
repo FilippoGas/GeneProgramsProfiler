@@ -151,6 +151,34 @@ results/<analysis_name>/
 
 Logs follow a parallel structure under `logs/<analysis_name>/`. Some rules produce `.done.txt` sentinel files to mark completion of modules with unbounded outputs; delete these to force a re-run.
 
+## Reports
+
+Once a run has finished, `snakemake --report` collects every plot produced by the workflow into a single browsable HTML report, together with captions, per-file metadata and the rule that generated each result.
+
+A report is scoped to one analysis at a time: pass the same `--configfile` used for the run. Because every output path derives from `analysis_name`, only that analysis's results are included, so several analyses can be kept side by side as independent reports:
+
+```bash
+snakemake --configfile config/config_one.yaml \
+  --report report_one.html
+
+snakemake --configfile config/config_two.yaml \
+  --report report_two.html
+
+snakemake --configfile .test/config/config_three.yaml \
+  --report report_three.html
+```
+
+`--report` does not execute anything: it only reads finished outputs and their provenance metadata, and it fails if any expected result is missing. Generate a report only after a run has completed successfully.
+
+For analyses with many cell types prefer `.zip` over `.html`. The HTML format embeds every result inline and grows large; the archive spreads results across a folder structure and loads them on demand.
+
+```bash
+snakemake --configfile config/my_analysis.yaml \
+  --report report_my_analysis.zip
+```
+
+To create the report automatically at the end of a run, add `--report-after-run` (requires `--report`).
+
 ## Authors
 
 - Filippo Gastaldello
