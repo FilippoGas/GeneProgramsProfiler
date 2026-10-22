@@ -15,6 +15,8 @@ rule make_comp_table:
         table=f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
     log:
         f"logs/{config["analysis_name"]}/collect_results/make_comp_table.log",
+    benchmark:
+        f"results/{config["analysis_name"]}/collect_results/benchmarks/make_comp_table.tsv"
     conda:
         "../envs/collect_results.yaml"
     threads: config["collect_results"]["make_comp_table"]["cores"]
@@ -28,8 +30,6 @@ rule make_comp_table:
         padj_thresh=config["collect_results"]["make_comp_table"]["padj_thresh"],
     message:
         "Put togheter results from different methods in one table allowing direct comparison."
-    benchmark:
-        f"results/{config["analysis_name"]}/collect_results/benchmarks/make_comp_table.tsv"
     script:
         "../scripts/collect_results/make_comp_table.R"
 
@@ -41,11 +41,23 @@ rule comp_table_plots:
     input:
         table=f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
     output:
-        horizontal_upset=f"results/{config["analysis_name"]}/collect_results/horizontal_upset.pdf",
-        vertical_upset=f"results/{config["analysis_name"]}/collect_results/vertical_upset.pdf",
+        report(
+            horizontal_upset=f"results/{config["analysis_name"]}/collect_results/horizontal_upset.pdf",
+            caption="../report/captions/collect_results/horizontal_upset.rst",
+            category="Methods consensus",
+            subcategory="comp_table_plots",
+        ),
+        report(
+            vertical_upset=f"results/{config["analysis_name"]}/collect_results/vertical_upset.pdf",
+            caption="../report/captions/collect_results/vertical_upset.rst",
+            category="Methods consensus",
+            subcategory="comp_table_plots",
+        ),
         intersections=f"results/{config["analysis_name"]}/collect_results/vertical_upset_intersections.xlsx",
     log:
         f"logs/{config["analysis_name"]}/collect_results/comp_table_plots.log",
+    benchmark:
+        f"results/{config["analysis_name"]}/collect_results/benchmarks/comp_table_plots.tsv"
     conda:
         "../envs/collect_results.yaml"
     threads: config["collect_results"]["comp_table_plots"]["cores"]
@@ -61,7 +73,5 @@ rule comp_table_plots:
         ],
     message:
         "Make concordance plots showing detected deregulations across methods."
-    benchmark:
-        f"results/{config["analysis_name"]}/collect_results/benchmarks/comp_table_plots.tsv"
     script:
         "../scripts/collect_results/comp_table_plots.R"

@@ -13,6 +13,8 @@ rule run_DE_analysis:
         gene_list=f"results/{config["analysis_name"]}/DE_analysis/gene_list.txt",
     log:
         f"logs/{config["analysis_name"]}/DE_analysis/run_DE_analysis.log",
+    benchmark:
+        f"results/{config["analysis_name"]}/DE_analysis/benchmarks/run_DE_analysis.tsv"
     conda:
         "../envs/DE_analysis.yaml"
     threads: config["DE_analysis"]["run_DE_analysis"]["cores"]
@@ -27,8 +29,6 @@ rule run_DE_analysis:
         case=config["case_condition"],
     message:
         "Run differential expression analysis in single cell and pseudo bulk mode on the scRNAseq dataset."
-    benchmark:
-        f"results/{config["analysis_name"]}/DE_analysis/benchmarks/run_DE_analysis.tsv"
     script:
         "../scripts/DE_analysis/run_DE_analysis.R"
 
@@ -43,11 +43,28 @@ rule DEA_plots:
         DEGs_pb=f"results/{config["analysis_name"]}/DE_analysis/DEGs_pb.csv",
         DEGs_both=f"results/{config["analysis_name"]}/DE_analysis/DEGs_both.csv",
     output:
-        overlap=f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
-        FDR_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",
-        log2FC_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
+        report(
+            overlap=f"results/{config["analysis_name"]}/DE_analysis/plots/sc_pb_overlap.pdf",
+            caption="../report/captions/DE_analysis/sc_pb_overlap.rst",
+            category="DE Analysis",
+            subcategory="DEA_plots",
+        ),
+        report(
+            FDR_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/FDR_correlation.pdf",
+            caption="../report/captions/DE_analysis/FDR_correlation.rst",
+            category="DE Analysis",
+            subcategory="DEA_plots",
+        ),
+        report(
+            log2FC_correlation=f"results/{config["analysis_name"]}/DE_analysis/plots/log2FC_correlation.pdf",
+            caption="../report/captions/DE_analysis/log2FC_correlation.rst",
+            category="DE Analysis",
+            subcategory="DEA_plots",
+        ),
     log:
         f"logs/{config["analysis_name"]}/DE_analysis/DEA_plots.log",
+    benchmark:
+        f"results/{config["analysis_name"]}/DE_analysis/benchmarks/DEA_plots.tsv"
     conda:
         "../envs/DE_analysis_plot.yaml"
     threads: config["DE_analysis"]["DEA_plots"]["cores"]
@@ -57,7 +74,5 @@ rule DEA_plots:
         queue=config["queues"]["cpu"],
     message:
         "Plot summary of DE analysis."
-    benchmark:
-        f"results/{config["analysis_name"]}/DE_analysis/benchmarks/DEA_plots.tsv"
     script:
         "../scripts/DE_analysis/DEA_plots.R"

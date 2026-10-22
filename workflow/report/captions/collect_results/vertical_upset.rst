@@ -1,0 +1,1 @@
+Concordance of deregulated gene programs detected across the different methods (spectra, cNMF, GSEA, ORA), vertical layout. Each bar corresponds to a combination of methods and its height to the number of gene programs supported by that combination.

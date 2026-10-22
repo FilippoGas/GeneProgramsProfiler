@@ -1,0 +1,1 @@
+Concordance of deregulated gene programs detected across the different methods (spectra, cNMF, GSEA, ORA), horizontal layout. Each bar corresponds to a celltype and each colored segment to a combination of methods that agreed on the deregulation.

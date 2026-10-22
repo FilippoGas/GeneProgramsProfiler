@@ -1,0 +1,1 @@
+Per-celltype differential activation of Spectra gene programs tested with the Wilcoxon-Mann-Whitney U test. Plots show the distribution of program scores across conditions for each celltype and a volcano summary of effect size vs significance.
