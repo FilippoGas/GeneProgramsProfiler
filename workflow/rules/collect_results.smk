@@ -41,14 +41,14 @@ rule comp_table_plots:
     input:
         table=f"results/{config["analysis_name"]}/collect_results/comparative_table.csv",
     output:
-        report(
-            horizontal_upset=f"results/{config["analysis_name"]}/collect_results/horizontal_upset.pdf",
+        horizontal_upset=report(
+            f"results/{config["analysis_name"]}/collect_results/horizontal_upset.pdf",
             caption="../report/captions/collect_results/horizontal_upset.rst",
             category="Methods consensus",
             subcategory="comp_table_plots",
         ),
-        report(
-            vertical_upset=f"results/{config["analysis_name"]}/collect_results/vertical_upset.pdf",
+        vertical_upset=report(
+            f"results/{config["analysis_name"]}/collect_results/vertical_upset.pdf",
             caption="../report/captions/collect_results/vertical_upset.rst",
             category="Methods consensus",
             subcategory="comp_table_plots",
