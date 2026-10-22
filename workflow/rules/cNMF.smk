@@ -69,7 +69,7 @@ rule cNMF_factorize_worker:
     log:
         f"logs/{config['analysis_name']}/cNMF/cNMF_factorize_worker_{{worker}}.log",
     benchmark:
-        f"results/{config["analysis_name"]}/cNMF/benchmarks/cNMF_factorize_worker.tsv"
+        f"results/{config["analysis_name"]}/cNMF/benchmarks/cNMF_factorize_worker_{{worker}}.tsv"
     conda:
         "../envs/cNMF.yaml"
     threads: 1
