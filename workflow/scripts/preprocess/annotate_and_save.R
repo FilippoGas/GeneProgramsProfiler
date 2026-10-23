@@ -182,8 +182,6 @@ message("Starting R script \"annotate_and_save.R\"...")
 # ------------------------------------------------------------------------------
 message("Loading Seurat object: ", snakemake@input[["sc_dataset"]])
 data <- read_rds(snakemake@input[["sc_dataset"]])
-metadata <- data@meta.data
-metadata <- metadata %>% rownames_to_column(var = "cell_id")
 message("Done")
 message("Loading cell type conversion dictionary: ",
         snakemake@input[["dictionary"]])
@@ -262,6 +260,8 @@ if (on_disk) {
 # 1. Save RDS and metadata
 # ------------------------------------------------------------------------------
 message("Saving dataset as rds to ", snakemake@output[["rds"]])
+metadata <- data@meta.data
+metadata <- metadata %>% rownames_to_column(var = "cell_id")
 if (on_disk) {
         # Copy the BPCells layers (chunked) into the results tree and re-point
         # the object at the copies so the saved rds is fully self-contained.
