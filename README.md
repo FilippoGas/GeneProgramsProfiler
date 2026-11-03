@@ -153,7 +153,7 @@ Logs follow a parallel structure under `logs/<analysis_name>/`. Some rules produ
 
 ## Reports
 
-Once a run has finished, `snakemake --report` collects every plot produced by the workflow into a single browsable HTML report, together with captions, per-file metadata and the rule that generated each result.
+Once a run has finished, `snakemake --report` collects every plot produced by the workflow into a single browsable HTML report, together with captions, per-file metadata and the rule that generated each result. The per-rule benchmarks are included too, both as individual files and as a merged table for the analysis.
 
 A report is scoped to one analysis at a time: pass the same `--configfile` used for the run. Because every output path derives from `analysis_name`, only that analysis's results are included, so several analyses can be kept side by side as independent reports:
 
