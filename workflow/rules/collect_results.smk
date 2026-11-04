@@ -87,9 +87,9 @@ rule comp_table_plots:
         "../scripts/collect_results/comp_table_plots.R"
 
 
-# Benchmark files are not treated as outputs by the report plugin, so they have
-# to be exposed explicitly. They are attached as report-flagged inputs of the
-# collector rule below, keeping them separated per analysis and per module.
+# Benchmark files are kept as plain inputs so that they are not listed one by
+# one in the report; the collector rule below summarizes them into report-flagged
+# performance plots and a merged table, per analysis and per module.
 BENCHMARKED_RULES = {
     "preprocess": ["annotate_and_save"],
     "spectra": [
@@ -119,11 +119,8 @@ BENCHMARKED_RULES = {
 }
 
 
-benchmark_tsv = lambda module, rule_name: report(
-    f"results/{config["analysis_name"]}/{module}/benchmarks/{rule_name}.tsv",
-    caption="../report/captions/benchmarks/benchmark_table.rst",
-    category="Benchmarks",
-    subcategory=module,
+benchmark_tsv = lambda module, rule_name: (
+    f"results/{config["analysis_name"]}/{module}/benchmarks/{rule_name}.tsv"
 )
 
 
@@ -144,6 +141,18 @@ rule collect_benchmarks:
             ],
         ],
     output:
+        runtime=report(
+            f"results/{config["analysis_name"]}/benchmarks/benchmarks_runtime.pdf",
+            caption="../report/captions/benchmarks/benchmark_runtime.rst",
+            category="Benchmarks",
+            subcategory="Performance",
+        ),
+        memory=report(
+            f"results/{config["analysis_name"]}/benchmarks/benchmarks_memory.pdf",
+            caption="../report/captions/benchmarks/benchmark_memory.rst",
+            category="Benchmarks",
+            subcategory="Performance",
+        ),
         summary=report(
             f"results/{config["analysis_name"]}/benchmarks/{config["analysis_name"]}_benchmarks.html",
             caption="../report/captions/benchmarks/benchmark_summary.rst",

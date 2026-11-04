@@ -1,1 +1,0 @@
-Snakemake benchmark of this rule: wall-clock time in seconds (``s``) and as ``h:m:s``, memory usage in MiB (``max_rss``, ``max_vms``, ``max_uss``, ``max_pss``), bytes read and written (``io_in``, ``io_out``), mean CPU load (``mean_load``) and CPU time in seconds (``cpu_time``).

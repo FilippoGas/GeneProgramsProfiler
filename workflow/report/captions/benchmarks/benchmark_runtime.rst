@@ -1,0 +1,1 @@
+Wall-clock runtime of each rule, on a logarithmic scale and coloured by module. The parallel cNMF factorization workers are summarized as a single median bar; all other rules appear individually.
