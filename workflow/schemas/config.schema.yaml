@@ -498,7 +498,7 @@ properties:
           - log2FC_thresh
           - FDR_thresh
   # Module 6: collect_results.smk
-  collect_results.smk:
+  collect_results:
     type: object
     properties:
       # Rule 1: make_comp_table:

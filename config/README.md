@@ -297,7 +297,7 @@ Generates UpSet plots showing concordance of detected deregulations across metho
 
 ### `collect_results.collect_benchmarks`
 
-Merges the benchmark files of every module into a single HTML table embedded in the Snakemake report, alongside the individual per-rule benchmark files.
+Summarizes the benchmark files of every module into runtime and peak-memory charts plus a single merged HTML table, all embedded in the Snakemake report.
 
 | Key      | Type    | Required | Description       |
 | -------- | ------- | -------- | ----------------- |

@@ -146,7 +146,8 @@ results/<analysis_name>/
 ├── DE_analysis/          # DEGs + correlation plots
 ├── functional_enrichment/# GSEA + ORA results
 ├── cNMF/                 # cNMF factorization + WMW/LMM results + plots
-└── collect_results/      # Comparative table + UpSet concordance plots
+├── collect_results/      # Comparative table + UpSet concordance plots
+└── benchmarks/           # Runtime and peak-memory charts + merged table
 ```
 
 Logs follow a parallel structure under `logs/<analysis_name>/`. Some rules produce `.done.txt` sentinel files to mark completion of modules with unbounded outputs; delete these to force a re-run.
