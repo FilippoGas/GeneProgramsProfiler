@@ -154,5 +154,12 @@ rule collect_benchmarks:
         f"logs/{config["analysis_name"]}/benchmarks/collect_benchmarks.log",
     conda:
         "../envs/collect_results.yaml"
+    threads: config["collect_results"]["collect_benchmarks"]["cores"]
+    resources:
+        mem_mb=config["collect_results"]["collect_benchmarks"]["mem_mb"],
+        time=config["collect_results"]["collect_benchmarks"]["time"],
+        queue=config["queues"]["cpu"],
+    message:
+        "Collect the benchmarks of all rules into the report."
     script:
         "../scripts/collect_results/collect_benchmarks.R"
