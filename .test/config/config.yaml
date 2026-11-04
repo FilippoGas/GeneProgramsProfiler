@@ -179,4 +179,4 @@ collect_results:
   collect_benchmarks:
     mem_mb: 3000
     time: "00:10:00"
-    cores: 1 
+    cores: 1
